@@ -5,6 +5,17 @@ import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Paths;
 
+/**
+ * Define the planets of solar System.
+ * <p>
+ * With:
+ * <ul>
+ *     <li>Mass of the planet;</li>
+ *     <li>Radius of the planet;</li>
+ *     <li>View of the planet, node that can be used to be visualized on a scene;</li>
+ * </ul>
+ * </p>
+ */
 public enum Planet {
     MERCURY (3.303e+23, 2.4397e6, mercury()),
     VENUS   (4.869e+24, 6.0518e6, venus()),
@@ -20,6 +31,13 @@ public enum Planet {
     private final double radius; //in meters
     private final Node planet;
 
+    /**
+     * Define the planet of the solar System
+     *
+     * @param mass Mass of the planet
+     * @param radius Radius of the planet
+     * @param planet View of the planet, node that can be added to be visualized
+     */
     Planet(double mass, double radius, Node planet) {
         this.mass = mass;
         this.radius = radius;

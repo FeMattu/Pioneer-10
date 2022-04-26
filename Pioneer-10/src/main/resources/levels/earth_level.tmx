@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="70" tileheight="70" infinite="0" nextlayerid="4" nextobjectid="21">
+ <tileset firstgid="1" name="tiles_spritesheet" tilewidth="70" tileheight="70" spacing="2" tilecount="156" columns="12">
+  <image source="tiles_spritesheet.png" width="914" height="936"/>
+ </tileset>
+ <objectgroup id="3" name="Livello di oggetti 1">
+  <object id="8" type="platform" x="2.52632" y="631.579" width="1399.58" height="72"/>
+  <object id="9" type="platform" x="348.632" y="416.842" width="353.684" height="74.5263"/>
+  <object id="10" type="platform" x="559.579" y="348.632" width="70.7368" height="70.7368"/>
+  <object id="11" type="platform" x="769.263" y="277.895" width="351.158" height="72"/>
+  <object id="13" type="coin" x="138.947" y="558.316" width="73.2632" height="70.7368"/>
+  <object id="18" type="coin" x="558.316" y="279.158" width="73.2632" height="70.7368"/>
+  <object id="19" type="coin" x="841.263" y="207.158" width="73.2632" height="70.7368"/>
+  <object id="20" type="coin" x="912" y="207.158" width="73.2632" height="70.7368"/>
+ </objectgroup>
+ <layer id="1" name="Livello tile 1" width="20" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,140,36,36,36,142,0,0,0,0,
+0,0,0,0,0,0,0,0,141,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,129,104,104,104,105,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+116,104,104,104,104,104,104,104,104,104,104,104,104,104,104,104,104,104,104,92
+</data>
+ </layer>
+</map>

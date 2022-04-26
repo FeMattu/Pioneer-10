@@ -27,7 +27,7 @@ public class PlanetLevel {
      * @param nrLevel Number of the level
      * @param pathOfTheMapLevel Path where is the .tmx file for the map of the level
      */
-    public PlanetLevel(String nameOfLevel, Planet planet, int nrLevel, String pathOfTheMapLevel){
+    public PlanetLevel(String nameOfLevel, int nrLevel, Planet planet, String pathOfTheMapLevel){
         this.planet = planet;
         this.nameOfLevel = nameOfLevel;
         this.nrLevel = nrLevel;
@@ -45,7 +45,7 @@ public class PlanetLevel {
      * @param pathOfTheMapLevel Path where is the .tmx file for the map of the level
      * @param background Background of map, this as default is white
      */
-    public PlanetLevel(String nameOfLevel, Planet planet, int nrLevel, String pathOfTheMapLevel, Image background){
+    public PlanetLevel(String nameOfLevel, int nrLevel, Planet planet, String pathOfTheMapLevel, Image background){
         this.planet = planet;
         this.nameOfLevel = nameOfLevel;
         this.nrLevel = nrLevel;

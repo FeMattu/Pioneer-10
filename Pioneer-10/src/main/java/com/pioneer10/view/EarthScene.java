@@ -3,6 +3,8 @@ package com.pioneer10.view;
 import com.almasb.fxgl.app.FXGLPane;
 import com.almasb.fxgl.app.GameApplication;
 import com.pioneer10.model.Game;
+import com.pioneer10.model.Planet;
+import com.pioneer10.model.PlanetLevel;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 

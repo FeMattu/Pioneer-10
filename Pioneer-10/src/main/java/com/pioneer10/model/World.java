@@ -16,7 +16,7 @@ public class World extends Sphere{
     private PhongMaterial textureMondo; //texture da applicare alla sfera
 
     /**
-     * Costruttore per la creazione del world
+     * Create a sphere representing a world, with given texture
      *
      * @param raggio Grandezza del world, raggio della sfera
      * @param texturePath Path della texture da applicare al world;
@@ -39,7 +39,7 @@ public class World extends Sphere{
     }
 
     /**
-     * Costruttore per la creazione del world
+     * Create a sphere representing a world, with given texture and bumbpmap to have a better 3D effect
      *
      * @param raggio Grandezza del world, raggio della sfera
      * @param texturePath Path della texture da applicare al world;
@@ -53,7 +53,10 @@ public class World extends Sphere{
     }
 
     /**
-     * Costruttore per la creazione del world
+     * Create a sphere representing a world,
+     * with given texture and bumbpmap to have a better 3D effect; selfillumination map,
+     * represent points of auto illumination of the world, like the lights visible on the night
+     * from the earth
      *
      * @param raggio Grandezza del world, raggio della sfera
      * @param texturePath Path della texture da applicare al world;
@@ -69,7 +72,10 @@ public class World extends Sphere{
     }
 
     /**
-     * Costruttore per la creazione del world
+     * Create a sphere representing a world,
+     * with given texture and bumbpmap to have a better 3D effect; selfillumination map,
+     * represent points of auto illumination of the world, like the lights visible on the night
+     * from the earth; specularmap, points specifying the amount of light reflected.
      *
      * @param raggio Grandezza del world, raggio della sfera
      * @param texturePath Path della texture da applicare al world;

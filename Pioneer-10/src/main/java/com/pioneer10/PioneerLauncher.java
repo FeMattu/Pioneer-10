@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-public class PioneerLuncher extends Application {
+public class PioneerLauncher extends Application {
 
     private static final int MAX_HEIGHT = 1080;
     private static final int MAX_WIDTH = 1920;
@@ -16,13 +16,13 @@ public class PioneerLuncher extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        stage.getIcons().add(new Image(Paths.get("src/main/java/resource/assets/image/icon.png").toAbsolutePath().toString()));
-        stage.setTitle("Hubble");
+        stage.getIcons().add(new Image(Paths.get("src/main/resources/assets/Icon/icon.png").toAbsolutePath().toString()));
+        stage.setTitle("Pioneer-10");
 
         stage.setScene(new MenuScene(stage).getScene());
         stage.show();
 
-        //dimesioni minime e massime della finistra
+        //dimensioni minime e massime della finestra
         stage.setMinHeight(stage.getHeight());
         stage.setMinWidth(stage.getWidth());
         stage.setMaxHeight(MAX_HEIGHT);

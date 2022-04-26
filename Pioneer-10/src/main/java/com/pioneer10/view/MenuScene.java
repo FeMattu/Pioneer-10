@@ -30,7 +30,7 @@ public class MenuScene {
         scene = new Scene(root, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
 
         //background
-        Image background = new Image(Paths.get("src/main/java/resource/assets/image/background.jpg").toAbsolutePath().toString());
+        Image background = new Image(Paths.get("src/main/resources/assets/background.jpg").toAbsolutePath().toString());
         ImagePattern patternBackground = new ImagePattern(background);
         scene.setFill(patternBackground);
 

@@ -22,7 +22,7 @@ public class PlanetLevel {
      *
      * @param nameOfLevel Name of the level
      * @param planet Planet of the level, this is important to specify the gravitational
-     *               acceleration of the planet that determinate the physics part of the level;
+     *               acceleration of the planets that determinate the physics part of the level;
      *               important for the physics simulation of the level.
      * @param nrLevel Number of the level
      * @param pathOfTheMapLevel Path where is the .tmx file for the map of the level
@@ -39,7 +39,7 @@ public class PlanetLevel {
      *
      * @param nameOfLevel Name of the level
      * @param planet Planet of the level, this is important to specify the gravitational
-     *               acceleration of the planet that determinate the physics part of the level;
+     *               acceleration of the planets that determinate the physics part of the level;
      *               important for the physics simulation of the level.
      * @param nrLevel Number of the level
      * @param pathOfTheMapLevel Path where is the .tmx file for the map of the level

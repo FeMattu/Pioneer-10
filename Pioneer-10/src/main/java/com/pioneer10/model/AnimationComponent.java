@@ -17,7 +17,7 @@ public class AnimationComponent extends Component {
     private AnimationChannel animIdle, animWalk;
 
     public AnimationComponent() {
-        String spacemanWalkPath = Path.of("src/main/java/resource/assets/SpaceMan/Walk/spaceman_walk.png").toAbsolutePath().toString();
+        String spacemanWalkPath = Path.of("src/main/resources/assets/SpaceMan/Walk/spaceman_walk.png").toAbsolutePath().toString();
 
         animIdle = new AnimationChannel(new Image(spacemanWalkPath), 4, 472, 472,
                 Duration.seconds(1), 10, 10);

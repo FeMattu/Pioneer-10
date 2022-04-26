@@ -1,6 +1,6 @@
 package com.pioneer10.view;
 
-import com.pioneer10.controller.ControllerMondo;
+import com.pioneer10.controller.ControllerMenu;
 import com.pioneer10.model.Planet;
 import javafx.scene.*;
 import javafx.scene.image.Image;
@@ -11,33 +11,29 @@ import javafx.stage.Stage;
 
 import java.nio.file.Paths;
 
-public class MenuScene {
-    //Dimensioni finestra
-    private static final int WIDTH = 1280;
-    private static final int HEIGHT = 720;
+public class MenuScene extends Scene{
 
-    private Scene scene;
+
+    private Group root = new Group();
     private Stage stage;
-    private ControllerMondo controller;
+    private ControllerMenu controller;
     private PerspectiveCamera camera;
 
-    public MenuScene(Stage stage) {
-        controller = new ControllerMondo(stage);
+    public MenuScene(Stage stage, double width, double height) {
+        super(new Group(), width, height, true, SceneAntialiasing.BALANCED);
+        this.setRoot(root);
+        controller = new ControllerMenu(stage);
         this.stage = stage;
-
-        //gruppo dei mondi
-        Group root = new Group();
-        scene = new Scene(root, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
 
         //background
         Image background = new Image(Paths.get("src/main/resources/assets/background.jpg").toAbsolutePath().toString());
         ImagePattern patternBackground = new ImagePattern(background);
-        scene.setFill(patternBackground);
+        this.setFill(patternBackground);
 
         //camera per la visualizzazione di scene 3D
         camera = new PerspectiveCamera(true); //camera al centro della scena
         camera.setDepthTest(DepthTest.ENABLE);
-        scene.setCamera(camera);
+        this.setCamera(camera);
         //volume di visualizzazione
         camera.setNearClip(0);
         camera.setFarClip(1000);
@@ -67,29 +63,20 @@ public class MenuScene {
         initMouseControl(root, terra);
     }
 
-    /**
-     * return the menu scene
-     *
-     * @return menu scene
-     */
-    public Scene getScene() {return scene;}
-
     //inizializzo input della tastiera
     private void initKeyboardControl(Stage stage, Node terra) {
         stage.addEventHandler(KeyEvent.ANY, event -> {
-            String tasto = event.getCharacter();
-
-            switch (tasto){
-                case "w", "W":
+            switch (event.getCode()){
+                case W, UP:
                     terra.setTranslateZ(terra.getTranslateZ()+10);
                     break;
-                case "s", "S":
+                case S, DOWN:
                     terra.setTranslateZ(terra.getTranslateZ()-10);
                     break;
-                case "a", "A":
+                case A, LEFT:
                     terra.setTranslateX(terra.getTranslateX()-10);
                     break;
-                case "d", "D":
+                case D, RIGHT:
                     terra.setTranslateX(terra.getTranslateX()+10);
                     break;
             }

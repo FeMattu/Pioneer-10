@@ -4,6 +4,7 @@ import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
@@ -30,10 +31,8 @@ public class AnimationComponent extends Component {
 
     @Override
     public void onAdded() {
-        //entity.getTransformComponent().setScaleOrigin(new Point2D(0.5, 0.5));
+        entity.getTransformComponent().setScaleOrigin(new Point2D(0.5, 0.5));
         entity.getViewComponent().addChild(texture);
-        entity.setScaleX(0.5);
-        entity.setScaleY(0.5);
     }
 
     @Override

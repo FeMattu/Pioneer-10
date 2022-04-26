@@ -62,7 +62,6 @@ public class Game extends GameApplication {
     protected void initGame() {
         player = entityBuilder()
                 .at(300, 300)
-                //.scale(0.5, 0.5)
                 .with(new AnimationComponent())
                 .buildAndAttach();
     }

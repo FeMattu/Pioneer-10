@@ -1,7 +1,11 @@
 package com.pioneer10.model;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystem;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public abstract class Utils {
 
@@ -17,8 +21,7 @@ public abstract class Utils {
      * @return The image object of the given image
      */
     public static String getPathFileFromResources(String fileName) throws InvalidPathException {
-        String p = Path.of(ROOT+fileName).toFile().getAbsolutePath();
-        return Path.of(ROOT+fileName).toAbsolutePath().toString();
+        return Path.of(ROOT,fileName).toAbsolutePath().normalize().toString();
     }
 
 

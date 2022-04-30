@@ -1,5 +1,6 @@
 package com.pioneer10.view;
 
+import com.pioneer10.model.Utils;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,7 +28,7 @@ public class LoadingGameScene extends Scene {
         // set background
 
         this.setFill(new ImagePattern(
-                new Image(Path.of("src/main/resources/assets/pioneer-10.jpg").toAbsolutePath().toString())
+                new Image(Utils.getPathFileFromResources("assets/pioneer-10.jpg"))
         ));
 
         Text nameOfGame = new Text("Pioneer-10");

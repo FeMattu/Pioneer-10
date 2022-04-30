@@ -1,13 +1,12 @@
 package com.pioneer10;
 
+import com.pioneer10.model.Utils;
 import com.pioneer10.view.LoadingGameScene;
-import com.pioneer10.view.MenuScene;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 
 public class PioneerLauncher extends Application {
 
@@ -22,7 +21,7 @@ public class PioneerLauncher extends Application {
     public void start(Stage stage) throws IOException {
 
         //aggiungo icona
-        stage.getIcons().add(new Image(Paths.get("src/main/resources/assets/Icon/icon.png").toAbsolutePath().toString()));
+        stage.getIcons().add(new Image(Utils.getPathFileFromResources("assets/Icon/icon.png")));
         stage.setTitle("Pioneer-10");
 
         //loading scene

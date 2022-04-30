@@ -85,16 +85,16 @@ public enum Planet {
     @NotNull
     private static Node mercury(){
         World mercury = new World(100,
-                Paths.get("src/main/resources/assets/planets/mercury/mercurymap.jpg").toAbsolutePath().toString(),
-                Paths.get("src/main/resources/assets/planets/mercury/mercurybump.jpg").toAbsolutePath().toString());
+                Utils.getPathFileFromResources("assets/planets/mercury/mercurymap.jpg"),
+                Utils.getPathFileFromResources("assets/planets/mercury/mercurybump.jpg"));
         mercury.animateRotation(40, false);
         return mercury;
     }
     @NotNull
     private static Node venus(){
         World venus = new World(100,
-                Paths.get("src/main/resources/assets/planets/venus/venusmap.jpg").toAbsolutePath().toString(),
-                Paths.get("src/main/resources/assets/planets/venus/venusbump.jpg").toAbsolutePath().toString());
+                Utils.getPathFileFromResources("assets/planets/venus/venusmap.jpg"),
+                Utils.getPathFileFromResources("assets/planets/venus/venusbump.jpg"));
         venus.animateRotation(40, false);
 
         return venus;
@@ -102,8 +102,8 @@ public enum Planet {
     @NotNull
     private static Node earth(){
         World earth = new World(100,
-                Paths.get("src/main/resources/assets/planets/earth/earth_map.jpg").toAbsolutePath().toString(),
-                Paths.get("src/main/resources/assets/planets/earth/earth_map_NRM.jpg").toAbsolutePath().toString());
+                Utils.getPathFileFromResources("assets/planets/earth/earth_map.jpg"),
+                Utils.getPathFileFromResources("assets/planets/earth/earth_map_NRM.jpg"));
         earth.animateRotation(40, false);
 
         return earth;
@@ -111,8 +111,8 @@ public enum Planet {
     @NotNull
     private static Node mars(){
         World mars = new World(100,
-                Paths.get("src/main/resources/assets/planets/mars/mars_map.jpg").toAbsolutePath().toString(),
-                Paths.get("src/main/resources/assets/planets/mars/mars_map_NRM.jpg").toAbsolutePath().toString());
+                Utils.getPathFileFromResources("assets/planets/mars/mars_map.jpg"),
+                Utils.getPathFileFromResources("assets/planets/mars/mars_map_NRM.jpg"));
         mars.animateRotation(40, false);
 
         return mars;
@@ -120,7 +120,7 @@ public enum Planet {
     @NotNull
     private static Node jupiter(){
         World jupiter = new World(100,
-                Paths.get("src/main/resources/assets/planets/jupiter/jupitermap.jpg").toAbsolutePath().toString());
+                Utils.getPathFileFromResources("assets/planets/jupiter/jupitermap.jpg"));
         jupiter.animateRotation(40, false);
 
         return jupiter;
@@ -128,7 +128,7 @@ public enum Planet {
     @NotNull
     private static Node saturn(){
         World saturn = new World(100,
-                Paths.get("src/main/resources/assets/planets/saturn/saturnmap.jpg").toAbsolutePath().toString());
+                Utils.getPathFileFromResources("assets/planets/saturn/saturnmap.jpg"));;
         saturn.animateRotation(40, false);
 
         return saturn;
@@ -136,7 +136,7 @@ public enum Planet {
     @NotNull
     private static Node uranus(){
         World uranus = new World(100,
-                Paths.get("src/main/resources/assets/planets/uranus/uranusmap.jpg").toAbsolutePath().toString());
+                Utils.getPathFileFromResources("assets/planets/uranus/uranusmap.jpg"));
         uranus.animateRotation(40, false);
 
         return uranus;
@@ -144,7 +144,7 @@ public enum Planet {
     @NotNull
     private static Node neptune(){
         World neptune = new World(100,
-                Paths.get("src/main/resources/assets/planets/neptune/neptunemap.jpg").toAbsolutePath().toString());
+                Utils.getPathFileFromResources("assets/planets/neptune/neptunemap.jpg"));
         neptune.animateRotation(40, false);
 
         return neptune;
@@ -152,8 +152,8 @@ public enum Planet {
     @NotNull
     private static Node pluto(){
         World pluto = new World(100,
-                Paths.get("src/main/resources/assets/planets/pluto/plutomap.jpg").toAbsolutePath().toString(),
-                Paths.get("src/main/resources/assets/planets/pluto/plutobump.jpg").toAbsolutePath().toString());
+                Utils.getPathFileFromResources("assets/planets/pluto/plutomap.jpg"),
+                Utils.getPathFileFromResources("assets/planets/pluto/plutobump.jpg"));
         pluto.animateRotation(40, false);
 
         return pluto;

@@ -2,6 +2,7 @@ package com.pioneer10.view;
 
 import com.pioneer10.controller.ControllerMenu;
 import com.pioneer10.model.Planet;
+import com.pioneer10.model.Utils;
 import javafx.scene.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
@@ -26,7 +27,7 @@ public class MenuScene extends Scene{
         this.stage = stage;
 
         //background
-        Image background = new Image(Paths.get("src/main/resources/assets/background.jpg").toAbsolutePath().toString());
+        Image background = new Image(Utils.getPathFileFromResources("assets/background.jpg"));
         ImagePattern patternBackground = new ImagePattern(background);
         this.setFill(patternBackground);
 

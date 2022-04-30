@@ -6,7 +6,7 @@ import java.nio.file.Path;
 public abstract class Utils {
 
     /** directory for image*/
-    public static final String ROOT = "./src/main/resources/";
+    public static final String ROOT = "src/main/resources/";
 
     /**
      * Return the image object by given name of image
@@ -17,7 +17,7 @@ public abstract class Utils {
      * @return The image object of the given image
      */
     public static String getPathFileFromResources(String fileName) throws InvalidPathException {
-        String p = Path.of(ROOT+fileName).toAbsolutePath().toString();
+        String p = Path.of(ROOT+fileName).toFile().getAbsolutePath();
         return Path.of(ROOT+fileName).toAbsolutePath().toString();
     }
 

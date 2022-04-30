@@ -26,7 +26,6 @@ public class LoadingGameScene extends Scene {
         this.setRoot(root);
 
         // set background
-
         this.setFill(new ImagePattern(
                 new Image(Utils.getPathFileFromResources("assets/pioneer-10.jpg"))
         ));

@@ -42,6 +42,7 @@ public class MenuScene extends Scene{
 
         //creo la terra
         Node terra = Planet.EARTH.getNode();
+        Node urano = Planet.URANUS.getNode();
         //creo marte
         Node marte = Planet.MARS.getNode();
         marte.setTranslateX(-200);
@@ -60,38 +61,5 @@ public class MenuScene extends Scene{
             controller.changeSceneOnEarthClick();
         });
 
-        initKeyboardControl(stage, terra);
-        initMouseControl(root, terra);
     }
-
-    //inizializzo input della tastiera
-    private void initKeyboardControl(Stage stage, Node terra) {
-        stage.addEventHandler(KeyEvent.ANY, event -> {
-            switch (event.getCode()){
-                case W, UP:
-                    terra.setTranslateZ(terra.getTranslateZ()+10);
-                    break;
-                case S, DOWN:
-                    terra.setTranslateZ(terra.getTranslateZ()-10);
-                    break;
-                case A, LEFT:
-                    terra.setTranslateX(terra.getTranslateX()-10);
-                    break;
-                case D, RIGHT:
-                    terra.setTranslateX(terra.getTranslateX()+10);
-                    break;
-            }
-        });
-    }
-    //inizializzo input dal mouse
-    private void initMouseControl(Group root, Node planet){
-        //zoom
-        stage.addEventHandler(ScrollEvent.SCROLL, event ->{
-            double direction = event.getDeltaY();
-            System.out.println(direction);
-            camera.setTranslateZ(camera.translateZProperty().getValue()+direction);
-            System.out.println("Camera Z: "+camera.getTranslateZ());
-        });
-    }
-
 }

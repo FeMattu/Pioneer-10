@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 public abstract class Utils {
 
     /** directory for image*/
-    public static final String ROOT = "src/main/resources/";
+    public static final String ROOT = "Pioneer-10/src/main/resources/";
 
     /**
      * Return the image object by given name of image

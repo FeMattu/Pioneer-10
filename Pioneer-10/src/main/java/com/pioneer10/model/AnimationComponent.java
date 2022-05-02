@@ -18,13 +18,13 @@ public class AnimationComponent extends Component {
     private AnimationChannel animIdle, animWalk;
 
     public AnimationComponent() {
-        String spacemanWalkPath = Utils.getPathFileFromResources("assets/SpaceMan/Walk/spaceman_walk.png");
+        String spacemanWalkPath = Utils.getPathFileFromResources("assets/SpaceMan/Walk/spaceman_walk_RID.png");
 
-        animIdle = new AnimationChannel(new Image(spacemanWalkPath), 4, 472, 472,
-                Duration.seconds(1), 10, 10);
+        animIdle = new AnimationChannel(new Image(spacemanWalkPath), 4, 75, 75,
+                Duration.seconds(0.5), 10, 10);
 
-        animWalk = new AnimationChannel(new Image(spacemanWalkPath), 4, 472, 472,
-                Duration.seconds(1.5), 0, 11);
+        animWalk = new AnimationChannel(new Image(spacemanWalkPath), 4, 75, 75,
+                Duration.seconds(0.8), 0, 11);
 
         texture = new AnimatedTexture(animIdle);
     }
@@ -45,7 +45,7 @@ public class AnimationComponent extends Component {
                 texture.loopAnimationChannel(animWalk);
             }
 
-            speed = (int) (speed * 0.9);
+            speed = (int) (speed * 0.2);
 
             if (FXGLMath.abs(speed) < 1) {
                 speed = 0;

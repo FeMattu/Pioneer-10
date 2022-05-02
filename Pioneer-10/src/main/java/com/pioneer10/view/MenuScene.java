@@ -60,9 +60,13 @@ public class MenuScene extends Scene{
         terra.setOnMouseClicked(event ->{
             controller.changeSceneOnEarthClick();
         });
+
         giove.setOnMouseClicked(event ->{
             controller.changSceneOnGioveClick();
         });
 
+        marte.setOnMouseClicked(event ->{
+            controller.changSceneOnGioveClick();
+        });
     }
 }

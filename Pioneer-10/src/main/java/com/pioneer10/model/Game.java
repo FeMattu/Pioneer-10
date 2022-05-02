@@ -75,5 +75,6 @@ public class Game extends GameApplication {
         textPixels.textProperty().bind(getWorldProperties().intProperty("pixelsMoved").asString());
 
         getGameScene().addUINode(textPixels); // add to the scene graphr
+
     }
 }

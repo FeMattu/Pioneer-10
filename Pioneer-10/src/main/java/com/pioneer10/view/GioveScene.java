@@ -3,6 +3,7 @@ package com.pioneer10.view;
 import com.almasb.fxgl.app.FXGLPane;
 import com.almasb.fxgl.app.GameApplication;
 import com.pioneer10.model.Game;
+import com.pioneer10.model.LivGiove;
 import com.pioneer10.model.Planet;
 import com.pioneer10.model.PlanetLevel;
 import javafx.scene.Group;
@@ -16,7 +17,7 @@ public class GioveScene extends Scene{
 
     public GioveScene(){
         super(new Group());
-        FXGLPane level1 = GameApplication.embeddedLaunch(new Game(WIDTH, HEIGHT));
+        FXGLPane level1 = GameApplication.embeddedLaunch(new LivGiove(WIDTH, HEIGHT));
         this.setRoot(level1);
     }
 

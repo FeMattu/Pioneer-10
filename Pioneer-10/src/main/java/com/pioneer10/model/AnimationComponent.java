@@ -45,7 +45,7 @@ public class AnimationComponent extends Component {
                 texture.loopAnimationChannel(animWalk);
             }
 
-            speed = (int) (speed * 0.2);
+            speed = (int) (speed/5);
 
             if (FXGLMath.abs(speed) < 1) {
                 speed = 0;
@@ -55,14 +55,13 @@ public class AnimationComponent extends Component {
     }
 
     public void moveRight() {
-        speed = 150;
+        speed = 20;
 
         getEntity().setScaleX(1);
     }
 
     public void moveLeft() {
-        speed = -150;
-
+        speed = -20;
         getEntity().setScaleX(-1);
     }
 }

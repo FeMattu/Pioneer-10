@@ -1,6 +1,7 @@
 package com.pioneer10.view;
 
 import com.pioneer10.model.Credits;
+import com.pioneer10.model.Info;
 import com.pioneer10.model.OptionScene;
 import com.pioneer10.model.Utils;
 import javafx.scene.Group;
@@ -48,8 +49,9 @@ public class LoadingGameScene extends Scene {
         Button button3 = new Button("CREDITS");
         root.getChildren().add(button3);
 
-        Button button4 = new Button("EXIT");
+        Button button4 = new Button("INFO");
         root.getChildren().add(button4);
+
 
 
         button.setOnMouseClicked(event -> {
@@ -64,6 +66,10 @@ public class LoadingGameScene extends Scene {
             stage.setScene(new Credits(stage, v, v1));
         });
 
+        button4.setOnMouseClicked(event -> {
+            stage.setScene(new Info(stage, v, v1));
+        });
+
 
 
 
@@ -72,29 +78,29 @@ public class LoadingGameScene extends Scene {
         nameOfGame.setTranslateY(this.getHeight()/5-nameOfGame.getLayoutBounds().getHeight()/2);
 
         button.setTranslateX(this.getWidth()/13 - button.getWidth()/2);
-        button.setTranslateY(this.getHeight()/3 - button.getHeight()/2 + 150);
+        button.setTranslateY(this.getHeight()/3 - button.getHeight()/2 + 100);
         button.setScaleX(2.8);
         button.setScaleY(2);
         button.setEffect(neonEffect());
         button.setTextFill(Color.WHITE);
 
         button2.setTranslateX(this.getWidth()/12.3 - button2.getWidth()/2);
-        button2.setTranslateY(this.getHeight()/3 - button2.getHeight()/2 + 210);
+        button2.setTranslateY(this.getHeight()/3 - button2.getHeight()/2 + 180);
         button2.setScaleX(3.3);
         button2.setScaleY(2);
         button2.setEffect(neonEffect());
         button2.setTextFill(Color.WHITE);
 
-        button3.setTranslateX(this.getWidth()/12.1 - button2.getWidth()/2);
-        button3.setTranslateY(this.getHeight()/3 - button2.getHeight()/2 + 270);
+        button3.setTranslateX(this.getWidth()/12.1 - button3.getWidth()/2);
+        button3.setTranslateY(this.getHeight()/3 - button3.getHeight()/2 + 260);
         button3.setScaleX(3.6);
         button3.setScaleY(2);
         button3.setEffect(neonEffect());
         button3.setTextFill(Color.WHITE);
 
-        button4.setTranslateX(this.getWidth()/11 - button2.getWidth()/2);
-        button4.setTranslateY(this.getHeight()/3 - button2.getHeight()/2 + 330);
-        button4.setScaleX(5.7);
+        button4.setTranslateX(this.getWidth()/11 - button4.getWidth()/2);
+        button4.setTranslateY(this.getHeight()/3 - button4.getHeight()/2 + 340);
+        button4.setScaleX(5.2);
         button4.setScaleY(2);
         button4.setEffect(neonEffect());
         button4.setTextFill(Color.WHITE);

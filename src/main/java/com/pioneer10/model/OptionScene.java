@@ -2,6 +2,8 @@ package com.pioneer10.model;
 
 
 import com.pioneer10.model.Utils;
+import com.pioneer10.view.LoadingGameScene;
+import com.pioneer10.view.MenuScene;
 import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.effect.*;
@@ -41,7 +43,7 @@ public class OptionScene extends Scene{
         root.getChildren().add(button6);
 
         button6.setTranslateX(this.getWidth()/15.7 - button5.getWidth()/2);
-        button6.setTranslateY(this.getHeight()/3 - button5.getHeight()/2 + 210);
+        button6.setTranslateY(this.getHeight()/3 - button5.getHeight()/2 + 230);
         button6.setScaleX(2);
         button6.setScaleY(2);
         button6.setEffect(neonEffect2());
@@ -50,8 +52,13 @@ public class OptionScene extends Scene{
         Button button7 = new Button("BACK");
         root.getChildren().add(button7);
 
+        button7.setOnMouseClicked(event -> {
+            stage.setScene(new LoadingGameScene(stage,width,height));
+        });
+
+
         button7.setTranslateX(this.getWidth()/11.5 - button5.getWidth()/2);
-        button7.setTranslateY(this.getHeight()/3 - button5.getHeight()/2 + 270);
+        button7.setTranslateY(this.getHeight()/3 - button5.getHeight()/2 + 310);
         button7.setScaleX(4.8);
         button7.setScaleY(2);
         button7.setEffect(neonEffect2());

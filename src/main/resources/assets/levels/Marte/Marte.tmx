@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.8" tiledversion="1.8.3" orientation="orthogonal" renderorder="right-down" width="180" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="2" nextobjectid="1">
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="112" columns="14">
-  <image source="Rocky pass/Rocky Pass Files/PNG/tileset.png" width="224" height="128"/>
+  <image source="tileset.png" width="224" height="128"/>
  </tileset>
  <tileset firstgid="113" name="crystal-1" tilewidth="16" tileheight="16" tilecount="1" columns="1">
-  <image source="Rocky pass/Rocky Pass Files/PNG/Props/crystal-1.png" width="25" height="25"/>
+  <image source="crystal-1.png" width="25" height="25"/>
  </tileset>
  <tileset firstgid="114" name="plant-2" tilewidth="16" tileheight="16" tilecount="2" columns="2">
-  <image source="Rocky pass/Rocky Pass Files/PNG/Props/plant-2.png" width="35" height="26"/>
- </tileset>
- <tileset firstgid="116" name="tileset" tilewidth="16" tileheight="16" tilecount="112" columns="14">
-  <image source="Rocky pass/Rocky Pass Files/PNG/tileset.png" width="224" height="128"/>
- </tileset>
- <tileset firstgid="228" name="crystal-1" tilewidth="16" tileheight="16" tilecount="1" columns="1">
-  <image source="Rocky pass/Rocky Pass Files/PNG/Props/crystal-1.png" width="25" height="25"/>
+  <image source="plant-2.png" width="35" height="26"/>
  </tileset>
  <layer id="1" name="Livello tile 1" width="180" height="25">
   <data encoding="csv">

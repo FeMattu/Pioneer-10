@@ -1,8 +1,5 @@
 package com.pioneer10.view;
 
-import com.pioneer10.model.Credits;
-import com.pioneer10.model.Info;
-import com.pioneer10.model.OptionScene;
 import com.pioneer10.model.Utils;
 import javafx.scene.Group;
 import javafx.scene.Scene;

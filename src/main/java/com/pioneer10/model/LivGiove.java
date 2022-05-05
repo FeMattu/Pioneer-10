@@ -26,7 +26,8 @@ public class LivGiove extends GameApplication {
         setLevelFromMap("Giove/Giove.tmx");
 
         Viewport viewport = getGameScene().getViewport();
-        viewport.setBounds(-1500, 0, 70*16, getAppHeight());
+        viewport.setBounds(-1500, 0, 70*16/2+10, getAppHeight());
+        viewport.setZoom(2);
         viewport.setLazy(true);
 
     }

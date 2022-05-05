@@ -1,5 +1,7 @@
-package com.pioneer10.model;
+package com.pioneer10.view;
 
+
+import com.pioneer10.model.Utils;
 import com.pioneer10.view.LoadingGameScene;
 import javafx.scene.*;
 import javafx.scene.control.Button;
@@ -13,9 +15,9 @@ import javafx.stage.Stage;
 
 
 
-public class Info extends Scene{
+public class Credits extends Scene{
 
-    public Info(Stage stage, double width, double height) {
+    public Credits(Stage stage, double width, double height) {
         super(new Group(), width, height, true, SceneAntialiasing.BALANCED);
         Group root = new Group();
         this.setRoot(root);
@@ -31,23 +33,24 @@ public class Info extends Scene{
 
 
 
-        Text Credit = new Text("INFO:");
-        Credit.setEffect(neonEffect6());
+        Text Credit = new Text("CREDITS:");
+        Credit.setEffect(neonEffect3());
         Credit.setFill(Color.WHITE);
         Credit.setStroke(Color.BLACK);
 
         Credit.setFont(Font.font("Consolas", 100));
         root.getChildren().add(Credit);
 
-        Credit.setTranslateX(this.getWidth()/7-Credit.getLayoutBounds().getWidth()/2);
+        Credit.setTranslateX(this.getWidth()/5-Credit.getLayoutBounds().getWidth()/2);
         Credit.setTranslateY(this.getHeight()/5-Credit.getLayoutBounds().getHeight()/2);
 
         Text We = new Text("""
-                - A: MOVE LEFT
-                - D: MOVE RIGHT
-                - W: MOVE FORWARD
-                - S: MOVE BACKWARDS""");
-        We.setEffect(neonEffect6());
+                - Federico Mattucci
+                - Manuel Arcuti
+                - Alessandro Augusto
+                - Mario Popa
+                - Gabriele Tarlarini""");
+        We.setEffect(neonEffect3());
         We.setFill(Color.WHITE);
         We.setStroke(Color.BLACK);
 
@@ -58,24 +61,24 @@ public class Info extends Scene{
         We.setTranslateY(this.getHeight()/2-We.getLayoutBounds().getHeight()/2);
 
 
-        Button button11 = new Button("BACK");
-        root.getChildren().add(button11);
+        Button button8 = new Button("BACK");
+        root.getChildren().add(button8);
 
-        button11.setTranslateX(this.getWidth()/9 - button11.getWidth()/2);
-        button11.setTranslateY(this.getHeight()/3 - button11.getHeight()/2 + 330);
-        button11.setScaleX(4.8);
-        button11.setScaleY(2);
-        button11.setEffect(neonEffect6());
-        button11.setTextFill(Color.WHITE);
-
-        button11.setOnMouseClicked(event -> {
+        button8.setOnMouseClicked(event -> {
             stage.setScene(new LoadingGameScene(stage,width,height));
         });
+
+        button8.setTranslateX(this.getWidth()/9 - button8.getWidth()/2);
+        button8.setTranslateY(this.getHeight()/3 - button8.getHeight()/2 + 330);
+        button8.setScaleX(4.8);
+        button8.setScaleY(2);
+        button8.setEffect(neonEffect3());
+        button8.setTextFill(Color.WHITE);
 
     }
 
 
-    private Blend neonEffect6(){
+    private Blend neonEffect3(){
         Blend blend = new Blend();
         blend.setMode(BlendMode.MULTIPLY);
 

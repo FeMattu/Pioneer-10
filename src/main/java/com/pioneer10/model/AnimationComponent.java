@@ -15,16 +15,22 @@ public class AnimationComponent extends Component {
     private int speed = 0;
 
     private AnimatedTexture texture;
-    private AnimationChannel animIdle, animWalk;
+    private AnimationChannel animIdle, animWalk, animJump;
 
     public AnimationComponent() {
-        String spacemanWalkPath = Utils.getPathFileFromResources("assets/SpaceMan/Walk/spaceman_walk_RID.png");
+        String spacemanWalkPath = Utils.getPathFileFromResources("assets/Sprites/Anim_Robot_Walk1_v1.1_spritesheet.png");
 
-        animIdle = new AnimationChannel(new Image(spacemanWalkPath), 4, 75, 75,
-                Duration.seconds(0.5), 10, 10);
+        animIdle = new AnimationChannel(new Image(spacemanWalkPath), 3, 32, 32,
+                Duration.seconds(0.5), 0, 0);
 
-        animWalk = new AnimationChannel(new Image(spacemanWalkPath), 4, 75, 75,
-                Duration.seconds(0.8), 0, 11);
+        animWalk = new AnimationChannel(new Image(spacemanWalkPath), 3, 32, 32,
+                Duration.seconds(1), 0, 5);
+
+        animWalk = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/Anim_Robot_Jump1_v1.1_spritesheet.png")),
+                3, 32, 32,
+                Duration.seconds(1), 0, 8);
+
+
 
         texture = new AnimatedTexture(animIdle);
     }
@@ -52,6 +58,7 @@ public class AnimationComponent extends Component {
                 texture.loopAnimationChannel(animIdle);
             }
         }
+
     }
 
     public void moveRight() {
@@ -64,4 +71,9 @@ public class AnimationComponent extends Component {
         speed = -20;
         getEntity().setScaleX(-1);
     }
+
+    public void jump() {
+        entity.translateY(200);
+    }
+
 }

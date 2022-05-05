@@ -33,15 +33,15 @@ public class PioneerFactory implements EntityFactory {
     public Entity newPlayer(SpawnData data) {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        //physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
+        physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(12, 0), BoundingShape.box(6, 5)));
 
         // this avoids player sticking to walls
         physics.setFixtureDef(new FixtureDef().friction(0.1f));
 
         return entityBuilder(data)
                 .type(PLAYER)
-                .bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12)))
-                .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(10, 17)))
+                .bbox(new HitBox(new Point2D(0,16), BoundingShape.box(16,10)))//box di collisione per la testa
+                .bbox(new HitBox(new Point2D(12,0), BoundingShape.box(6, 6)))//box di collisione per le gambe
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new IrremovableComponent())

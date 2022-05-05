@@ -19,7 +19,7 @@ public class PlayerAnimationComponent extends Component {
     public PlayerAnimationComponent() {
         String spacemanWalkPath = Utils.getPathFileFromResources("assets/Sprites/Anim_Robot_Walk1_v1.1_spritesheet.png");
 
-        animIdle = new AnimationChannel(new Image(spacemanWalkPath), 4, 32, 42,
+        animIdle = new AnimationChannel(new Image(spacemanWalkPath), 4, 32, 32,
                 Duration.seconds(1), 2, 2);
 
         animWalk = new AnimationChannel(new Image(spacemanWalkPath), 3, 32, 32,
@@ -34,7 +34,7 @@ public class PlayerAnimationComponent extends Component {
 
     @Override
     public void onAdded() {
-        entity.getTransformComponent().setScaleOrigin(new Point2D(0.5, 0.5));
+        entity.getTransformComponent().setScaleOrigin(new Point2D(16, 16));
         entity.getViewComponent().addChild(texture);
     }
 
@@ -59,17 +59,17 @@ public class PlayerAnimationComponent extends Component {
         physics.setVelocityX(0);
     }
     public void right() {
-        physics.setVelocityX(50);
+        physics.setVelocityX(70);
         getEntity().setScaleX(1);
     }
 
     public void left() {
-        physics.setVelocityX(-50);
+        physics.setVelocityX(-70);
         getEntity().setScaleX(-1);
     }
 
     public void jump() {
-        physics.setVelocityY(-100);
+        physics.setVelocityY(-200);
     }
 
 }

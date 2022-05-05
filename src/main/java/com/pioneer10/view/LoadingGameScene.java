@@ -50,7 +50,6 @@ public class LoadingGameScene extends Scene {
         root.getChildren().add(button4);
 
 
-
         button.setOnMouseClicked(event -> {
             stage.setScene(new MenuScene(stage, v, v1));
         });

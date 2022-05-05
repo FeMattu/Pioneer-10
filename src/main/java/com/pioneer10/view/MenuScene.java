@@ -50,8 +50,6 @@ public class MenuScene extends Scene{
         //camera.setTranslateZ(); //sposto la camera indietro per visualizzare correttamente gli oggetti
 
 
-
-
         int distanceFromCenterPlanet = 350;
         //creo la terra
         Node terra = Planet.EARTH.getNode();

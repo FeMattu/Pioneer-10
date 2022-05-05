@@ -27,6 +27,8 @@ public enum Planet {
     NEPTUNE (1.024e+26, 2.4746e7, neptune()),
     PLUTO   (1.27e+22,  1.137e6, pluto());
 
+    public static final int RAGGIO = 200;
+    public static final int VELOCITY = 40;
     private final double mass;   //in kilograms
     private final double radius; //in meters
     private final Node planet;
@@ -84,77 +86,78 @@ public enum Planet {
 
     @NotNull
     private static Node mercury(){
-        World mercury = new World(100,
+
+        World mercury = new World(RAGGIO,
                 Utils.getPathFileFromResources("assets/planets/mercury/mercurymap.jpg"),
                 Utils.getPathFileFromResources("assets/planets/mercury/mercurybump.jpg"));
-        mercury.animateRotation(40, false);
+        mercury.animateRotation(VELOCITY, false);
         return mercury;
     }
     @NotNull
     private static Node venus(){
-        World venus = new World(100,
+        World venus = new World(RAGGIO,
                 Utils.getPathFileFromResources("assets/planets/venus/venusmap.jpg"),
                 Utils.getPathFileFromResources("assets/planets/venus/venusbump.jpg"));
-        venus.animateRotation(40, false);
+        venus.animateRotation(VELOCITY, false);
 
         return venus;
     }
     @NotNull
     private static Node earth(){
-        World earth = new World(100,
+        World earth = new World(RAGGIO,
                 Utils.getPathFileFromResources("assets/planets/earth/earth_map.jpg"),
                 Utils.getPathFileFromResources("assets/planets/earth/earth_map_NRM.jpg"));
-        earth.animateRotation(40, false);
+        earth.animateRotation(VELOCITY, false);
 
         return earth;
     }
     @NotNull
     private static Node mars(){
-        World mars = new World(100,
+        World mars = new World(RAGGIO,
                 Utils.getPathFileFromResources("assets/planets/mars/mars_map.jpg"),
                 Utils.getPathFileFromResources("assets/planets/mars/mars_map_NRM.jpg"));
-        mars.animateRotation(40, false);
+        mars.animateRotation(VELOCITY, false);
 
         return mars;
     }
     @NotNull
     private static Node jupiter(){
-        World jupiter = new World(100,
+        World jupiter = new World(RAGGIO,
                 Utils.getPathFileFromResources("assets/planets/jupiter/jupitermap.jpg"));
-        jupiter.animateRotation(40, false);
+        jupiter.animateRotation(VELOCITY, false);
 
         return jupiter;
     }
     @NotNull
     private static Node saturn(){
-        World saturn = new World(100,
+        World saturn = new World(RAGGIO,
                 Utils.getPathFileFromResources("assets/planets/saturn/saturnmap.jpg"));;
-        saturn.animateRotation(40, false);
+        saturn.animateRotation(VELOCITY, false);
 
         return saturn;
     }
     @NotNull
     private static Node uranus(){
-        World uranus = new World(100,
+        World uranus = new World(RAGGIO,
                 Utils.getPathFileFromResources("assets/planets/uranus/uranusmap.jpg"));
-        uranus.animateRotation(40, false);
+        uranus.animateRotation(VELOCITY, false);
 
         return uranus;
     }
     @NotNull
     private static Node neptune(){
-        World neptune = new World(100,
+        World neptune = new World(RAGGIO,
                 Utils.getPathFileFromResources("assets/planets/neptune/neptunemap.jpg"));
-        neptune.animateRotation(40, false);
+        neptune.animateRotation(VELOCITY, false);
 
         return neptune;
     }
     @NotNull
     private static Node pluto(){
-        World pluto = new World(100,
+        World pluto = new World(RAGGIO,
                 Utils.getPathFileFromResources("assets/planets/pluto/plutomap.jpg"),
                 Utils.getPathFileFromResources("assets/planets/pluto/plutobump.jpg"));
-        pluto.animateRotation(40, false);
+        pluto.animateRotation(VELOCITY, false);
 
         return pluto;
     }

@@ -41,25 +41,32 @@ public class MenuScene extends Scene{
         this.setFill(patternBackground);
 
         //camera per la visualizzazione di scene 3D
-        camera = new PerspectiveCamera(true); //camera al centro della scena
+        camera = new PerspectiveCamera(); //camera al centro della scena
         camera.setDepthTest(DepthTest.ENABLE);
         this.setCamera(camera);
         //volume di visualizzazione
         camera.setNearClip(0);
         camera.setFarClip(1000);
-        camera.setTranslateZ(-900); //sposto la camera indietro per visualizzare correttamente gli oggetti
+        //camera.setTranslateZ(); //sposto la camera indietro per visualizzare correttamente gli oggetti
 
+
+
+
+        int distanceFromCenterPlanet = 350;
         //creo la terra
         Node terra = Planet.EARTH.getNode();
-        Node urano = Planet.URANUS.getNode();
+        terra.setTranslateX(width/2);
+        terra.setTranslateY(height/2);
         //creo marte
         Node marte = Planet.MARS.getNode();
-        marte.setTranslateX(-200);
-        marte.setTranslateZ(100);
+        marte.setTranslateX(terra.getTranslateX()- distanceFromCenterPlanet);
+        marte.setTranslateY(terra.getTranslateY());
+        marte.setTranslateZ(terra.getTranslateZ()+100);
         //creo giove
         Node giove = Planet.JUPITER.getNode();
-        giove.setTranslateX(200);
-        giove.setTranslateZ(100);
+        giove.setTranslateX(terra.getTranslateX()+ distanceFromCenterPlanet);
+        giove.setTranslateY(terra.getTranslateY());
+        giove.setTranslateZ(terra.getTranslateZ()+100);
 
         //aggiuno i pianeti
         root.getChildren().add(marte);
@@ -78,33 +85,36 @@ public class MenuScene extends Scene{
             controller.changSceneOnGioveClick();
         });
 
-        Text level1 = new Text("Level 1-\n" + "Jupiter");
-        level1.setEffect(neonEffect5());
-        level1.setFill(Color.WHITE);
-        level1.setStroke(Color.BLACK);
+        //aggiungere tutti gli oggetti 2D da qui, se vengono aggiunti
+        //sopra potrebbero interferire con gli oggetti 3D
 
 
-        level1.setFont(Font.font("Consolas", 30.5));
-        root.getChildren().add(level1);
+        Text textForJupiter = new Text("Level 1-\n" + "Jupiter");
+        textForJupiter.setEffect(neonEffect5());
+        textForJupiter.setFill(Color.WHITE);
+        textForJupiter.setStroke(Color.BLACK);
+        textForJupiter.setFont(Font.font("Consolas", 30.5));
 
-        level1.setTranslateX(this.getWidth()/6.5-level1.getLayoutBounds().getWidth()/2);
-        level1.setTranslateY(this.getHeight()/4.5-level1.getLayoutBounds().getHeight()/2);
+        //posizionamento del testo in linea con giove
+        textForJupiter.setTranslateX(giove.getTranslateX()-textForJupiter.getLayoutBounds().getWidth()/2);
+        textForJupiter.setTranslateY(giove.getTranslateY()+ 250 -textForJupiter.getLayoutBounds().getHeight()/2);
 
-        Text level1Terra = new Text("Level 1-\n" + "Earth");
-        level1Terra.setEffect(neonEffect5());
-        level1Terra.setFill(Color.WHITE);
-        level1Terra.setStroke(Color.BLACK);
+        root.getChildren().add(textForJupiter);
 
+        Text textForEarth = new Text("Level 1-\n" + "Earth");
+        textForEarth.setEffect(neonEffect5());
+        textForEarth.setFill(Color.WHITE);
+        textForEarth.setStroke(Color.BLACK);
+        textForEarth.setFont(Font.font("Consolas", 30.5));
 
-        level1Terra.setFont(Font.font("Consolas", 30.5));
-        root.getChildren().add(level1Terra);
+        //posizionamento del testo in linea con la terra
+        textForEarth.setTranslateX(terra.getTranslateX()-textForEarth.getLayoutBounds().getWidth()/2);
+        textForEarth.setTranslateY(terra.getTranslateY()+ 270 -textForEarth.getLayoutBounds().getHeight()/2);
 
-        level1Terra.setTranslateX(this.getWidth()/30.5-level1Terra.getLayoutBounds().getWidth()/2);
-        level1Terra.setTranslateY(this.getHeight()/4.5-level1Terra.getLayoutBounds().getHeight()/2);
-
-
-
+        root.getChildren().add(textForEarth);
     }
+
+
 
     private Blend neonEffect5(){
         Blend blend = new Blend();

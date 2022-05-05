@@ -34,15 +34,7 @@ public class LivMarte extends GameApplication {
         bella.setBounds(-1500,0,16*16,getAppHeight());
         bella.setZoom(1.5);
         bella.setLazy(true);
-=======
-        getGameWorld().addEntityFactory(new PioneerFactory());
-        setLevelFromMap("Marte/MappaMarte.tmx");
 
-        Viewport viewport = getGameScene().getViewport();
-        viewport.setBounds(-1500, 0, 70*16/2+10, getAppHeight());
-        viewport.setZoom(2);
-        viewport.setLazy(true);
->>>>>>> origin/main
 
     }
     @Override

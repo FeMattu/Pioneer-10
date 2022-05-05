@@ -24,10 +24,11 @@ public class LivMarte extends GameApplication {
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
         setLevelFromMap("Marte/Marte.tmx");
+        spawn("player");
 
         Viewport viewport = getGameScene().getViewport();
         viewport.setBounds(-1500, 0, 70*16/2+10, getAppHeight());
-        viewport.setZoom(2);
+        viewport.setZoom(1);
         viewport.setLazy(true);
 
     }

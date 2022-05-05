@@ -82,7 +82,7 @@ public class MenuScene extends Scene{
         });
 
         marte.setOnMouseClicked(event ->{
-            controller.changSceneOnGioveClick();
+            controller.changSceneOnMarteClick();
         });
 
         //aggiungere tutti gli oggetti 2D da qui, se vengono aggiunti
@@ -90,7 +90,7 @@ public class MenuScene extends Scene{
 
 
         Text textForJupiter = new Text("Level 1-\n" + "Jupiter");
-        textForJupiter.setEffect(neonEffect5());
+        textForJupiter.setEffect(Utils.neonEffect());
         textForJupiter.setFill(Color.WHITE);
         textForJupiter.setStroke(Color.BLACK);
         textForJupiter.setFont(Font.font("Consolas", 30.5));
@@ -102,7 +102,7 @@ public class MenuScene extends Scene{
         root.getChildren().add(textForJupiter);
 
         Text textForEarth = new Text("Level 1-\n" + "Earth");
-        textForEarth.setEffect(neonEffect5());
+        textForEarth.setEffect(Utils.neonEffect());
         textForEarth.setFill(Color.WHITE);
         textForEarth.setStroke(Color.BLACK);
         textForEarth.setFont(Font.font("Consolas", 30.5));
@@ -112,48 +112,5 @@ public class MenuScene extends Scene{
         textForEarth.setTranslateY(terra.getTranslateY()+ 270 -textForEarth.getLayoutBounds().getHeight()/2);
 
         root.getChildren().add(textForEarth);
-    }
-
-    private Blend neonEffect5(){
-        Blend blend = new Blend();
-        blend.setMode(BlendMode.MULTIPLY);
-
-        DropShadow ds = new DropShadow();
-        ds.setColor(Color.rgb(66, 119, 254, 0.3));
-        ds.setOffsetX(5);
-        ds.setOffsetY(5);
-        ds.setRadius(5);
-        ds.setSpread(0.2);
-
-        blend.setBottomInput(ds);
-
-        DropShadow ds1 = new DropShadow();
-        ds1.setColor(Color.rgb(0, 121, 141, 1));
-        ds1.setRadius(20);
-        ds1.setSpread(0.2);
-
-        Blend blend2 = new Blend();
-        blend2.setMode(BlendMode.MULTIPLY);
-
-        InnerShadow is = new InnerShadow();
-        is.setColor(Color.rgb(255, 255, 255, 1));
-        is.setRadius(9);
-        is.setChoke(0.8);
-        blend2.setBottomInput(is);
-
-        InnerShadow is1 = new InnerShadow();
-        is1.setColor(Color.rgb(255, 255, 255, 1));
-        is1.setRadius(5);
-        is1.setChoke(0.4);
-        blend2.setTopInput(is1);
-
-        Blend blend1 = new Blend();
-        blend1.setMode(BlendMode.MULTIPLY);
-        blend1.setBottomInput(ds1);
-        blend1.setTopInput(blend2);
-
-        blend.setTopInput(blend1);
-
-        return blend;
     }
 }

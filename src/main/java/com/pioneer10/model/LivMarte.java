@@ -23,7 +23,7 @@ public class LivMarte extends GameApplication {
     @Override
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
-        setLevelFromMap("Marte/MappaMarte.tmx");
+        setLevelFromMap("Marte/Marte.tmx");
 
         Viewport viewport = getGameScene().getViewport();
         viewport.setBounds(-1500, 0, 70*16/2+10, getAppHeight());

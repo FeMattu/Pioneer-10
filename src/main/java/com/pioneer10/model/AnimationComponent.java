@@ -20,11 +20,11 @@ public class AnimationComponent extends Component {
     public AnimationComponent() {
         String spacemanWalkPath = Utils.getPathFileFromResources("assets/Sprites/Anim_Robot_Walk1_v1.1_spritesheet.png");
 
-        animIdle = new AnimationChannel(new Image(spacemanWalkPath), 3, 32, 32,
-                Duration.seconds(0.5), 0, 0);
+        animIdle = new AnimationChannel(new Image(spacemanWalkPath), 4, 32, 42,
+                Duration.seconds(1), 1, 1);
 
         animWalk = new AnimationChannel(new Image(spacemanWalkPath), 3, 32, 32,
-                Duration.seconds(1), 0, 5);
+                Duration.seconds(0.66), 0, 3);
 
         animWalk = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/Anim_Robot_Jump1_v1.1_spritesheet.png")),
                 3, 32, 32,

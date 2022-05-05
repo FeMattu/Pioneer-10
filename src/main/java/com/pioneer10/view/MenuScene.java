@@ -90,6 +90,19 @@ public class MenuScene extends Scene{
         level1.setTranslateX(this.getWidth()/6.5-level1.getLayoutBounds().getWidth()/2);
         level1.setTranslateY(this.getHeight()/4.5-level1.getLayoutBounds().getHeight()/2);
 
+        Text level1Terra = new Text("Level 1-\n" + "Earth");
+        level1Terra.setEffect(neonEffect5());
+        level1Terra.setFill(Color.WHITE);
+        level1Terra.setStroke(Color.BLACK);
+
+
+        level1Terra.setFont(Font.font("Consolas", 30.5));
+        root.getChildren().add(level1Terra);
+
+        level1Terra.setTranslateX(this.getWidth()/30.5-level1Terra.getLayoutBounds().getWidth()/2);
+        level1Terra.setTranslateY(this.getHeight()/4.5-level1Terra.getLayoutBounds().getHeight()/2);
+
+
 
     }
 

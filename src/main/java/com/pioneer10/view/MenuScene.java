@@ -114,8 +114,6 @@ public class MenuScene extends Scene{
         root.getChildren().add(textForEarth);
     }
 
-
-
     private Blend neonEffect5(){
         Blend blend = new Blend();
         blend.setMode(BlendMode.MULTIPLY);

@@ -24,10 +24,11 @@ public class LivGiove extends GameApplication {
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
         setLevelFromMap("Giove/Giove.tmx");
+        spawn("player");
+        spawn("background");
 
         Viewport viewport = getGameScene().getViewport();
         viewport.setBounds(-1500, 0, 70*16/2+10, getAppHeight());
-        viewport.setZoom(2);
         viewport.setLazy(true);
 
     }
@@ -40,6 +41,5 @@ public class LivGiove extends GameApplication {
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setWidth(16*70);
         gameSettings.setHeight(16*20);
-        gameSettings.setApplicationMode(ApplicationMode.DEVELOPER);
     }
 }

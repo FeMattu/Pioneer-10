@@ -1,6 +1,5 @@
 package com.pioneer10.model;
 
-import com.almasb.fxgl.dsl.components.AutoRotationComponent;
 import com.almasb.fxgl.dsl.views.ScrollingBackgroundView;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
@@ -15,8 +14,6 @@ import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
-
-import java.util.Collections;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
@@ -43,6 +40,22 @@ public class PioneerFactory implements EntityFactory {
                 .build();
     }
 
+    @Spawns("enemy")
+    public Entity newEnemy(SpawnData data) {
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.DYNAMIC);
+
+        physics.setFixtureDef(new FixtureDef().friction(0.0f));
+
+        return entityBuilder(data)
+                .type(ENEMY)
+                .bbox(new HitBox(new Point2D(17,0), BoundingShape.box(7,17))) //box di collisione per le gambe
+                .bbox(new HitBox(new Point2D(17,17), BoundingShape.box(9,9))) //box collisone per la testa
+                .with(physics)
+                .with(new EnemyControlComponent())
+                .build();
+    }
+
     @Spawns("player")
     public Entity newPlayer(SpawnData data) {
         PhysicsComponent physics = new PhysicsComponent();
@@ -54,12 +67,11 @@ public class PioneerFactory implements EntityFactory {
 
         return entityBuilder(data)
                 .type(PLAYER)
-                .bbox(new HitBox(new Point2D(0,16), BoundingShape.box(16,10)))//box di collisione per la testa
-                .bbox(new HitBox(new Point2D(-6,0), BoundingShape.box(6, 6)))//box di collisione per le gambe
+                .bbox(new HitBox(BoundingShape.box(32,32)))//box di collisione per la testa
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new IrremovableComponent())
-                .with(new PlayerAnimationComponent())
+                .with(new PlayerControlComponent())
                 .build();
     }
 

@@ -1,10 +1,12 @@
 package com.pioneer10.model;
 
-import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.input.virtual.VirtualButton;
+import javafx.scene.input.KeyCode;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
@@ -34,7 +36,40 @@ public class LivTerra extends GameApplication {
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setWidth(150*32/2);
         gameSettings.setHeight(20*32);
-        gameSettings.setApplicationMode(ApplicationMode.DEVELOPER);
+    }
+
+    @Override
+    protected void initInput() {
+        getInput().addAction(new UserAction("Left") {
+            @Override
+            protected void onAction() {
+                player.getComponent(PlayerControlComponent.class).left();
+            }
+
+            @Override
+            protected void onActionEnd() {
+                player.getComponent(PlayerControlComponent.class).stop();
+            }
+        }, KeyCode.A, VirtualButton.LEFT);
+
+        getInput().addAction(new UserAction("Right") {
+            @Override
+            protected void onAction() {
+                player.getComponent(PlayerControlComponent.class).right();
+            }
+
+            @Override
+            protected void onActionEnd() {
+                player.getComponent(PlayerControlComponent.class).stop();
+            }
+        }, KeyCode.D, VirtualButton.RIGHT);
+
+        getInput().addAction(new UserAction("Jump") {
+            @Override
+            protected void onActionBegin() {
+                player.getComponent(PlayerControlComponent.class).jump();
+            }
+        }, KeyCode.SPACE, VirtualButton.A);
     }
 
 }

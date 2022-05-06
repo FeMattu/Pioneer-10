@@ -55,31 +55,31 @@ public class GameLevelFromMap extends GameApplication {
         getInput().addAction(new UserAction("Left") {
             @Override
             protected void onAction() {
-                player.getComponent(PlayerAnimationComponent.class).left();
+                player.getComponent(PlayerControlComponent.class).left();
             }
 
             @Override
             protected void onActionEnd() {
-                player.getComponent(PlayerAnimationComponent.class).stop();
+                player.getComponent(PlayerControlComponent.class).stop();
             }
         }, KeyCode.A, VirtualButton.LEFT);
 
         getInput().addAction(new UserAction("Right") {
             @Override
             protected void onAction() {
-                player.getComponent(PlayerAnimationComponent.class).right();
+                player.getComponent(PlayerControlComponent.class).right();
             }
 
             @Override
             protected void onActionEnd() {
-                player.getComponent(PlayerAnimationComponent.class).stop();
+                player.getComponent(PlayerControlComponent.class).stop();
             }
         }, KeyCode.D, VirtualButton.RIGHT);
 
         getInput().addAction(new UserAction("Jump") {
             @Override
             protected void onActionBegin() {
-                player.getComponent(PlayerAnimationComponent.class).jump();
+                player.getComponent(PlayerControlComponent.class).jump();
             }
         }, KeyCode.SPACE, VirtualButton.A);
     }

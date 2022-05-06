@@ -30,13 +30,13 @@ public class Game extends GameApplication {
     protected void initInput() {
         onKey(KeyCode.D, () -> {
             player.translateX(5); // move right 5 pixels
-            player.getComponent(PlayerAnimationComponent.class).right();
+            player.getComponent(PlayerControlComponent.class).right();
             inc("pixelsMoved", +5);
         });
 
         onKey(KeyCode.A, () -> {
             player.translateX(-5); // move left 5 pixels
-            player.getComponent(PlayerAnimationComponent.class).left();
+            player.getComponent(PlayerControlComponent.class).left();
             inc("pixelsMoved", -5);
         });
 
@@ -62,7 +62,7 @@ public class Game extends GameApplication {
     protected void initGame() {
         player = entityBuilder()
                 .at(300, 300)
-                .with(new PlayerAnimationComponent())
+                .with(new PlayerControlComponent())
                 .buildAndAttach();
     }
 

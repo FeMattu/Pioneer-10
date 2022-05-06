@@ -1,12 +1,9 @@
 package com.pioneer10.model;
 
-import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.Viewport;
-import com.almasb.fxgl.dsl.views.ScrollingBackgroundView;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.components.IrremovableComponent;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
 import javafx.scene.input.KeyCode;
@@ -21,10 +18,11 @@ public class LivGiove extends GameApplication {
     @Override
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
-        //setLevelFromMap("Giove/g.tmx");
+        //setLevelFromMap("Giove/Giove.tmx");
         setLevelFromMap("Terra/MappaTerra.tmx");
         //setLevelFromMap("Marte/Marte.tmx");
         player = spawn("player", 50, 50);
+        spawn("enemy", 20, 20);
         spawn("background");
 
 
@@ -44,35 +42,33 @@ public class LivGiove extends GameApplication {
         getInput().addAction(new UserAction("Left") {
             @Override
             protected void onAction() {
-                player.getComponent(PlayerAnimationComponent.class).left();
+                player.getComponent(PlayerControlComponent.class).left();
             }
 
             @Override
             protected void onActionEnd() {
-                player.getComponent(PlayerAnimationComponent.class).stop();
+                player.getComponent(PlayerControlComponent.class).stop();
             }
         }, KeyCode.A, VirtualButton.LEFT);
 
         getInput().addAction(new UserAction("Right") {
             @Override
             protected void onAction() {
-                player.getComponent(PlayerAnimationComponent.class).right();
+                player.getComponent(PlayerControlComponent.class).right();
             }
 
             @Override
             protected void onActionEnd() {
-                player.getComponent(PlayerAnimationComponent.class).stop();
+                player.getComponent(PlayerControlComponent.class).stop();
             }
         }, KeyCode.D, VirtualButton.RIGHT);
 
         getInput().addAction(new UserAction("Jump") {
             @Override
             protected void onActionBegin() {
-                player.getComponent(PlayerAnimationComponent.class).jump();
+                player.getComponent(PlayerControlComponent.class).jump();
             }
         }, KeyCode.SPACE, VirtualButton.A);
-
-        //player.getComponent(PlayerAnimationComponent.class).stop();
     }
 
     @Override
@@ -81,4 +77,6 @@ public class LivGiove extends GameApplication {
         gameSettings.setHeight(32*20);
 
     }
+
+    public static void main(String[] args){launch(args);}
 }

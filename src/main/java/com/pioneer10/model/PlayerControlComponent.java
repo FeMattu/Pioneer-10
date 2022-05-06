@@ -16,6 +16,8 @@ public class PlayerControlComponent extends Component {
     private AnimationChannel animIdle, animWalk, animJump;
     private PhysicsComponent physics;
 
+
+
     public PlayerControlComponent() {
         String spacemanWalkPath = Utils.getPathFileFromResources("assets/Sprites/Anim_Robot_Walk1_v1.1_spritesheet.png");
 

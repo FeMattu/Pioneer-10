@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="150" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="85">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="150" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="87">
  <tileset firstgid="1" name="terra2.0" tilewidth="32" tileheight="32" tilecount="96" columns="12">
   <image source="Tiles.png" width="384" height="256"/>
  </tileset>
  <tileset firstgid="97" name="oggettiTerra" tilewidth="32" tileheight="32" tilecount="242" columns="22">
-  <image source="../../Downloads/Objects (1).png" width="705" height="354"/>
- </tileset>
- <tileset firstgid="339" name="diocene" tilewidth="16" tileheight="16" tilecount="968" columns="44">
   <image source="../../Downloads/Objects (1).png" width="705" height="354"/>
  </tileset>
  <layer id="1" name="Livello tile 1" width="150" height="20">
@@ -91,5 +88,7 @@
   <object id="84" type="platformTriangolo" x="416" y="320">
    <polygon points="0,0 1.33333,62.6667 60,62.6667"/>
   </object>
+  <object id="85" type="platform" x="0" y="0" width="2.66667" height="318.667"/>
+  <object id="86" type="platform" x="4800" y="2.66667" width="10.6667" height="221.333"/>
  </objectgroup>
 </map>

@@ -32,6 +32,15 @@ public class LivTerra extends GameApplication {
     }
 
     @Override
+    protected void onUpdate(double tpf) {
+        //inc("levelTime", tpf);
+        if (player.getY() > getAppHeight()) {
+            getGameWorld().removeEntity(player);
+            player = spawn("player", 50, 50);
+        }
+    }
+
+    @Override
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setWidth(150*32/2);
         gameSettings.setHeight(20*32);

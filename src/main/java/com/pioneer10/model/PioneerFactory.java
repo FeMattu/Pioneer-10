@@ -14,6 +14,8 @@ import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
@@ -27,6 +29,18 @@ public class PioneerFactory implements EntityFactory {
                 .type(PLATFORM)
                 .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
                 .rotate(data.<Float>get("rotation"))
+                .with(new PhysicsComponent())
+                .build();
+    }
+
+    @Spawns("platformTriangolo")
+    public Entity newPlatformTriangolo(SpawnData data) {
+        return entityBuilder(data)
+                .type(PLATFORM)
+                .bbox(new HitBox(BoundingShape.polygon(new Point2D(50, 50), new Point2D(60, 60), new Point2D(50, 60))))
+                .viewWithBBox(String.valueOf(Color.RED))
+                //.bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
+                //.rotate(data.<Float>get("rotation"))
                 .with(new PhysicsComponent())
                 .build();
     }

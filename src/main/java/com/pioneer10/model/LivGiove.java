@@ -21,7 +21,7 @@ public class LivGiove extends GameApplication {
     @Override
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
-        //setLevelFromMap("Giove/Giove.tmx");
+        //setLevelFromMap("Giove/g.tmx");
         setLevelFromMap("Terra/MappaTerra.tmx");
         //setLevelFromMap("Marte/Marte.tmx");
         player = spawn("player", 50, 50);

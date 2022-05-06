@@ -21,6 +21,8 @@
         <client.plugin.version>0.1.35</client.plugin.version>
         <attach.version>4.0.9</attach.version>
         <mainClassName>com.pioneer10.PioneerLauncher</mainClassName>
+        <maven.compiler.source>18</maven.compiler.source>
+        <maven.compiler.target>18</maven.compiler.target>
     </properties>
 
     <dependencies>

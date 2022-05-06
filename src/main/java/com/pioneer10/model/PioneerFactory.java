@@ -107,7 +107,7 @@ public class PioneerFactory implements EntityFactory {
                 .with(new IrremovableComponent())
                 .build();
     }
-    @Spawns("background")
+    @Spawns("backgroundTerra")
     public Entity newBackground(SpawnData data) {
         return entityBuilder()
                 .view(new ScrollingBackgroundView(new Image(Utils.getPathFileFromResources("assets/levels/Terra/backgroundTerra.jpg")),

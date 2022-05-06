@@ -23,7 +23,7 @@ public class LivGiove extends GameApplication {
         //setLevelFromMap("Marte/Marte.tmx");
         player = spawn("player", 50, 50);
         spawn("enemy", 20, 20);
-        spawn("background");
+        spawn("backgroundTerra");
 
 
         Viewport viewport = getGameScene().getViewport();

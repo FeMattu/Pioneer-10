@@ -25,7 +25,6 @@ public class LivTerra extends GameApplication {
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setZoom(2);
         viewport.setLazy(true);
-
     }
     @Override
     protected void initPhysics() {
@@ -71,5 +70,7 @@ public class LivTerra extends GameApplication {
             }
         }, KeyCode.SPACE, VirtualButton.A);
     }
+
+    public static void main(String[] args){launch(args);}
 
 }

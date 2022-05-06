@@ -3,8 +3,6 @@ package com.pioneer10.model;
 import javafx.scene.Node;
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.file.Paths;
-
 /**
  * Define the planets of solar System.
  * <p>

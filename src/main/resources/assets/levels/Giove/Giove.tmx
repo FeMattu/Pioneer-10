@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.3" orientation="orthogonal" renderorder="right-down" width="180" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="2" nextobjectid="1">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="180" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="35">
  <tileset firstgid="1" name="background-37" tilewidth="16" tileheight="16" tilecount="4" columns="2">
   <image source="MAPPA GIOVE/background-37.png" width="32" height="32"/>
  </tileset>
@@ -113,4 +113,24 @@
 0,0,0,0,0,35,36,37,38,39,40,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,159,160,161,162,163,164,0,0,0,0,159,160,161,162,163,164,0,0,0,0,159,160,161,162,163,164,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,123,124,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="2" name="platform">
+  <object id="3" type="platform" x="16" y="16" width="165" height="133"/>
+  <object id="11" type="platform" x="80" y="304" width="96" height="96"/>
+  <object id="13" type="platform" x="240" y="272" width="32" height="32"/>
+  <object id="14" type="platform" x="320" y="224" width="32" height="32"/>
+  <object id="17" type="platform" x="624" y="176" width="173" height="30"/>
+  <object id="18" type="platform" x="576" y="352" width="286" height="30"/>
+  <object id="19" type="platform" x="864" y="208" width="32" height="32"/>
+  <object id="20" type="platform" x="960" y="176" width="32" height="32"/>
+  <object id="21" type="platform" x="1040" y="256" width="32" height="32"/>
+  <object id="23" type="platform" x="480" y="208" width="80" height="48"/>
+  <object id="24" type="platform" x="1120" y="192" width="32" height="32"/>
+  <object id="26" type="platform" x="1264" y="144" width="285" height="64"/>
+  <object id="28" type="platform" x="1648" y="208" width="96" height="192"/>
+  <object id="29" type="platform" x="1808" y="208" width="96" height="192"/>
+  <object id="30" type="platform" x="1968" y="208" width="96" height="192"/>
+  <object id="32" type="platform" x="2208" y="208" width="208" height="48"/>
+  <object id="33" type="platform" x="2512" y="144" width="32" height="256"/>
+  <object id="34" type="platform" x="2640" y="128" width="224" height="64"/>
+ </objectgroup>
 </map>

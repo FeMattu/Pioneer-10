@@ -22,8 +22,6 @@ import javafx.stage.Stage;
 import java.nio.file.Paths;
 
 public class MenuScene extends Scene{
-
-
     private Group root = new Group();
     private Stage stage;
     private ControllerMenu controller;

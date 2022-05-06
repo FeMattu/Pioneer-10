@@ -37,4 +37,5 @@ public class LivMarte extends GameApplication {
         gameSettings.setWidth(180*16);
         gameSettings.setHeight(25*16);
     }
+    public static void main(String[] args){launch(args);}
 }

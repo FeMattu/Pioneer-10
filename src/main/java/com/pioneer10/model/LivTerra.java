@@ -71,4 +71,5 @@ public class LivTerra extends GameApplication {
         }, KeyCode.SPACE, VirtualButton.A);
     }
 
+    public static void main(String[] args){launch(args);}
 }

@@ -58,13 +58,14 @@ public class PlayerAnimationComponent extends Component {
     public void stop() {
         physics.setVelocityX(0);
     }
+
     public void right() {
-        physics.setVelocityX(70);
+        physics.setVelocityX(100);
         getEntity().setScaleX(1);
     }
 
     public void left() {
-        physics.setVelocityX(-70);
+        physics.setVelocityX(-100);
         getEntity().setScaleX(-1);
     }
 

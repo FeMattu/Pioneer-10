@@ -16,26 +16,20 @@ import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
 
 public class LivGiove extends GameApplication {
 
-    private final int height;
-    private final int width;
-
     private Entity player;
-
-    public LivGiove(int width, int height){
-        this.width = width;
-        this.height = height;
-    }
 
     @Override
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
         //setLevelFromMap("Giove/Giove.tmx");
         setLevelFromMap("Terra/MappaTerra.tmx");
+        //setLevelFromMap("Marte/Marte.tmx");
         player = spawn("player", 50, 50);
         spawn("background");
 
+
         Viewport viewport = getGameScene().getViewport();
-        viewport.setBounds(-1500, 0, 70*32/2+10, getAppHeight());
+        viewport.setBounds(0, 0, 150*32, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
 
@@ -77,11 +71,14 @@ public class LivGiove extends GameApplication {
                 player.getComponent(PlayerAnimationComponent.class).jump();
             }
         }, KeyCode.SPACE, VirtualButton.A);
+
+        //player.getComponent(PlayerAnimationComponent.class).stop();
     }
 
     @Override
     protected void initSettings(GameSettings gameSettings) {
-        gameSettings.setWidth(32*30);
+        gameSettings.setWidth(32*150/4);
         gameSettings.setHeight(32*20);
+
     }
 }

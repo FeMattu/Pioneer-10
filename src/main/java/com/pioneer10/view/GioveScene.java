@@ -17,7 +17,7 @@ public class GioveScene extends Scene{
 
     public GioveScene(){
         super(new Group());
-        FXGLPane level1 = GameApplication.embeddedLaunch(new LivGiove(WIDTH, HEIGHT));
+        FXGLPane level1 = GameApplication.embeddedLaunch(new LivGiove());
         this.setRoot(level1);
     }
 

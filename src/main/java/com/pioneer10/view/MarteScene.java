@@ -17,7 +17,7 @@ public class MarteScene extends Scene{
 
     public MarteScene(){
         super(new Group());
-        FXGLPane level1 = GameApplication.embeddedLaunch(new LivMarte(WIDTH, HEIGHT));
+        FXGLPane level1 = GameApplication.embeddedLaunch(new LivMarte());
         this.setRoot(level1);
     }
 

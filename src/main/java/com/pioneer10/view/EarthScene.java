@@ -16,8 +16,8 @@ public class EarthScene extends Scene{
 
     public EarthScene(){
         super(new Group());
-        FXGLPane level1 = GameApplication.embeddedLaunch(new Game(WIDTH, HEIGHT));
-        this.setRoot(level1);
+        FXGLPane level3 = GameApplication.embeddedLaunch(new Game(WIDTH, HEIGHT));
+        this.setRoot(level3);
     }
 
     public Scene getScene(){return this;}

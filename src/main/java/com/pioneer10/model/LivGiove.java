@@ -25,7 +25,6 @@ public class LivGiove extends GameApplication {
         spawn("enemy", 20, 20);
         spawn("background");
 
-
         Viewport viewport = getGameScene().getViewport();
         viewport.setBounds(0, 0, 150*32, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
@@ -69,6 +68,19 @@ public class LivGiove extends GameApplication {
                 player.getComponent(PlayerControlComponent.class).jump();
             }
         }, KeyCode.SPACE, VirtualButton.A);
+    }
+
+    @Override
+    protected void onUpdate(double tpf) {
+        //inc("levelTime", tpf);
+
+        if (player.getY() > getAppHeight()) {
+            player = spawn("player", 50, 50);
+            Viewport viewport = getGameScene().getViewport();
+            viewport.setBounds(0, 0, 150*32, getAppHeight());
+            viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
+            viewport.setLazy(true);
+        }
     }
 
     @Override

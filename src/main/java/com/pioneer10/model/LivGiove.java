@@ -12,7 +12,6 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
 
 public class LivGiove extends GameApplication {
-
     private Entity player;
 
     @Override
@@ -24,16 +23,16 @@ public class LivGiove extends GameApplication {
         player = spawn("player", 50, 50);
         spawn("enemy", 20, 20);
         spawn("backgroundTerra");
+        spawn("astronave", 150*32-100, 100);
 
         Viewport viewport = getGameScene().getViewport();
-        viewport.setBounds(0, 0, 150*32, getAppHeight());
+        viewport.setBounds(120*32, 0, 150*32, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
-
     }
     @Override
     protected void initPhysics() {
-        getPhysicsWorld().setGravity(0, 400);
+        getPhysicsWorld().setGravity(0, 350);
     }
 
     @Override
@@ -73,15 +72,13 @@ public class LivGiove extends GameApplication {
     @Override
     protected void onUpdate(double tpf) {
         //inc("levelTime", tpf);
-
         if (player.getY() > getAppHeight()) {
+            getGameWorld().removeEntity(player);
             player = spawn("player", 50, 50);
-            Viewport viewport = getGameScene().getViewport();
-            viewport.setBounds(0, 0, 150*32, getAppHeight());
-            viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
-            viewport.setLazy(true);
         }
     }
+
+
 
     @Override
     protected void initSettings(GameSettings gameSettings) {

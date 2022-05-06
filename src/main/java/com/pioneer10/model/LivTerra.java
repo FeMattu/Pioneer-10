@@ -16,14 +16,13 @@ public class LivTerra extends GameApplication {
     @Override
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
-        setLevelFromMap("Terra/Terra.tmx");
+        setLevelFromMap("Terra/MappaTerra.tmx");
         player = spawn("player", 50, 50);
-        spawn("background");
+        spawn("backgroundTerra");
 
         Viewport viewport = getGameScene().getViewport();
         viewport.setBounds(0, 0, 150*32, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
-        viewport.setZoom(2);
         viewport.setLazy(true);
 
     }

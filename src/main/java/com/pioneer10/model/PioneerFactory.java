@@ -14,6 +14,7 @@ import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -86,6 +87,18 @@ public class PioneerFactory implements EntityFactory {
                 .with(new CollidableComponent(true))
                 .with(new IrremovableComponent())
                 .with(new PlayerControlComponent())
+                .build();
+    }
+
+    @Spawns("astronave")
+    public Entity newAstronave(SpawnData data) {
+        return entityBuilder(data)
+                .type(PLAYER)
+                .viewWithBBox(new ImageView(
+                        new Image(Utils.getPathFileFromResources("assets/levels/astronave.png"))
+                ))
+                .with(new CollidableComponent(true))
+                .with(new IrremovableComponent())
                 .build();
     }
 

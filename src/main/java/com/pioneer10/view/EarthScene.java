@@ -2,9 +2,7 @@ package com.pioneer10.view;
 
 import com.almasb.fxgl.app.FXGLPane;
 import com.almasb.fxgl.app.GameApplication;
-import com.pioneer10.model.Game;
-import com.pioneer10.model.Planet;
-import com.pioneer10.model.PlanetLevel;
+import com.pioneer10.model.LivTerra;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 
@@ -16,7 +14,7 @@ public class EarthScene extends Scene{
 
     public EarthScene(){
         super(new Group());
-        FXGLPane level3 = GameApplication.embeddedLaunch(new Game(WIDTH, HEIGHT));
+        FXGLPane level3 = GameApplication.embeddedLaunch(new LivTerra());
         this.setRoot(level3);
     }
 

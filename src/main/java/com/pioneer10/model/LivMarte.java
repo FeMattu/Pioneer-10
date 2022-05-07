@@ -18,7 +18,7 @@ import static com.pioneer10.model.PioneerEntityType.PLAYER;
 public class  LivMarte extends GameApplication {
 
     private Entity player;
-    Viewport viewport ;
+    private Viewport viewport ;
 
     @Override
     protected void initSettings(GameSettings gameSettings) {

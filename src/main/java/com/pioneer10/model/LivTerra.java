@@ -27,6 +27,7 @@ public class LivTerra extends GameApplication {
 
     @Override
     public void initGame(){
+
         getGameWorld().addEntityFactory(new PioneerFactory());
         setLevelFromMap("Terra/MappaTerra.tmx");
         player = getGameWorld().getEntitiesByType(PLAYER).get(0);

@@ -14,8 +14,8 @@ public class CoinAnimation extends Component {
 
     public CoinAnimation() {
         animation = new AnimationChannel(
-                new Image(Utils.getPathFileFromResources("assets/levels/coin.png")),
-                7, 32, 35, Duration.seconds(1.5), 0, 6);
+                new Image(Utils.getPathFileFromResources("assets/levels/coin-spritesheet.png")),
+                9, 32, 30, Duration.seconds(1), 0, 8);
 
         texture = new AnimatedTexture(animation);
     }
@@ -23,5 +23,6 @@ public class CoinAnimation extends Component {
     public void onAdded() {
         entity.getTransformComponent().setScaleOrigin(new Point2D(16, 16));
         entity.getViewComponent().addChild(texture);
+        texture.loopAnimationChannel(animation);
     }
 }

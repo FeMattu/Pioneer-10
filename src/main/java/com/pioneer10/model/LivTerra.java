@@ -9,22 +9,31 @@ import com.almasb.fxgl.input.virtual.VirtualButton;
 import javafx.scene.input.KeyCode;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
+import static com.pioneer10.model.PioneerEntityType.COIN;
+import static com.pioneer10.model.PioneerEntityType.PLAYER;
 
 public class LivTerra extends GameApplication {
+
+    private final int MAX_VITE = 3;
     private Entity player;
     private Viewport viewport;
+    private int vite;
     @Override
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setWidth(150*32/4);
         gameSettings.setHeight(20*32);
+        gameSettings.setTitle("Pioneer-10\nTerra");
     }
 
     @Override
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
         setLevelFromMap("Terra/MappaTerra.tmx");
-        player = spawn("player", 50, 50);
+        player = spawn("player");
+        //player = (Entity) getGameWorld().getEntitiesByType(PLAYER);
         spawn("backgroundTerra");
+
+        vite = MAX_VITE;
 
         viewport = getGameScene().getViewport();
         viewport.setBounds(0, 0, 150*32, getAppHeight());
@@ -40,9 +49,14 @@ public class LivTerra extends GameApplication {
     protected void onUpdate(double tpf) {
         //inc("levelTime", tpf);
         if (player.getY() > getAppHeight()) {
-            getGameWorld().removeEntity(player);
-            player = spawn("player", 50, 50);
-            viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
+            if(vite > 0){
+                getGameWorld().removeEntity(player);
+                player = spawn("player", 50, 50);
+                viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
+                vite--;
+            }else{
+                getDialogService().showMessageBox("You are died");
+            }
         }
     }
 

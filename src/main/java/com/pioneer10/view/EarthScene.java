@@ -7,10 +7,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 
 public class EarthScene extends Scene{
-    private static final int WIDTH = 1280;
-    private static final int HEIGHT = 720;
-
-    private Scene scene;
 
     public EarthScene(){
         super(new Group());

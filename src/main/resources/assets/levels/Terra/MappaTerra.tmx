@@ -4,7 +4,7 @@
   <image source="Tiles.png" width="384" height="256"/>
  </tileset>
  <tileset firstgid="97" name="oggettiTerra" tilewidth="32" tileheight="32" tilecount="242" columns="22">
-  <image source="Objects (1).png" width="705" height="354"/>
+  <image source="Objects.png" width="705" height="354"/>
  </tileset>
  <layer id="1" name="Livello tile 1" width="150" height="20">
   <data encoding="csv">

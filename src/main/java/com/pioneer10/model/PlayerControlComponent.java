@@ -29,7 +29,7 @@ public class PlayerControlComponent extends Component {
 
         animJump = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/Anim_Robot_Jump1_v1.1_spritesheet.png")),
                 3, 32, 32,
-                Duration.seconds(1), 0, 8);
+                Duration.seconds(1.5), 0, 8);
 
         texture = new AnimatedTexture(animIdle);
     }

@@ -29,7 +29,6 @@ public class PioneerFactory implements EntityFactory {
         return entityBuilder(data)
                 .type(PLATFORM)
                 .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
-                .rotate(data.<Float>get("rotation"))
                 .with(new PhysicsComponent())
                 .build();
     }
@@ -44,7 +43,7 @@ public class PioneerFactory implements EntityFactory {
         return entityBuilder(data)
                 .type(ENEMY)
                 .bbox(new HitBox(new Point2D(17,0), BoundingShape.box(7,17))) //box di collisione per le gambe
-                .bbox(new HitBox(new Point2D(17,17), BoundingShape.box(9,9))) //box collisone per la testa
+                .bbox(new HitBox(new Point2D(17,17), BoundingShape.box(9,9))) //box collisione per la testa
                 .with(physics)
                 .with(new EnemyControlComponent())
                 .build();
@@ -61,7 +60,8 @@ public class PioneerFactory implements EntityFactory {
 
         return entityBuilder(data)
                 .type(PLAYER)
-                .bbox(new HitBox(BoundingShape.box(32,32)))//box di collisione per la testa
+                .bbox(new HitBox(new Point2D(16,17), BoundingShape.box(11,9)))//box di collisione per la testa
+                .bbox(new HitBox(new Point2D(7,6), BoundingShape.box(21,16)))//box di collisione per le gambe
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new PlayerControlComponent())
@@ -81,6 +81,17 @@ public class PioneerFactory implements EntityFactory {
                 .build();
     }
 
+    @Spawns("coin")
+    public Entity newCoin(SpawnData data) {
+        return entityBuilder(data)
+                .type(COIN)
+                .view(new ImageView(
+                        new Image(Utils.getPathFileFromResources("assets/levels/coin.png"))
+                ))
+                .bbox(new HitBox(BoundingShape.circle(40)))
+                .with(new CollidableComponent(true))
+                .build();
+    }
     @Spawns("backgroundGiove")
     public Entity newBackgroundGiove(SpawnData data) {
         return entityBuilder()

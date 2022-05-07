@@ -15,16 +15,31 @@ public class LivGiove extends GameApplication {
     private Entity player;
 
     @Override
+    protected void initSettings(GameSettings gameSettings) {
+        gameSettings.setWidth(32*180/4);
+        gameSettings.setHeight(32*25);
+        gameSettings.setTitle("Pioneer-10\nGiove");
+    }
+
+    @Override
+    protected void onUpdate(double tpf) {
+        //inc("levelTime", tpf);
+        if (player.getY() > getAppHeight()) {
+            getGameWorld().removeEntity(player);
+            player = spawn("player", 50, 50);
+        }
+    }
+
+    @Override
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
         setLevelFromMap("Giove/Giove.tmx");
         player = spawn("player", 50, 300);
         spawn("enemy", 20, 20);
         spawn("backgroundTerra");
-        spawn("astronave", 150*32-100, 100);
 
         Viewport viewport = getGameScene().getViewport();
-        viewport.setBounds(0, 0, 150*32, getAppHeight());
+        viewport.setBounds(0, 0, 180*32, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
     }
@@ -65,24 +80,6 @@ public class LivGiove extends GameApplication {
                 player.getComponent(PlayerControlComponent.class).jump();
             }
         }, KeyCode.SPACE, VirtualButton.A);
-    }
-
-    @Override
-    protected void onUpdate(double tpf) {
-        //inc("levelTime", tpf);
-        if (player.getY() > getAppHeight()) {
-            getGameWorld().removeEntity(player);
-            player = spawn("player", 50, 50);
-        }
-    }
-
-
-
-    @Override
-    protected void initSettings(GameSettings gameSettings) {
-        gameSettings.setWidth(32*150/4);
-        gameSettings.setHeight(32*20);
-
     }
 
     public static void main(String[] args){launch(args);}

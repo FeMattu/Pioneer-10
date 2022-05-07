@@ -20,7 +20,7 @@ public class PioneerLauncher extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         //aggiungo icona
-        stage.getIcons().add(new Image(Utils.getPathFileFromResources("assets/Icon/icon.png")));
+        stage.getIcons().add(new Image(Utils.getPathFileFromResources("assets/icon.png")));
         stage.setTitle("Pioneer-10");
 
         //loading scene

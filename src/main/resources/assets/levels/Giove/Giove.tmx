@@ -1,109 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="180" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="277">
  <tileset firstgid="1" name="block-42" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/block-42.png" width="32" height="32"/>
+  <image source="block-42.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="2" name="block-44" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/block-44.png" width="32" height="32"/>
+  <image source="block-44.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="3" name="block-81" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/block-81.png" width="32" height="32"/>
+  <image source="block-81.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="4" name="background-37" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/background-37.png" width="32" height="32"/>
+  <image source="background-37.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="5" name="background-38" tilewidth="32" tileheight="32" tilecount="8" columns="2">
-  <image source="MAPPA GIOVE/background-38.png" width="64" height="132"/>
+  <image source="background-38.png" width="64" height="132"/>
  </tileset>
  <tileset firstgid="13" name="background-85" tilewidth="32" tileheight="32" tilecount="3" columns="1">
-  <image source="MAPPA GIOVE/background-85.png" width="32" height="96"/>
+  <image source="background-85.png" width="32" height="96"/>
  </tileset>
  <tileset firstgid="16" name="background-108" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/background-108.png" width="32" height="32"/>
+  <image source="background-108.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="17" name="background-111" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/background-111.png" width="32" height="32"/>
+  <image source="background-111.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="18" name="background-127" tilewidth="32" tileheight="32" tilecount="2" columns="1">
-  <image source="MAPPA GIOVE/background-127.png" width="32" height="64"/>
+  <image source="background-127.png" width="32" height="64"/>
  </tileset>
  <tileset firstgid="20" name="background-128" tilewidth="32" tileheight="32" tilecount="3" columns="1">
-  <image source="MAPPA GIOVE/background-128.png" width="32" height="96"/>
+  <image source="background-128.png" width="32" height="96"/>
  </tileset>
  <tileset firstgid="23" name="block-1" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/block-1.png" width="32" height="32"/>
+  <image source="block-1.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="24" name="block-45" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/block-45.png" width="32" height="32"/>
+  <image source="block-45.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="25" name="block-46" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/block-46.png" width="32" height="32"/>
+  <image source="block-46.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="26" name="block-79" tilewidth="32" tileheight="32" tilecount="9" columns="3">
-  <image source="MAPPA GIOVE/block-79.png" width="96" height="96"/>
+  <image source="block-79.png" width="96" height="96"/>
  </tileset>
  <tileset firstgid="35" name="block-65" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/block-65.png" width="32" height="32"/>
+  <image source="block-65.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="36" name="block-80" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/block-80.png" width="32" height="32"/>
+  <image source="block-80.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="37" name="block-82" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/block-82.png" width="32" height="32"/>
+  <image source="block-82.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="38" name="block-96" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/block-96.png" width="32" height="32"/>
+  <image source="block-96.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="39" name="block-108" tilewidth="32" tileheight="32" tilecount="9" columns="3">
-  <image source="MAPPA GIOVE/block-108.png" width="96" height="96"/>
+  <image source="block-108.png" width="96" height="96"/>
  </tileset>
  <tileset firstgid="48" name="block-118" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/block-118.png" width="32" height="32"/>
+  <image source="block-118.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="49" name="block-119" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/block-119.png" width="32" height="32"/>
+  <image source="block-119.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="50" name="block-148" tilewidth="32" tileheight="32" tilecount="2" columns="1">
-  <image source="MAPPA GIOVE/block-148.png" width="32" height="64"/>
+  <image source="block-148.png" width="32" height="64"/>
  </tileset>
  <tileset firstgid="52" name="block-149" tilewidth="32" tileheight="32" tilecount="2" columns="1">
-  <image source="MAPPA GIOVE/block-149.png" width="32" height="64"/>
+  <image source="block-149.png" width="32" height="64"/>
  </tileset>
  <tileset firstgid="54" name="block-154" tilewidth="32" tileheight="32" tilecount="2" columns="1">
-  <image source="MAPPA GIOVE/block-154.png" width="32" height="64"/>
+  <image source="block-154.png" width="32" height="64"/>
  </tileset>
  <tileset firstgid="56" name="block-161" tilewidth="32" tileheight="32" tilecount="9" columns="3">
-  <image source="MAPPA GIOVE/block-161.png" width="96" height="96"/>
+  <image source="block-161.png" width="96" height="96"/>
  </tileset>
  <tileset firstgid="65" name="block-301" tilewidth="32" tileheight="32" tilecount="4" columns="4">
-  <image source="MAPPA GIOVE/block-301.png" width="128" height="32"/>
+  <image source="block-301.png" width="128" height="32"/>
  </tileset>
  <tileset firstgid="69" name="block-302" tilewidth="32" tileheight="32" tilecount="4" columns="4">
-  <image source="MAPPA GIOVE/block-302.png" width="128" height="32"/>
+  <image source="block-302.png" width="128" height="32"/>
  </tileset>
  <tileset firstgid="73" name="block-303" tilewidth="32" tileheight="32" tilecount="4" columns="4">
-  <image source="MAPPA GIOVE/block-303.png" width="128" height="32"/>
+  <image source="block-303.png" width="128" height="32"/>
  </tileset>
  <tileset firstgid="77" name="block-304" tilewidth="32" tileheight="32" tilecount="4" columns="4">
-  <image source="MAPPA GIOVE/block-304.png" width="128" height="32"/>
+  <image source="block-304.png" width="128" height="32"/>
  </tileset>
  <tileset firstgid="81" name="block-311" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="MAPPA GIOVE/block-311.png" width="32" height="32"/>
+  <image source="block-311.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="82" name="block-312" tilewidth="32" tileheight="32" tilecount="2" columns="2">
-  <image source="MAPPA GIOVE/block-312.png" width="64" height="32"/>
+  <image source="block-312.png" width="64" height="32"/>
  </tileset>
  <tileset firstgid="84" name="block-616" tilewidth="32" tileheight="32" tilecount="2" columns="2">
-  <image source="MAPPA GIOVE/block-616.png" width="64" height="32"/>
+  <image source="block-616.png" width="64" height="32"/>
  </tileset>
  <tileset firstgid="86" name="block-617" tilewidth="32" tileheight="32" tilecount="2" columns="2">
-  <image source="MAPPA GIOVE/block-617.png" width="64" height="32"/>
+  <image source="block-617.png" width="64" height="32"/>
  </tileset>
  <tileset firstgid="88" name="block-618" tilewidth="32" tileheight="32" tilecount="2" columns="2">
-  <image source="MAPPA GIOVE/block-618.png" width="64" height="32"/>
+  <image source="block-618.png" width="64" height="32"/>
  </tileset>
  <tileset firstgid="90" name="block-619" tilewidth="32" tileheight="32" tilecount="2" columns="2">
-  <image source="MAPPA GIOVE/block-619.png" width="64" height="32"/>
+  <image source="block-619.png" width="64" height="32"/>
  </tileset>
  <layer id="1" name="Livello tile 1" width="180" height="25">
   <data encoding="csv">
@@ -142,7 +142,7 @@
   <object id="11" type="platform" x="1248" y="448" width="96" height="96"/>
   <object id="12" type="platform" x="1664" y="672" width="384" height="64"/>
   <object id="13" type="platform" x="1856" y="352" width="448" height="64"/>
-  <object id="14" x="1728" y="416" width="32" height="32"/>
+  <object id="14" type="platform" x="1728" y="416" width="32" height="32"/>
   <object id="15" type="platform" x="1600" y="416" width="32" height="32"/>
   <object id="16" type="platform" x="1472" y="416" width="32" height="32"/>
   <object id="17" type="platform" x="2368" y="288" width="32" height="32"/>

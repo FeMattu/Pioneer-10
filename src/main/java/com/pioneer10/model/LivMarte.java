@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
+import static com.pioneer10.model.PioneerEntityType.PLAYER;
 
 public class  LivMarte extends GameApplication {
 
@@ -35,7 +36,7 @@ public class  LivMarte extends GameApplication {
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
         setLevelFromMap("Marte/Marte.tmx");
-        player = spawn("player");
+        player = getGameWorld().getEntitiesByType(PLAYER).get(0);
 
         Viewport viewport = getGameScene().getViewport();
         viewport.setBounds(0, 0, 180*16, getAppHeight());

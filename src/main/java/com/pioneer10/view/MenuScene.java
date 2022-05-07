@@ -107,6 +107,5 @@ public class MenuScene extends Scene{
         textForEarth.setTranslateX(terra.getTranslateX()-textForEarth.getLayoutBounds().getWidth()/2);
         textForEarth.setTranslateY(terra.getTranslateY()+ 270 -textForEarth.getLayoutBounds().getHeight()/2);
 
-        root.getChildren().add(textForEarth);
     }
 }

@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
+import static com.pioneer10.model.PioneerEntityType.PLAYER;
 
 public class LivGiove extends GameApplication {
     private Entity player;
@@ -26,7 +27,7 @@ public class LivGiove extends GameApplication {
         //inc("levelTime", tpf);
         if (player.getY() > getAppHeight()) {
             getGameWorld().removeEntity(player);
-            player = spawn("player", 50, 50);
+            player = getGameWorld().getEntitiesByType(PLAYER).get(0);
         }
     }
 

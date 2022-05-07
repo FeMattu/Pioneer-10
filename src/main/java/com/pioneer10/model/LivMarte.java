@@ -17,7 +17,7 @@ import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
 public class  LivMarte extends GameApplication {
 
     private Entity player;
-    Viewport viewport ;
+    private Viewport viewport ;
 
     @Override
     protected void initSettings(GameSettings gameSettings) {

@@ -29,8 +29,7 @@ public class LivTerra extends GameApplication {
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
         setLevelFromMap("Terra/MappaTerra.tmx");
-        player = spawn("player");
-        //player = (Entity) getGameWorld().getEntitiesByType(PLAYER);
+        player = getGameWorld().getEntitiesByType(PLAYER).get(0);
         spawn("backgroundTerra");
 
         vite = MAX_VITE;
@@ -55,7 +54,9 @@ public class LivTerra extends GameApplication {
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
                 vite--;
             }else{
-                getDialogService().showMessageBox("You are died");
+                getDialogService().showMessageBox("You are died", () ->{
+
+                });
             }
         }
     }

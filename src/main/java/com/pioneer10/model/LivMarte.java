@@ -9,6 +9,8 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.components.IrremovableComponent;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
+import com.almasb.fxgl.physics.CollisionHandler;
+import com.almasb.fxgl.physics.PhysicsWorld;
 import javafx.scene.input.KeyCode;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -19,6 +21,7 @@ public class  LivMarte extends GameApplication {
 
     private Entity player;
     private Viewport viewport ;
+    private int coinsGrabbed;
 
     @Override
     protected void initSettings(GameSettings gameSettings) {
@@ -30,6 +33,17 @@ public class  LivMarte extends GameApplication {
     @Override
     protected void initPhysics() {
         getPhysicsWorld().setGravity(0, 200);
+
+        PhysicsWorld physicsWorld = getPhysicsWorld();
+        physicsWorld.addCollisionHandler(new CollisionHandler(PioneerEntityType.PLAYER, PioneerEntityType.COIN) {
+            @Override
+            public void onCollision(Entity player, Entity coin) {
+                coin.removeFromWorld();
+                coinsGrabbed++;
+               // getGameState().increment("score", 1);
+            }
+        });
+
     }
 
     @Override

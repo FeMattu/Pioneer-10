@@ -17,16 +17,14 @@ public class LivGiove extends GameApplication {
     @Override
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
-        //setLevelFromMap("Giove/Giove.tmx");
-        setLevelFromMap("Terra/MappaTerra.tmx");
-        //setLevelFromMap("Marte/Marte.tmx");
-        player = spawn("player", 50, 50);
+        setLevelFromMap("Giove/Giove.tmx");
+        player = spawn("player", 50, 300);
         spawn("enemy", 20, 20);
         spawn("backgroundTerra");
         spawn("astronave", 150*32-100, 100);
 
         Viewport viewport = getGameScene().getViewport();
-        viewport.setBounds(120*32, 0, 150*32, getAppHeight());
+        viewport.setBounds(0, 0, 150*32, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
     }

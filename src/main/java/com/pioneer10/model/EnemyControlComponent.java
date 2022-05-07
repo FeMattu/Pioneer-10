@@ -40,8 +40,7 @@ public class EnemyControlComponent extends Component {
 
     @Override
     public void onUpdate(double tpf) {
-        System.out.println(physics.getVelocityX());
-        if(timer.elapsed(Duration.seconds(2))){
+        if(timer.elapsed(Duration.seconds(1))){
             if(physics.isMovingX() && physics.getVelocityX()>0){
                 left();
             }else{ right(); }

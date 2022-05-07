@@ -12,6 +12,12 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class LivTerra extends GameApplication {
     private Entity player;
+    private Viewport viewport;
+    @Override
+    protected void initSettings(GameSettings gameSettings) {
+        gameSettings.setWidth(150*32/4);
+        gameSettings.setHeight(20*32);
+    }
 
     @Override
     public void initGame(){
@@ -20,15 +26,14 @@ public class LivTerra extends GameApplication {
         player = spawn("player", 50, 50);
         spawn("backgroundTerra");
 
-        Viewport viewport = getGameScene().getViewport();
+        viewport = getGameScene().getViewport();
         viewport.setBounds(0, 0, 150*32, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
-
     }
     @Override
     protected void initPhysics() {
-        getPhysicsWorld().setGravity(0, 760);
+        getPhysicsWorld().setGravity(0, 400);
     }
 
     @Override
@@ -37,13 +42,8 @@ public class LivTerra extends GameApplication {
         if (player.getY() > getAppHeight()) {
             getGameWorld().removeEntity(player);
             player = spawn("player", 50, 50);
+            viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         }
-    }
-
-    @Override
-    protected void initSettings(GameSettings gameSettings) {
-        gameSettings.setWidth(150*32/2);
-        gameSettings.setHeight(20*32);
     }
 
     @Override

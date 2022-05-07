@@ -25,7 +25,7 @@ public class PlayerControlComponent extends Component {
                 Duration.seconds(1), 2, 2);
 
         animWalk = new AnimationChannel(new Image(spacemanWalkPath), 3, 32, 32,
-                Duration.seconds(0.66), 0, 3);
+                Duration.seconds(0.5), 0, 3);
 
         animJump = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/Anim_Robot_Jump1_v1.1_spritesheet.png")),
                 3, 32, 32,
@@ -42,11 +42,12 @@ public class PlayerControlComponent extends Component {
 
     @Override
     public void onUpdate(double tpf) {
+        System.out.println(physics.getVelocityY());
         if (physics.isMovingX()) {
             if (texture.getAnimationChannel() != animWalk) {
                 texture.loopAnimationChannel(animWalk);
             }
-        } else if(physics.isMovingY()){
+        } else if(physics.isMovingY() && physics.getVelocityY() < 0){
             if (texture.getAnimationChannel() != animJump) {
                 texture.loopAnimationChannel(animJump);
             }

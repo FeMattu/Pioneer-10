@@ -34,27 +34,6 @@ public class PioneerFactory implements EntityFactory {
                 .build();
     }
 
-    @Spawns("platformTriangolo")
-    public Entity newPlatformTriangolo(SpawnData data) {
-        return entityBuilder(data)
-                .type(PLATFORM)
-                .bbox(new HitBox(BoundingShape.polygon(new Point2D(50, 50), new Point2D(60, 60), new Point2D(50, 60))))
-                .viewWithBBox(String.valueOf(Color.RED))
-                //.bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
-                //.rotate(data.<Float>get("rotation"))
-                .with(new PhysicsComponent())
-                .build();
-    }
-
-    @Spawns("angles")
-    public Entity newAngles(SpawnData data) {
-        return entityBuilder(data)
-                .type(PLATFORM)
-                .bbox(new HitBox(BoundingShape.polygon(data.<Double>get("points"))))
-                .with(new PhysicsComponent())
-                .build();
-    }
-
     @Spawns("enemy")
     public Entity newEnemy(SpawnData data) {
         PhysicsComponent physics = new PhysicsComponent();
@@ -85,7 +64,6 @@ public class PioneerFactory implements EntityFactory {
                 .bbox(new HitBox(BoundingShape.box(32,32)))//box di collisione per la testa
                 .with(physics)
                 .with(new CollidableComponent(true))
-                .with(new IrremovableComponent())
                 .with(new PlayerControlComponent())
                 .build();
     }
@@ -93,8 +71,9 @@ public class PioneerFactory implements EntityFactory {
     @Spawns("astronave")
     public Entity newAstronave(SpawnData data) {
         return entityBuilder(data)
-                .type(PLAYER)
-                .viewWithBBox(new ImageView(
+                .type(ASTRONAVE)
+                .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
+                .view(new ImageView(
                         new Image(Utils.getPathFileFromResources("assets/levels/astronave.png"))
                 ))
                 .with(new CollidableComponent(true))

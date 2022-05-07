@@ -17,6 +17,7 @@ import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
 public class  LivMarte extends GameApplication {
 
     private Entity player;
+    Viewport viewport ;
 
     @Override
     protected void initSettings(GameSettings gameSettings) {
@@ -48,6 +49,7 @@ public class  LivMarte extends GameApplication {
         if (player.getY() > getAppHeight()) {
             getGameWorld().removeEntity(player);
             player = spawn("player", 50, 50);
+           // viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         }
     }
 

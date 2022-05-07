@@ -6,6 +6,7 @@ import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
+import com.pioneer10.controller.ControllerMenu;
 import javafx.scene.input.KeyCode;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -14,6 +15,9 @@ import static com.pioneer10.model.PioneerEntityType.PLAYER;
 
 public class LivGiove extends GameApplication {
     private Entity player;
+    private Viewport viewport;
+
+
 
     @Override
     protected void initSettings(GameSettings gameSettings) {
@@ -26,8 +30,11 @@ public class LivGiove extends GameApplication {
     protected void onUpdate(double tpf) {
         //inc("levelTime", tpf);
         if (player.getY() > getAppHeight()) {
+            Double posX = player.getX();
+            Double posY = Double.valueOf(getAppHeight()/2);
             getGameWorld().removeEntity(player);
-            player = getGameWorld().getEntitiesByType(PLAYER).get(0);
+            player = spawn("player", posX, posY);
+            viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         }
     }
 
@@ -35,11 +42,10 @@ public class LivGiove extends GameApplication {
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
         setLevelFromMap("Giove/Giove.tmx");
-        player = spawn("player", 50, 300);
-        spawn("enemy", 20, 20);
+        player = getGameWorld().getEntitiesByType(PLAYER).get(0);
         spawn("backgroundTerra");
 
-        Viewport viewport = getGameScene().getViewport();
+        viewport = getGameScene().getViewport();
         viewport.setBounds(0, 0, 180*32, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);

@@ -13,14 +13,14 @@ import javafx.scene.input.KeyCode;
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.pioneer10.model.PioneerEntityType.COIN;
 import static com.pioneer10.model.PioneerEntityType.PLAYER;
+import static com.pioneer10.model.Planet.EARTH;
 
 public class LivTerra extends GameApplication {
 
     private final int MAX_VITE = 3;
     private Entity player;
     private Viewport viewport;
-    private int vite;
-    private int coinsGrabbed;
+    private int vite, coinsGrabbed;
     @Override
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setWidth(150*32/4);
@@ -43,20 +43,16 @@ public class LivTerra extends GameApplication {
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
     }
+
     @Override
     protected void initPhysics() {
         getPhysicsWorld().setGravity(0, 400);
-        PhysicsWorld physicsWorld = getPhysicsWorld();
-        physicsWorld.addCollisionHandler(new CollisionHandler(PioneerEntityType.PLAYER, PioneerEntityType.COIN) {
-            @Override
-            public void onCollision(Entity player, Entity coin) {
 
-                if(player.getX()+5==coin.getX() || player.getX()+5==coin.getX() ){
-                    coin.removeFromWorld();
-                    coinsGrabbed++;
-                }
-                // getGameState().increment("score", 1);
-            }
+        //Collisione con monete
+        onCollisionOneTimeOnly(PLAYER, COIN, (player, coin) -> {
+            getGameWorld().removeEntity(coin);
+            coinsGrabbed++;
+            System.out.println("Coin grabbed: "+ coinsGrabbed);
         });
     }
 
@@ -65,9 +61,12 @@ public class LivTerra extends GameApplication {
         //inc("levelTime", tpf);
         if (player.getY() > getAppHeight()) {
             if(vite > 0){
+                Double posX = player.getX();
+                Double posY = Double.valueOf(getAppHeight()/2);
                 getGameWorld().removeEntity(player);
-                player = spawn("player", 50, 50);
+                player = spawn("player", posX, posY-100);
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
+                getGameWorld().removeEntity(getGameWorld().getEntitiesByType(EARTH).get(0));
                 vite--;
             }else{
                 getDialogService().showMessageBox("You are died", () ->{

@@ -42,7 +42,6 @@ public class PlayerControlComponent extends Component {
 
     @Override
     public void onUpdate(double tpf) {
-        System.out.println(physics.getVelocityY());
         if (physics.isMovingX()) {
             if (texture.getAnimationChannel() != animWalk) {
                 texture.loopAnimationChannel(animWalk);

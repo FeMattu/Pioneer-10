@@ -13,12 +13,14 @@ import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
+import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
@@ -62,8 +64,8 @@ public class PioneerFactory implements EntityFactory {
 
         return entityBuilder(data)
                 .type(PLAYER)
-                .bbox(new HitBox(new Point2D(16,17), BoundingShape.box(11,9)))//box di collisione per la testa
-                .bbox(new HitBox(new Point2D(7,6), BoundingShape.box(21,16)))//box di collisione per le gambe
+                .bbox(new HitBox(new Point2D(16,17), BoundingShape.box(11,14)))//box di collisione per la gambe
+                .bbox(new HitBox(new Point2D(7,6), BoundingShape.box(21,16)))//box di collisione per le testa
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new PlayerControlComponent())
@@ -87,13 +89,22 @@ public class PioneerFactory implements EntityFactory {
     public Entity newCoin(SpawnData data) {
         return entityBuilder(data)
                 .type(COIN)
-                .view(new ImageView(
-                        new Image(Utils.getPathFileFromResources("assets/levels/coin.png"))
-                ))
-                .bbox(new HitBox(BoundingShape.circle(40)))
+                .with( new CoinAnimation())
+                .bbox(BoundingShape.circle(32))
                 .with(new CollidableComponent(true))
                 .build();
     }
+
+    @Spawns("heart")
+    public Entity newHeart(SpawnData data) {
+        return entityBuilder(data)
+                .type(HEART)
+                .view(new ImageView(
+                        new Image(Utils.getPathFileFromResources("assets/levels/cuore.png"))
+                ))
+                .build();
+    }
+
     @Spawns("backgroundGiove")
     public Entity newBackgroundGiove(SpawnData data) {
         return entityBuilder()

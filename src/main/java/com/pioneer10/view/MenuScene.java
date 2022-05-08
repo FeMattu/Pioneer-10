@@ -85,7 +85,7 @@ public class MenuScene extends Scene{
         //sopra potrebbero interferire con gli oggetti 3D
 
 
-        Text textForJupiter = new Text("Level 1-\n" + "Jupiter");
+        Text textForJupiter = new Text("Level 2-\n" + "Jupiter");
         textForJupiter.setEffect(Utils.neonEffect());
         textForJupiter.setFill(Color.WHITE);
         textForJupiter.setStroke(Color.BLACK);
@@ -97,7 +97,7 @@ public class MenuScene extends Scene{
 
         root.getChildren().add(textForJupiter);
 
-        Text textForEarth = new Text("Level 1-\n" + "Earth");
+        Text textForEarth = new Text("Level 1-\n" + " Earth");
         textForEarth.setEffect(Utils.neonEffect());
         textForEarth.setFill(Color.WHITE);
         textForEarth.setStroke(Color.BLACK);
@@ -106,6 +106,20 @@ public class MenuScene extends Scene{
         //posizionamento del testo in linea con la terra
         textForEarth.setTranslateX(terra.getTranslateX()-textForEarth.getLayoutBounds().getWidth()/2);
         textForEarth.setTranslateY(terra.getTranslateY()+ 270 -textForEarth.getLayoutBounds().getHeight()/2);
+        root.getChildren().add(textForEarth);
+
+        Text textForMars = new Text("Level 3-\n" + " Mars");
+        textForMars.setEffect(Utils.neonEffect());
+        textForMars.setFill(Color.WHITE);
+        textForMars.setStroke(Color.BLACK);
+        textForMars.setFont(Font.font("Consolas", 30.5));
+
+        //posizionamento del testo in linea con marte
+        textForMars.setTranslateX(marte.getTranslateX()-textForMars.getLayoutBounds().getWidth()/2);
+        textForMars.setTranslateY(marte.getTranslateY()+ 250 -textForMars.getLayoutBounds().getHeight()/2);
+
+        root.getChildren().add(textForMars);
+
 
     }
 }

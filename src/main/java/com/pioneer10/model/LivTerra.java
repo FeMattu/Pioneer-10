@@ -9,10 +9,12 @@ import com.almasb.fxgl.input.virtual.VirtualButton;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.PhysicsWorld;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import static com.pioneer10.model.PioneerEntityType.COIN;
-import static com.pioneer10.model.PioneerEntityType.PLAYER;
+import static com.pioneer10.model.PioneerEntityType.*;
 import static com.pioneer10.model.Planet.EARTH;
 
 public class LivTerra extends GameApplication {
@@ -54,6 +56,17 @@ public class LivTerra extends GameApplication {
             coinsGrabbed++;
             System.out.println("Coin grabbed: "+ coinsGrabbed);
         });
+
+        onCollisionOneTimeOnly(PLAYER, ENEMY, (player, enemy) -> {
+
+            if(vite<0){
+                getDialogService().showMessageBox("You are died", () ->{
+
+                });
+            }
+            vite--;
+
+        });
     }
 
     @Override
@@ -66,7 +79,7 @@ public class LivTerra extends GameApplication {
                 getGameWorld().removeEntity(player);
                 player = spawn("player", posX, posY-100);
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
-                getGameWorld().removeEntity(getGameWorld().getEntitiesByType(EARTH).get(0));
+                //getGameWorld().removeEntity(getGameWorld().getEntitiesByType(EARTH).get(0));
                 vite--;
             }else{
                 getDialogService().showMessageBox("You are died", () ->{
@@ -108,6 +121,26 @@ public class LivTerra extends GameApplication {
                 player.getComponent(PlayerControlComponent.class).jump();
             }
         }, KeyCode.SPACE, VirtualButton.A);
+    }
+
+    @Override
+    protected void onPreInit() {
+        getSettings().setGlobalMusicVolume(0.25);
+        loopBGM("Minecraft.mp3");
+    }
+
+
+    @Override
+    protected void initUI() {
+
+        Text text = new Text("Monete prese: "+coinsGrabbed);
+        text.setFont(Font.font(20));
+        text.setFill(Color.WHITE);
+        addUINode(text, 120, getAppHeight() - 620);
+       /* text.setTranslateX(40);
+        text.setTranslateX(-200);
+        text.setFont(Font.font(5000));
+        getGameScene().addChild(text);*/
     }
 
     public static void main(String[] args){launch(args);}

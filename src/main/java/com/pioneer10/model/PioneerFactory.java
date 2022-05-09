@@ -105,6 +105,17 @@ public class PioneerFactory implements EntityFactory {
                 .build();
     }
 
+    @Spawns("money")
+    public Entity newMoney(SpawnData data) {
+        return entityBuilder(data)
+                .type(MONEY)
+                .view(new ImageView(
+                        new Image(Utils.getPathFileFromResources("assets/levels/money.png"))
+                ))
+                .with(new IrremovableComponent())
+                .build();
+    }
+
     @Spawns("backgroundGiove")
     public Entity newBackgroundGiove(SpawnData data) {
         return entityBuilder()

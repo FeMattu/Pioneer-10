@@ -8,32 +8,34 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
 import com.pioneer10.controller.ControllerMenu;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+
+import java.util.List;
+import java.util.function.Predicate;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
-import static com.pioneer10.model.PioneerEntityType.PLAYER;
+import static com.pioneer10.model.PioneerEntityType.*;
 
 public class LivGiove extends GameApplication {
+
+    private final int MAX_VITE = 3;
     private Entity player;
     private Viewport viewport;
+
+    private int vite, coinsGrabbed;
+    private List<Entity> cuori;
+    private Text textForCoinGrabbed;
+
+    private Entity closestPlatformToPlayer;
 
     @Override
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setWidth(1200);
-        gameSettings.setHeight(640);
+        gameSettings.setHeight(25*32);
         gameSettings.setTitle("Pioneer-10\nGiove");
-    }
-
-    @Override
-    protected void onUpdate(double tpf) {
-        //inc("levelTime", tpf);
-        if (player.getY() > getAppHeight()) {
-            Double posX = player.getX();
-            Double posY = Double.valueOf(getAppHeight()/2);
-            getGameWorld().removeEntity(player);
-            player = spawn("player", posX, posY);
-            viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
-        }
     }
 
     @Override
@@ -43,14 +45,70 @@ public class LivGiove extends GameApplication {
         player = getGameWorld().getEntitiesByType(PLAYER).get(0);
         spawn("backgroundTerra");
 
+        cuori = getGameWorld().getEntitiesByType(HEART);
+
+        vite = MAX_VITE;
+
         viewport = getGameScene().getViewport();
         viewport.setBounds(0, 0, 180*32, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
     }
+
+    @Override
+    protected void onUpdate(double tpf) {
+        if (player.getY() > getAppHeight()) {
+            if(vite > 0){
+                closestPlatformToPlayer = getGameWorld().getClosestEntity(player, e -> e.isType(PLATFORM)).get();
+                Double posX = player.getX();
+                Double posY = Double.valueOf(getAppHeight()/2);
+                getGameWorld().removeEntity(player);
+                //player = spawn("player", posX, posY-100);
+                player = spawn("player", closestPlatformToPlayer.getX()+30, closestPlatformToPlayer.getY()-16);
+                viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
+                getGameWorld().removeEntity(cuori.get(vite-1));
+                //vite--;
+            }else{
+                getDialogService().showMessageBox("You are died", () ->{
+                    //codice per tornare al menu dei livelli
+                });
+            }
+        }
+
+        //bind dei cuori
+        for(int i = 0; i < cuori.size(); i++){
+            cuori.get(i).xProperty().set(viewport.xProperty().doubleValue()+i*32);
+        }
+        getGameWorld().getEntitiesByType(MONEY).get(0).xProperty().bind(viewport.xProperty());
+        textForCoinGrabbed.setText(Integer.toString(coinsGrabbed));
+    }
+    @Override
+    protected void initUI(){
+        textForCoinGrabbed = new Text();
+        textForCoinGrabbed.setFont(Font.font(30));
+        textForCoinGrabbed.setFill(Color.WHITE);
+        textForCoinGrabbed.setX(34);
+        textForCoinGrabbed.setY(61);
+        getGameScene().addUINode(textForCoinGrabbed);
+    }
+
     @Override
     protected void initPhysics() {
         getPhysicsWorld().setGravity(0, 350);
+
+        onCollisionOneTimeOnly(PLAYER, COIN, (player, coin) -> {
+            getGameWorld().removeEntity(coin);
+            coinsGrabbed++;
+        });
+
+        onCollisionOneTimeOnly(PLAYER, ENEMY, (player, enemy) -> {
+            if(vite<0){
+                getDialogService().showMessageBox("You are died", () ->{
+                });
+            }
+            getGameWorld().removeEntity(cuori.get(vite-1));
+            vite--;
+        });
     }
 
     @Override

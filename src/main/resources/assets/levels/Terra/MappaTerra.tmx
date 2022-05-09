@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="150" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="159">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="150" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="160">
  <tileset firstgid="1" name="terra2.0" tilewidth="32" tileheight="32" tilecount="96" columns="12">
   <image source="Tiles.png" width="384" height="256"/>
  </tileset>
@@ -30,10 +30,11 @@
 40,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,62,0,0,0,61,4,4,4,4,4,4,4,4,4,4,4,40,4,4,4,4,4,4,40,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,61,15,15,15,4,4,4,39,4,4,4,4,4,4,4,4,4,4,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,61,4,4,4,4,4,4,4,4,4,4,4
 </data>
  </layer>
- <objectgroup id="9" name="cuori">
+ <objectgroup id="9" name="MoneyLife">
   <object id="130" type="heart" x="0" y="0" width="32" height="32"/>
   <object id="131" type="heart" x="32" y="0" width="32" height="32"/>
   <object id="132" type="heart" x="64" y="0" width="32" height="32"/>
+  <object id="159" type="money" x="0" y="32" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="7" name="coin">
   <object id="101" type="coin" x="800" y="64" width="32" height="32"/>

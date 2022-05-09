@@ -27,6 +27,7 @@ public class LivTerra extends GameApplication {
     private Viewport viewport;
     private int vite, coinsGrabbed;
     private List<Entity> cuori;
+    private Text textForCoinGrabbed;
     @Override
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setWidth(1200);
@@ -58,11 +59,13 @@ public class LivTerra extends GameApplication {
     }
 
     @Override
-    protected void initUI() {
-        Text text = new Text("Monete prese: "+coinsGrabbed);
-        text.setFont(Font.font(20));
-        text.setFill(Color.WHITE);
-        addUINode(text, 120, getAppHeight() - 620);
+    protected void initUI(){
+        textForCoinGrabbed = new Text();
+        textForCoinGrabbed.setFont(Font.font(30));
+        textForCoinGrabbed.setFill(Color.WHITE);
+        textForCoinGrabbed.setX(34);
+        textForCoinGrabbed.setY(61);
+        getGameScene().addUINode(textForCoinGrabbed);
     }
 
     @Override
@@ -73,7 +76,6 @@ public class LivTerra extends GameApplication {
         onCollisionOneTimeOnly(PLAYER, COIN, (player, coin) -> {
             getGameWorld().removeEntity(coin);
             coinsGrabbed++;
-            System.out.println("Coin grabbed: "+ coinsGrabbed);
         });
 
         onCollisionOneTimeOnly(PLAYER, ENEMY, (player, enemy) -> {
@@ -108,6 +110,8 @@ public class LivTerra extends GameApplication {
         for(int i = 0; i < cuori.size(); i++){
             cuori.get(i).xProperty().set(viewport.xProperty().doubleValue()+i*32);
         }
+        getGameWorld().getEntitiesByType(MONEY).get(0).xProperty().bind(viewport.xProperty());
+        textForCoinGrabbed.setText(Integer.toString(coinsGrabbed));
     }
 
     @Override

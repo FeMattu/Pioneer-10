@@ -13,6 +13,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.pioneer10.model.PioneerEntityType.*;
 import static com.pioneer10.model.Planet.EARTH;
@@ -23,10 +26,11 @@ public class LivTerra extends GameApplication {
     private Entity player;
     private Viewport viewport;
     private int vite, coinsGrabbed;
+    private List<Entity> cuori;
     @Override
     protected void initSettings(GameSettings gameSettings) {
-        gameSettings.setWidth(150*32/4);
-        gameSettings.setHeight(20*32);
+        gameSettings.setWidth(1200);
+        gameSettings.setHeight(640);
         gameSettings.setTitle("Pioneer-10\nTerra");
     }
 
@@ -37,6 +41,7 @@ public class LivTerra extends GameApplication {
         setLevelFromMap("Terra/MappaTerra.tmx");
         player = getGameWorld().getEntitiesByType(PLAYER).get(0);
         spawn("backgroundTerra");
+        cuori = getGameWorld().getEntitiesByType(HEART);
 
         vite = MAX_VITE;
 
@@ -44,6 +49,20 @@ public class LivTerra extends GameApplication {
         viewport.setBounds(0, 0, 150*32, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
+    }
+
+    @Override
+    protected void onPreInit() {
+        getSettings().setGlobalMusicVolume(0.25);
+        loopBGM("Minecraft.mp3");
+    }
+
+    @Override
+    protected void initUI() {
+        Text text = new Text("Monete prese: "+coinsGrabbed);
+        text.setFont(Font.font(20));
+        text.setFill(Color.WHITE);
+        addUINode(text, 120, getAppHeight() - 620);
     }
 
     @Override
@@ -58,20 +77,17 @@ public class LivTerra extends GameApplication {
         });
 
         onCollisionOneTimeOnly(PLAYER, ENEMY, (player, enemy) -> {
-
             if(vite<0){
                 getDialogService().showMessageBox("You are died", () ->{
-
                 });
             }
+            getGameWorld().removeEntity(cuori.get(vite-1));
             vite--;
-
         });
     }
 
     @Override
     protected void onUpdate(double tpf) {
-        //inc("levelTime", tpf);
         if (player.getY() > getAppHeight()) {
             if(vite > 0){
                 Double posX = player.getX();
@@ -79,13 +95,18 @@ public class LivTerra extends GameApplication {
                 getGameWorld().removeEntity(player);
                 player = spawn("player", posX, posY-100);
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
-                //getGameWorld().removeEntity(getGameWorld().getEntitiesByType(EARTH).get(0));
+                getGameWorld().removeEntity(cuori.get(vite-1));
                 vite--;
             }else{
                 getDialogService().showMessageBox("You are died", () ->{
-
+                    //codice per tornare al menu dei livelli
                 });
             }
+        }
+
+        //bind dei cuori
+        for(int i = 0; i < cuori.size(); i++){
+            cuori.get(i).xProperty().set(viewport.xProperty().doubleValue()+i*32);
         }
     }
 
@@ -121,26 +142,6 @@ public class LivTerra extends GameApplication {
                 player.getComponent(PlayerControlComponent.class).jump();
             }
         }, KeyCode.SPACE, VirtualButton.A);
-    }
-
-    @Override
-    protected void onPreInit() {
-        getSettings().setGlobalMusicVolume(0.25);
-        loopBGM("Minecraft.mp3");
-    }
-
-
-    @Override
-    protected void initUI() {
-
-        Text text = new Text("Monete prese: "+coinsGrabbed);
-        text.setFont(Font.font(20));
-        text.setFill(Color.WHITE);
-        addUINode(text, 120, getAppHeight() - 620);
-       /* text.setTranslateX(40);
-        text.setTranslateX(-200);
-        text.setFont(Font.font(5000));
-        getGameScene().addChild(text);*/
     }
 
     public static void main(String[] args){launch(args);}

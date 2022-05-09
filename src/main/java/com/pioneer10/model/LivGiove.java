@@ -17,12 +17,10 @@ public class LivGiove extends GameApplication {
     private Entity player;
     private Viewport viewport;
 
-
-
     @Override
     protected void initSettings(GameSettings gameSettings) {
-        gameSettings.setWidth(32*180/4);
-        gameSettings.setHeight(32*25);
+        gameSettings.setWidth(1200);
+        gameSettings.setHeight(640);
         gameSettings.setTitle("Pioneer-10\nGiove");
     }
 

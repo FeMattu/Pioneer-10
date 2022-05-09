@@ -90,7 +90,7 @@ public class PioneerFactory implements EntityFactory {
         return entityBuilder(data)
                 .type(COIN)
                 .with( new CoinAnimation())
-                .bbox(BoundingShape.circle(32))
+                .bbox(BoundingShape.circle(30))
                 .with(new CollidableComponent(true))
                 .build();
     }

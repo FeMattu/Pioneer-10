@@ -25,8 +25,8 @@ public class  LivMarte extends GameApplication {
 
     @Override
     protected void initSettings(GameSettings gameSettings) {
-        gameSettings.setWidth(180*16/4);
-        gameSettings.setHeight(25*16);
+        gameSettings.setWidth(1200);
+        gameSettings.setHeight(640);
         gameSettings.setTitle("Pioneer-10\nMarte");
     }
 

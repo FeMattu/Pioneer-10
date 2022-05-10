@@ -60,16 +60,13 @@ public class LivGiove extends GameApplication {
         if (player.getY() > getAppHeight()) {
             if(vite > 0){
                 closestPlatformToPlayer = getGameWorld().getClosestEntity(player, e -> e.isType(PLATFORM)).get();
-                Double posX = player.getX();
-                Double posY = Double.valueOf(getAppHeight()/2);
                 getGameWorld().removeEntity(player);
-                //player = spawn("player", posX, posY-100);
-                player = spawn("player", closestPlatformToPlayer.getX()+30, closestPlatformToPlayer.getY()-16);
+                player = spawn("player", closestPlatformToPlayer.getX()+16, closestPlatformToPlayer.getY()-16);
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
                 getGameWorld().removeEntity(cuori.get(vite-1));
                 //vite--;
             }else{
-                getDialogService().showMessageBox("You are died", () ->{
+                getDialogService().showMessageBox("You are dead", () ->{
                     //codice per tornare al menu dei livelli
                 });
             }

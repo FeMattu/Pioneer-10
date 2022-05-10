@@ -28,6 +28,7 @@ public class LivTerra extends GameApplication {
     private int vite, coinsGrabbed;
     private List<Entity> cuori;
     private Text textForCoinGrabbed;
+    private Entity closestPlatformToPlayer;
     @Override
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setWidth(1200);
@@ -92,12 +93,12 @@ public class LivTerra extends GameApplication {
     protected void onUpdate(double tpf) {
         if (player.getY() > getAppHeight()) {
             if(vite > 0){
-                Double posX = player.getX();
-                Double posY = Double.valueOf(getAppHeight()/2);
+                closestPlatformToPlayer = getGameWorld().getClosestEntity(player, e -> e.isType(PLATFORM)).get();
                 getGameWorld().removeEntity(player);
-                player = spawn("player", posX, posY-100);
+                player = spawn("player", closestPlatformToPlayer.getX()+30, closestPlatformToPlayer.getY()-16);
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
                 getGameWorld().removeEntity(cuori.get(vite-1));
+                vite--;
                 vite--;
             }else{
                 getDialogService().showMessageBox("You are died", () ->{

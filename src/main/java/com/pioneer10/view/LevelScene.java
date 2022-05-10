@@ -4,6 +4,7 @@ import com.pioneer10.controller.ControllerMenu;
 import com.pioneer10.model.Planet;
 import com.pioneer10.model.Utils;
 import javafx.scene.*;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -74,6 +75,14 @@ public class LevelScene extends Scene{
         //aggiungere tutti gli oggetti 2D da qui, se vengono aggiunti
         //sopra potrebbero interferire con gli oggetti 3D
 
+        Text text = new Text("SELECT A LEVEL TO CONTINUE:");
+        text.setEffect(Utils.neonEffect());
+        text.setFill(Color.WHITE);
+        text.setStroke(Color.BLACK);
+        text.setFont(Font.font("Consolas", 30.5));
+
+        text.setTranslateX(giove.getTranslateX()-text.getLayoutBounds().getWidth()/2);
+        text.setTranslateY(giove.getTranslateY()+ 240 -text.getLayoutBounds().getHeight()/2);
 
         Text textForJupiter = new Text("Level 2-\n" + "Jupiter");
         textForJupiter.setEffect(Utils.neonEffect());
@@ -109,6 +118,20 @@ public class LevelScene extends Scene{
         textForNeptune.setTranslateY(nettuno.getTranslateY()+ 250 -textForNeptune.getLayoutBounds().getHeight()/2);
 
         root.getChildren().add(textForNeptune);
+
+        Button button = new Button("BACK");
+        root.getChildren().add(button);
+
+        button.setTranslateX(this.getWidth()/16 - button.getWidth()/2);
+        button.setTranslateY(this.getHeight()/1.3 - button.getHeight()/2 + 100);
+        button.setScaleX(2.8);
+        button.setScaleY(2);
+        button.setEffect(Utils.neonEffect());
+        button.setTextFill(Color.WHITE);
+
+        button.setOnMouseClicked(event -> {
+            stage.setScene(new LoadingGameScene(stage,width,height));
+        });
 
 
     }

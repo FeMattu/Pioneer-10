@@ -1,33 +1,23 @@
 package com.pioneer10.view;
 
-import com.almasb.fxgl.app.scene.Viewport;
 import com.pioneer10.controller.ControllerMenu;
 import com.pioneer10.model.Planet;
 import com.pioneer10.model.Utils;
 import javafx.scene.*;
-import javafx.scene.control.Button;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.nio.file.Paths;
-
-public class MenuScene extends Scene{
+public class LevelScene extends Scene{
     private Group root = new Group();
     private Stage stage;
     private ControllerMenu controller;
     private PerspectiveCamera camera;
 
-    public MenuScene(Stage stage, double width, double height) {
+    public LevelScene(Stage stage, double width, double height) {
         super(new Group(), width, height, true, SceneAntialiasing.BALANCED);
         this.setRoot(root);
         controller = new ControllerMenu(stage);
@@ -53,11 +43,11 @@ public class MenuScene extends Scene{
         Node terra = Planet.EARTH.getNode();
         terra.setTranslateX(width/2);
         terra.setTranslateY(height/2);
-        //creo marte
-        Node marte = Planet.MARS.getNode();
-        marte.setTranslateX(terra.getTranslateX()- distanceFromCenterPlanet);
-        marte.setTranslateY(terra.getTranslateY());
-        marte.setTranslateZ(terra.getTranslateZ()+100);
+        //creo nettuno
+        Node nettuno = Planet.NEPTUNE.getNode();
+        nettuno.setTranslateX(terra.getTranslateX()- distanceFromCenterPlanet);
+        nettuno.setTranslateY(terra.getTranslateY());
+        nettuno.setTranslateZ(terra.getTranslateZ()+100);
         //creo giove
         Node giove = Planet.JUPITER.getNode();
         giove.setTranslateX(terra.getTranslateX()+ distanceFromCenterPlanet);
@@ -65,7 +55,7 @@ public class MenuScene extends Scene{
         giove.setTranslateZ(terra.getTranslateZ()+100);
 
         //aggiuno i pianeti
-        root.getChildren().add(marte);
+        root.getChildren().add(nettuno);
         root.getChildren().add(giove);
         root.getChildren().add(terra);
 
@@ -77,7 +67,7 @@ public class MenuScene extends Scene{
             controller.changSceneOnGioveClick();
         });
 
-        marte.setOnMouseClicked(event ->{
+        nettuno.setOnMouseClicked(event ->{
             controller.changSceneOnMarteClick();
         });
 
@@ -108,17 +98,17 @@ public class MenuScene extends Scene{
         textForEarth.setTranslateY(terra.getTranslateY()+ 270 -textForEarth.getLayoutBounds().getHeight()/2);
         root.getChildren().add(textForEarth);
 
-        Text textForMars = new Text("Level 3-\n" + " Mars");
-        textForMars.setEffect(Utils.neonEffect());
-        textForMars.setFill(Color.WHITE);
-        textForMars.setStroke(Color.BLACK);
-        textForMars.setFont(Font.font("Consolas", 30.5));
+        Text textForNeptune = new Text("Level 3-\n" + " Neptune");
+        textForNeptune.setEffect(Utils.neonEffect());
+        textForNeptune.setFill(Color.WHITE);
+        textForNeptune.setStroke(Color.BLACK);
+        textForNeptune.setFont(Font.font("Consolas", 30.5));
 
-        //posizionamento del testo in linea con marte
-        textForMars.setTranslateX(marte.getTranslateX()-textForMars.getLayoutBounds().getWidth()/2);
-        textForMars.setTranslateY(marte.getTranslateY()+ 250 -textForMars.getLayoutBounds().getHeight()/2);
+        //posizionamento del testo in linea con nettuno
+        textForNeptune.setTranslateX(nettuno.getTranslateX()-textForNeptune.getLayoutBounds().getWidth()/2);
+        textForNeptune.setTranslateY(nettuno.getTranslateY()+ 250 -textForNeptune.getLayoutBounds().getHeight()/2);
 
-        root.getChildren().add(textForMars);
+        root.getChildren().add(textForNeptune);
 
 
     }

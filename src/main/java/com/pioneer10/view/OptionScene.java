@@ -2,11 +2,8 @@ package com.pioneer10.view;
 
 
 import com.pioneer10.model.Utils;
-import com.pioneer10.view.LoadingGameScene;
-import com.pioneer10.view.MenuScene;
 import javafx.scene.*;
 import javafx.scene.control.Button;
-import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;

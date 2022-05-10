@@ -2,7 +2,7 @@ package com.pioneer10.view;
 
 import com.almasb.fxgl.app.FXGLPane;
 import com.almasb.fxgl.app.GameApplication;
-import com.pioneer10.model.LivMarte;
+import com.pioneer10.model.LivNettuno;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 
@@ -14,7 +14,7 @@ public class MarteScene extends Scene{
 
     public MarteScene(){
         super(new Group());
-        FXGLPane level1 = GameApplication.embeddedLaunch(new LivMarte());
+        FXGLPane level1 = GameApplication.embeddedLaunch(new LivNettuno());
         this.setRoot(level1);
     }
 

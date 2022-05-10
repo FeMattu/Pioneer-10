@@ -6,79 +6,52 @@ import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
-import com.pioneer10.controller.ControllerMenu;
+import com.almasb.fxgl.physics.CollisionHandler;
+import com.almasb.fxgl.physics.PhysicsWorld;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
 import static com.pioneer10.model.PioneerEntityType.*;
 
-public class LivGiove extends GameApplication {
+public class LivNettuno extends GameApplication {
 
     private final int MAX_VITE = 3;
     private Entity player;
     private Viewport viewport;
-
     private int vite, coinsGrabbed;
     private List<Entity> cuori;
     private Text textForCoinGrabbed;
-
     private Entity closestPlatformToPlayer;
 
     @Override
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setWidth(1200);
-        gameSettings.setHeight(25*32);
-        gameSettings.setTitle("Pioneer-10\nGiove");
+        gameSettings.setHeight(640);
+        gameSettings.setTitle("Pioneer-10\nMarte");
     }
 
     @Override
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
-        setLevelFromMap("Giove/Giove.tmx");
+        setLevelFromMap("Nettuno/Nettuno.tmx");
         player = getGameWorld().getEntitiesByType(PLAYER).get(0);
-        spawn("backgroundTerra");
-
         cuori = getGameWorld().getEntitiesByType(HEART);
 
         vite = MAX_VITE;
 
         viewport = getGameScene().getViewport();
-        viewport.setBounds(0, 0, 180*32, getAppHeight());
+        viewport.setBounds(0, 0, 180*16, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
+
     }
 
-    @Override
-    protected void onUpdate(double tpf) {
-        if (player.getY() > getAppHeight()) {
-            if(vite > 0){
-                closestPlatformToPlayer = getGameWorld().getClosestEntity(player, e -> e.isType(PLATFORM)).get();
-                getGameWorld().removeEntity(player);
-                player = spawn("player", closestPlatformToPlayer.getX()+16, closestPlatformToPlayer.getY()-16);
-                viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
-                getGameWorld().removeEntity(cuori.get(vite-1));
-                vite--;
-            }else{
-                getDialogService().showMessageBox("You are dead", () ->{
-                    //codice per tornare al menu dei livelli
-                });
-            }
-        }
-
-        //bind dei cuori
-        for(int i = 0; i < cuori.size(); i++){
-            cuori.get(i).xProperty().set(viewport.xProperty().doubleValue()+i*32);
-        }
-        getGameWorld().getEntitiesByType(MONEY).get(0).xProperty().bind(viewport.xProperty());
-        textForCoinGrabbed.setText(Integer.toString(coinsGrabbed));
-    }
     @Override
     protected void initUI(){
         textForCoinGrabbed = new Text();
@@ -91,8 +64,9 @@ public class LivGiove extends GameApplication {
 
     @Override
     protected void initPhysics() {
-        getPhysicsWorld().setGravity(0, 350);
+        getPhysicsWorld().setGravity(0, 400);
 
+        //Collisione con monete
         onCollisionOneTimeOnly(PLAYER, COIN, (player, coin) -> {
             getGameWorld().removeEntity(coin);
             coinsGrabbed++;
@@ -106,6 +80,31 @@ public class LivGiove extends GameApplication {
             getGameWorld().removeEntity(cuori.get(vite-1));
             vite--;
         });
+    }
+
+    @Override
+    protected void onUpdate(double tpf) {
+        if (player.getY() > getAppHeight()) {
+            if(vite > 0){
+                closestPlatformToPlayer = getGameWorld().getClosestEntity(player, e -> e.isType(PLATFORM)).get();
+                getGameWorld().removeEntity(player);
+                player = spawn("player", closestPlatformToPlayer.getX()+30, closestPlatformToPlayer.getY()-16);
+                viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
+                getGameWorld().removeEntity(cuori.get(vite-1));
+                vite--;
+            }else{
+                getDialogService().showMessageBox("You are died", () ->{
+                    //codice per tornare al menu dei livelli
+                });
+            }
+        }
+
+        //bind dei cuori
+        for(int i = 0; i < cuori.size(); i++){
+            cuori.get(i).xProperty().set(viewport.xProperty().doubleValue()+i*32);
+        }
+        getGameWorld().getEntitiesByType(MONEY).get(0).xProperty().bind(viewport.xProperty());
+        textForCoinGrabbed.setText(Integer.toString(coinsGrabbed));
     }
 
     @Override

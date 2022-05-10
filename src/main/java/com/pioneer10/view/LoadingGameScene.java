@@ -4,10 +4,6 @@ import com.pioneer10.model.Utils;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -51,7 +47,7 @@ public class LoadingGameScene extends Scene {
 
 
         button.setOnMouseClicked(event -> {
-            stage.setScene(new MenuScene(stage, v, v1));
+            stage.setScene(new LevelScene(stage, v, v1));
         });
 
         button2.setOnMouseClicked(event -> {

@@ -3,7 +3,7 @@ package com.pioneer10.controller;
 import com.pioneer10.view.GioveScene;
 import com.pioneer10.view.EarthScene;
 import com.pioneer10.view.MarteScene;
-import com.pioneer10.view.MenuScene;
+import com.pioneer10.view.LevelScene;
 import javafx.stage.Stage;
 
 public class ControllerMenu {
@@ -25,7 +25,7 @@ public class ControllerMenu {
         stage.setScene(new MarteScene().getScene());
     }
 
-    public void returnToMenuOnDied() {stage.setScene(new MenuScene(stage, 1280, 720));
+    public void returnToMenuOnDied() {stage.setScene(new LevelScene(stage, 1280, 720));
     }
 }
 

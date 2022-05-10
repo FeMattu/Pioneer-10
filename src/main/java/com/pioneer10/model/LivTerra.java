@@ -99,7 +99,6 @@ public class LivTerra extends GameApplication {
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
                 getGameWorld().removeEntity(cuori.get(vite-1));
                 vite--;
-                vite--;
             }else{
                 getDialogService().showMessageBox("You are died", () ->{
                     //codice per tornare al menu dei livelli

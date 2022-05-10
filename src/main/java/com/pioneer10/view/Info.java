@@ -41,8 +41,8 @@ public class Info extends Scene{
         Text We = new Text("""
                 - A: MOVE LEFT
                 - D: MOVE RIGHT
-                - W: MOVE FORWARD
-                - S: MOVE BACKWARDS""");
+                - SPACE: JUMP
+                - E: ATTACK """);
         We.setEffect(Utils.neonEffect());
         We.setFill(Color.WHITE);
         We.setStroke(Color.BLACK);
@@ -50,7 +50,7 @@ public class Info extends Scene{
         We.setFont(Font.font("Consolas", 40));
         root.getChildren().add(We);
 
-        We.setTranslateX(this.getWidth()/5-We.getLayoutBounds().getWidth()/2);
+        We.setTranslateX(this.getWidth()/6-We.getLayoutBounds().getWidth()/2);
         We.setTranslateY(this.getHeight()/2-We.getLayoutBounds().getHeight()/2);
 
 

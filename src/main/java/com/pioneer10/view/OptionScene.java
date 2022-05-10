@@ -25,22 +25,25 @@ public class OptionScene extends Scene{
         ImagePattern patternBackground = new ImagePattern(background);
         this.setFill(patternBackground);
 
-
         Button button5 = new Button("SET MUSIC");
         root.getChildren().add(button5);
 
         button5.setTranslateX(this.getWidth()/13 - button5.getWidth()/2);
-        button5.setTranslateY(this.getHeight()/3 - button5.getHeight()/2 + 150);
+        button5.setTranslateY(this.getHeight()/3 - button5.getHeight()/2 + 60);
         button5.setScaleX(2.8);
         button5.setScaleY(2);
         button5.setEffect(Utils.neonEffect());
         button5.setTextFill(Color.WHITE);
 
+        button5.setOnMouseClicked(event -> {
+            stage.setScene(new music(stage,width,height));
+        });
+
         Button button6 = new Button("SET BRIGHTNESS");
         root.getChildren().add(button6);
 
-        button6.setTranslateX(this.getWidth()/15.7 - button5.getWidth()/2);
-        button6.setTranslateY(this.getHeight()/3 - button5.getHeight()/2 + 230);
+        button6.setTranslateX(this.getWidth()/15.7 - button6.getWidth()/2);
+        button6.setTranslateY(this.getHeight()/3 - button6.getHeight()/2 + 140);
         button6.setScaleX(2);
         button6.setScaleY(2);
         button6.setEffect(Utils.neonEffect());
@@ -54,8 +57,9 @@ public class OptionScene extends Scene{
         });
 
 
-        button7.setTranslateX(this.getWidth()/11.5 - button5.getWidth()/2);
-        button7.setTranslateY(this.getHeight()/3 - button5.getHeight()/2 + 310);
+
+        button7.setTranslateX(this.getWidth()/11.5 - button7.getWidth()/2);
+        button7.setTranslateY(this.getHeight()/3 - button7.getHeight()/2 + 220);
         button7.setScaleX(4.8);
         button7.setScaleY(2);
         button7.setEffect(Utils.neonEffect());

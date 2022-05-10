@@ -13,9 +13,11 @@ import javafx.util.Duration;
 public class EnemyControlComponent extends Component {
 
     private AnimatedTexture texture;
-    private AnimationChannel animIdle, animWalk;
+    private AnimationChannel animIdle, animWalk, animDeath, animAttack;
     private PhysicsComponent physics;
     private LocalTimer timer;
+
+    private int nrOfLife = 4; //questo scala ogni volta che viene colpito dal player
 
     public EnemyControlComponent() {
 
@@ -25,7 +27,15 @@ public class EnemyControlComponent extends Component {
 
         animWalk = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/undead_walk_sheet.png")),
                 20, 1120/20, 26,
-                Duration.seconds(0.66), 0, 19);
+                Duration.seconds(1), 0, 19);
+
+        animAttack = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/undead_attack_sheet.png")),
+                20, 1120/20, 35,
+                Duration.seconds(0.4), 0, 19);
+
+        animDeath = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/undead_death_sheet.png")),
+                13, 936/13, 26,
+                Duration.seconds(1.5), 0, 12);
 
         texture = new AnimatedTexture(animIdle);
     }
@@ -40,7 +50,7 @@ public class EnemyControlComponent extends Component {
 
     @Override
     public void onUpdate(double tpf) {
-        if(timer.elapsed(Duration.seconds(1))){
+        if(timer.elapsed(Duration.seconds(1.5))){
             if(physics.isMovingX() && physics.getVelocityX()>0){
                 left();
             }else{ right(); }
@@ -55,8 +65,6 @@ public class EnemyControlComponent extends Component {
                 texture.loopAnimationChannel(animIdle);
             }
         }
-
-
     }
 
     public void stop() {
@@ -71,6 +79,22 @@ public class EnemyControlComponent extends Component {
     public void left() {
         physics.setVelocityX(-100);
         getEntity().setScaleX(-1);
+    }
+
+    public void attack() {
+        texture.loopAnimationChannel(animAttack);
+    }
+
+    public void death(){
+        texture.loopAnimationChannel(animDeath);
+    }
+
+    public void hit(){
+        if(nrOfLife < 0){
+            death();
+            return;
+        }
+        nrOfLife--;
     }
 
 }

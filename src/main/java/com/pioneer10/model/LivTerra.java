@@ -43,17 +43,17 @@ public class LivTerra extends GameApplication {
 
         getGameWorld().addEntityFactory(new PioneerFactory());
         setLevelFromMap("Terra/MappaTerra.tmx");
-        player = getGameWorld().getEntitiesByType(PLAYER).get(0);
+        player = getGameWorld().getSingleton(PLAYER);
         spawn("backgroundTerra");
         cuori = getGameWorld().getEntitiesByType(HEART);
 
         vite = MAX_VITE;
 
+
         viewport = getGameScene().getViewport();
         viewport.setBounds(0, 0, 150*32, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
-        //getDevService().openDevPane();
     }
 
     @Override
@@ -99,7 +99,7 @@ public class LivTerra extends GameApplication {
             if(vite > 0){
                 closestPlatformToPlayer = getGameWorld().getClosestEntity(player, e -> e.isType(PLATFORM)).get();
                 getGameWorld().removeEntity(player);
-                player = spawn("player", closestPlatformToPlayer.getX()+30, closestPlatformToPlayer.getY()-16);
+                player = spawn("player", closestPlatformToPlayer.getX()+16, closestPlatformToPlayer.getY()-32);
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
                 getGameWorld().removeEntity(cuori.get(vite-1));
                 vite--;
@@ -109,6 +109,7 @@ public class LivTerra extends GameApplication {
                 });
             }
         }
+
 
         //bind dei cuori
         for(int i = 0; i < cuori.size(); i++){
@@ -150,6 +151,17 @@ public class LivTerra extends GameApplication {
                 player.getComponent(PlayerControlComponent.class).jump();
             }
         }, KeyCode.SPACE, VirtualButton.A);
+
+        getInput().addAction(new UserAction("DevPane") {
+            @Override
+            protected void onActionBegin() {
+                if(!getDevService().isDevPaneOpen()){
+                    getDevService().openDevPane();
+                }else{
+                    getDevService().closeDevPane();
+                }
+            }
+        }, KeyCode.P, VirtualButton.LB);
     }
 
     public static void main(String[] args){launch(args);}

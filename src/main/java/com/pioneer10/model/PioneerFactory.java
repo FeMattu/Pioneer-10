@@ -46,9 +46,9 @@ public class PioneerFactory implements EntityFactory {
 
         return entityBuilder(data)
                 .type(ENEMY)
-                .bbox(new HitBox(new Point2D(17,0), BoundingShape.box(7,17))) //box di collisione per le gambe
-                .bbox(new HitBox(new Point2D(17,17), BoundingShape.box(9,9))) //box collisione per la testa
+                .bbox(new HitBox(new Point2D(26,0), BoundingShape.box(8,24))) //box di collisione
                 .with(physics)
+                .with(new CollidableComponent(true))
                 .with(new EnemyControlComponent())
                 .build();
     }
@@ -57,15 +57,15 @@ public class PioneerFactory implements EntityFactory {
     public Entity newPlayer(SpawnData data) {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        //physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(12, 0), BoundingShape.box(6, 5)));
+        physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(12, 0), BoundingShape.box(6, 5)));
 
         // this avoids player sticking to walls
         physics.setFixtureDef(new FixtureDef().friction(0.0f));
 
         return entityBuilder(data)
                 .type(PLAYER)
-                .bbox(new HitBox(new Point2D(16,17), BoundingShape.box(11,14)))//box di collisione per la gambe
-                .bbox(new HitBox(new Point2D(7,6), BoundingShape.box(21,16)))//box di collisione per le testa
+                .bbox(new HitBox(new Point2D(13,17), BoundingShape.box(8,14)))//box di collisione per le gambe
+                .bbox(new HitBox(new Point2D(7,7), BoundingShape.box(21,16)))//box di collisione per la testa
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new PlayerControlComponent())
@@ -90,7 +90,7 @@ public class PioneerFactory implements EntityFactory {
         return entityBuilder(data)
                 .type(COIN)
                 .with( new CoinAnimation())
-                .bbox(BoundingShape.circle(30))
+                .bbox(BoundingShape.circle(15))
                 .with(new CollidableComponent(true))
                 .build();
     }

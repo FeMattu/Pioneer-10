@@ -33,7 +33,7 @@ public class LivNettuno extends GameApplication {
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setWidth(1200);
         gameSettings.setHeight(640);
-        gameSettings.setTitle("Pioneer-10\nMarte");
+        gameSettings.setTitle("Pioneer-10\nNettuno");
     }
 
     @Override
@@ -49,6 +49,7 @@ public class LivNettuno extends GameApplication {
         viewport.setBounds(0, 0, 180*16, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
+        getDevService().openConsole();
 
     }
 
@@ -72,13 +73,14 @@ public class LivNettuno extends GameApplication {
             coinsGrabbed++;
         });
 
-        onCollisionOneTimeOnly(PLAYER, ENEMY, (player, enemy) -> {
-            if(vite<0){
+        onCollisionBegin(PLAYER, ENEMY, (player, enemy) -> {
+            if(vite>0){
+                getGameWorld().removeEntity(cuori.get(vite-1));
+                vite--;
+            }else{
                 getDialogService().showMessageBox("You are died", () ->{
                 });
             }
-            getGameWorld().removeEntity(cuori.get(vite-1));
-            vite--;
         });
     }
 

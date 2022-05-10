@@ -98,13 +98,14 @@ public class LivGiove extends GameApplication {
             coinsGrabbed++;
         });
 
-        onCollisionOneTimeOnly(PLAYER, ENEMY, (player, enemy) -> {
-            if(vite<0){
+        onCollisionBegin(PLAYER, ENEMY, (player, enemy) -> {
+            if(vite>0){
+                getGameWorld().removeEntity(cuori.get(vite-1));
+                vite--;
+            }else{
                 getDialogService().showMessageBox("You are died", () ->{
                 });
             }
-            getGameWorld().removeEntity(cuori.get(vite-1));
-            vite--;
         });
     }
 

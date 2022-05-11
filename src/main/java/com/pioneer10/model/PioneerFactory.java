@@ -11,16 +11,22 @@ import com.almasb.fxgl.pathfinding.CellMoveComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
+import com.almasb.fxgl.physics.PolygonShapeData;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.almasb.fxgl.texture.AnimationChannel;
+import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Box;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+
+import java.util.List;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
@@ -33,6 +39,23 @@ public class PioneerFactory implements EntityFactory {
         return entityBuilder(data)
                 .type(PLATFORM)
                 .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
+                .with(new PhysicsComponent())
+                .build();
+    }
+
+    @Spawns("angle")
+    public Entity newAngle(SpawnData data) {
+
+        List<Double> pp = data.<Polygon>get("polygon").getPoints().stream().toList();
+
+        double [] points = new double[pp.size()];
+        for(int i = 0; i < pp.size(); i++){
+            points[i] = pp.get(i).doubleValue();
+        }
+
+        return entityBuilder(data)
+                .type(PLATFORM)
+                .bbox(BoundingShape.polygon(points))
                 .with(new PhysicsComponent())
                 .build();
     }

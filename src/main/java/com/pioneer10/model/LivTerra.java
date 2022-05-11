@@ -36,7 +36,7 @@ public class LivTerra extends GameApplication {
     private Entity closestPlatformToPlayer;
     @Override
     protected void initSettings(GameSettings gameSettings) {
-        gameSettings.setWidth(1500);
+        gameSettings.setWidth(1200);
         gameSettings.setHeight(640);
         gameSettings.setTitle("Pioneer-10\nTerra");
         gameSettings.setDeveloperMenuEnabled(true);

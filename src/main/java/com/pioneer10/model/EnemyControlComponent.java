@@ -34,7 +34,7 @@ public class EnemyControlComponent extends Component {
                 Duration.seconds(1), 0, 19);
 
         animAttack = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/undead_attack_sheet.png")),
-                20, 1120/20, 35,
+                20, 856/20, 26,
                 Duration.seconds(0.4), 0, 19);
 
         animDeath = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/undead_death_sheet.png")),
@@ -57,9 +57,9 @@ public class EnemyControlComponent extends Component {
         player = FXGL.getGameWorld().getSingleton(PLAYER);
 
         if(entity.distance(player) < 200
-                && entity.getY() < player.getY()+50
+                && entity.getY() < player.getY()+50     //aggiunta di margine di errore per le Y
                 && entity.getY() > player.getY()-50){
-            if (entity.distance(player) > 40 || entity.distance(player) < 40){
+            if (entity.distance(player) > 40){
                 if(player.getX() > entity.getX()){
                     right();
                 }else if( player.getX() < entity.getX()){
@@ -75,15 +75,17 @@ public class EnemyControlComponent extends Component {
             timer.capture();
         }
 
-        if (physics.isMovingX() && texture.getAnimationChannel() != animAttack) {
+        if (physics.isMovingX()) {
             if (texture.getAnimationChannel() != animWalk) {
                 texture.loopAnimationChannel(animWalk);
             }
         } else{
-            if (texture.getAnimationChannel() != animIdle && texture.getAnimationChannel() != animAttack) {
+            if (texture.getAnimationChannel() != animIdle) {
                 texture.loopAnimationChannel(animIdle);
             }
         }
+
+
     }
 
     public void stop() {

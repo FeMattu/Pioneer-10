@@ -36,6 +36,7 @@ public class LivGiove extends GameApplication {
         gameSettings.setWidth(1200);
         gameSettings.setHeight(25*32);
         gameSettings.setTitle("Pioneer-10\nGiove");
+        gameSettings.setDeveloperMenuEnabled(true);
     }
 
     @Override
@@ -103,7 +104,7 @@ public class LivGiove extends GameApplication {
                 getGameWorld().removeEntity(cuori.get(vite-1));
                 vite--;
             }else{
-                getDialogService().showMessageBox("You are died", () ->{
+                getDialogService().showMessageBox("You are dead", () ->{
                 });
             }
         });
@@ -141,6 +142,17 @@ public class LivGiove extends GameApplication {
                 player.getComponent(PlayerControlComponent.class).jump();
             }
         }, KeyCode.SPACE, VirtualButton.A);
+
+        getInput().addAction(new UserAction("DevPane") {
+            @Override
+            protected void onActionBegin() {
+                if(!getDevService().isDevPaneOpen()){
+                    getDevService().openDevPane();
+                }else{
+                    getDevService().closeDevPane();
+                }
+            }
+        }, KeyCode.P, VirtualButton.LB);
     }
 
     public static void main(String[] args){launch(args);}

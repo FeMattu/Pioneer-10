@@ -3,12 +3,16 @@ package com.pioneer10.model;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.Viewport;
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.PhysicsWorld;
+import com.almasb.fxgl.ui.InGamePanel;
+import com.pioneer10.PioneerLauncher;
+import com.pioneer10.view.LevelScene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -58,7 +62,7 @@ public class LivTerra extends GameApplication {
 
     @Override
     protected void onPreInit() {
-        getSettings().setGlobalMusicVolume(0.25);
+        getSettings().setGlobalMusicVolume(0.5);
         loopBGM("Minecraft.mp3");
     }
 
@@ -87,7 +91,12 @@ public class LivTerra extends GameApplication {
                 getGameWorld().removeEntity(cuori.get(vite-1));
                 vite--;
             }else{
-                getDialogService().showMessageBox("You are died", () ->{
+                getDialogService().showMessageBox("You are dead", () ->{
+                    FXGL.getPrimaryStage().setScene(new LevelScene(
+                            FXGL.getPrimaryStage(),
+                            PioneerLauncher.WIDTH,
+                            PioneerLauncher.HEIGHT
+                    ));
                 });
             }
         });
@@ -104,8 +113,12 @@ public class LivTerra extends GameApplication {
                 getGameWorld().removeEntity(cuori.get(vite-1));
                 vite--;
             }else{
-                getDialogService().showMessageBox("You are died", () ->{
-                    //codice per tornare al menu dei livelli
+                getDialogService().showMessageBox("You are dead", () ->{
+                    FXGL.getPrimaryStage().setScene(new LevelScene(
+                            FXGL.getPrimaryStage(),
+                            PioneerLauncher.WIDTH,
+                            PioneerLauncher.HEIGHT
+                    ));
                 });
             }
         }

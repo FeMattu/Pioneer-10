@@ -66,21 +66,13 @@ public class music extends Scene{
         String musicFile = Utils.getPathFileFromResources("assets/music/lost_and_notfound.mp3");
         Media sound = new Media(new File(musicFile).toURI().toString());
         MediaPlayer mediaPlayer2 = new MediaPlayer(sound);
-        mediaPlayer2.setVolume(0.25);
-
-        //Creating the mouse event handler
-        EventHandler<MouseEvent> eventHandler = e -> mediaPlayer2.play();
+        mediaPlayer2.setVolume(1);
 
         //Adding event Filter
-        button5.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
-
-        //Creating the mouse event handler
-        EventHandler<MouseEvent> eventHandler2 = e -> mediaPlayer2.stop();
+        button5.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> mediaPlayer2.setAutoPlay(true));
 
         //Adding event Filter
-        button6.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler2);
-
-
+        button6.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> mediaPlayer2.stop());
 
 
         Button button11 = new Button("BACK");

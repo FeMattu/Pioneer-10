@@ -62,7 +62,7 @@ public class LoadingGameScene extends Scene {
         Button button3 = new Button("CREDITS");
         root.getChildren().add(button3);
 
-        Button button4 = new Button("INFO");
+        Button button4 = new Button("TUTORIAL");
         root.getChildren().add(button4);
 
 

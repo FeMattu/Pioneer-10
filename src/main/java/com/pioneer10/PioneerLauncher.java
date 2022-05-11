@@ -11,11 +11,11 @@ import java.io.IOException;
 public class PioneerLauncher extends Application {
 
     //Dimensioni minime finestra
-    private static final int WIDTH = 1280;
-    private static final int HEIGHT = 720;
+    public static final int WIDTH = 1280;
+    public static final int HEIGHT = 720;
     //dimensioni massime finestra
-    private static final int MAX_HEIGHT = 1080;
-    private static final int MAX_WIDTH = 1920;
+    public static final int MAX_HEIGHT = 1080;
+    public static final int MAX_WIDTH = 1920;
 
     @Override
     public void start(Stage stage) throws IOException {

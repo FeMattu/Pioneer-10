@@ -68,7 +68,6 @@ public class music extends Scene{
         Media sound = new Media(new File(musicFile).toURI().toString());
         MediaPlayer mediaPlayer2 = new MediaPlayer(sound);
         mediaPlayer2.setVolume(1);
-        FXGL.loopBGM(musicFile);
 
         //Adding event Filter
         button5.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> mediaPlayer2.setAutoPlay(true));

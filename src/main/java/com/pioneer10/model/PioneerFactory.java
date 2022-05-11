@@ -72,7 +72,8 @@ public class PioneerFactory implements EntityFactory {
                 .bbox(new HitBox(new Point2D(26,0), BoundingShape.box(8,24))) //box di collisione
                 .with(physics)
                 .with(new CollidableComponent(true))
-                .with(new EnemyControlComponent())
+                .with(new PhysicsComponent())
+                .with(new EnemyControlComponent(data.get("stationary")))
                 .build();
     }
 

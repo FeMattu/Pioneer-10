@@ -22,8 +22,10 @@ public class EnemyControlComponent extends Component {
 
     private int nrOfLife = 4; //questo scala ogni volta che viene colpito dal player
     private Entity player;
+    private boolean stationary;
 
-    public EnemyControlComponent() {
+    public EnemyControlComponent(boolean stationary) {
+        this.stationary = stationary;
 
         animIdle = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/undead_idle_sheet.png")),
                 18, 864/18, 26,
@@ -56,7 +58,13 @@ public class EnemyControlComponent extends Component {
     public void onUpdate(double tpf) {
         player = FXGL.getGameWorld().getSingleton(PLAYER);
 
-        if(entity.distance(player) < 200
+        if(stationary){
+            if(entity.distance(player) < 40
+                    && entity.getY() < player.getY()+50     //aggiunta di margine di errore per le Y
+                    && entity.getY() > player.getY()-50){
+                attack();
+            }
+        }else if(entity.distance(player) < 200
                 && entity.getY() < player.getY()+50     //aggiunta di margine di errore per le Y
                 && entity.getY() > player.getY()-50){
             if (entity.distance(player) > 40){

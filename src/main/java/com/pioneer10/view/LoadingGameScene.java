@@ -110,9 +110,9 @@ public class LoadingGameScene extends Scene {
         button3.setEffect(Utils.neonEffect());
         button3.setTextFill(Color.WHITE);
 
-        button4.setTranslateX(this.getWidth()/11 - button4.getWidth()/2);
+        button4.setTranslateX(this.getWidth()/12.5 - button4.getWidth()/2);
         button4.setTranslateY(this.getHeight()/3 - button4.getHeight()/2 + 300);
-        button4.setScaleX(5.2);
+        button4.setScaleX(3.150);
         button4.setScaleY(2);
         button4.setEffect(Utils.neonEffect());
         button4.setTextFill(Color.WHITE);

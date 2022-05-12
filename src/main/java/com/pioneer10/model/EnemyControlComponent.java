@@ -11,24 +11,28 @@ import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import com.almasb.fxgl.time.LocalTimer;
+import com.almasb.fxgl.ui.ProgressBar;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import org.jetbrains.annotations.NotNull;
 
 import static com.pioneer10.model.PioneerEntityType.PLAYER;
 
 public class EnemyControlComponent extends Component {
 
+    private final ProgressBar healtBar;
     private AnimatedTexture texture;
     private AnimationChannel animIdle, animWalk, animDeath, animAttack;
     private PhysicsComponent physics;
     private LocalTimer timer;
 
-    private int nrOfLife = 4; //questo scala ogni volta che viene colpito dal player
     private Entity player;
     private boolean stationary;
 
-    public EnemyControlComponent(boolean stationary) {
+    public EnemyControlComponent(boolean stationary, int nrOfLife) {
         this.stationary = stationary;
 
         animIdle = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/undead_idle_sheet.png")),
@@ -47,6 +51,10 @@ public class EnemyControlComponent extends Component {
                 13, 936/13, 26,
                 Duration.seconds(1.5), 0, 12);
 
+        healtBar = HealtBar();
+        healtBar.setMaxValue(nrOfLife);
+        healtBar.setCurrentValue(nrOfLife);
+        //FXGL.addUINode(healtBar);
         texture = new AnimatedTexture(animIdle);
     }
 
@@ -62,6 +70,8 @@ public class EnemyControlComponent extends Component {
     public void onUpdate(double tpf) {
         player = FXGL.getGameWorld().getSingleton(PLAYER);
         physics.applyBodyForce(Vec2.fromAngle(90), Vec2.fromAngle(90));
+        healtBar.setTranslateX(entity.getX() - entity.getWidth()/2);
+        healtBar.setTranslateY(entity.getY()-entity.getHeight()/2-5);
 
         if(stationary){ //nemici statici
 
@@ -136,11 +146,15 @@ public class EnemyControlComponent extends Component {
     }
 
     public void hit(){
-        if(nrOfLife < 0){
-            death();
-            return;
-        }
-        nrOfLife--;
+        death();
+    }
+
+    @NotNull
+    private static ProgressBar HealtBar() {
+        ProgressBar bar = new ProgressBar(true);
+        bar.setWidth(50);
+        bar.setFill(Color.AQUAMARINE);
+        return bar;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.pioneer10.model;
 
+import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.dsl.components.OffscreenCleanComponent;
 import com.almasb.fxgl.dsl.components.ProjectileComponent;
 import com.almasb.fxgl.dsl.views.ScrollingBackgroundView;
@@ -41,6 +42,7 @@ public class PioneerFactory implements EntityFactory {
         return entityBuilder(data)
                 .type(PLATFORM)
                 .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
+                .with(new CollidableComponent(true))
                 .with(new PhysicsComponent())
                 .build();
     }
@@ -58,6 +60,7 @@ public class PioneerFactory implements EntityFactory {
         return entityBuilder(data)
                 .type(PLATFORM)
                 .bbox(BoundingShape.polygon(points))
+                .with(new CollidableComponent(true))
                 .with(new PhysicsComponent())
                 .build();
     }
@@ -72,9 +75,10 @@ public class PioneerFactory implements EntityFactory {
                 .type(ENEMY)
                 .bbox(new HitBox(new Point2D(26,0), BoundingShape.box(8,24))) //box di collisione
                 .with(physics)
+                .with(new HealthIntComponent(5))
                 .with(new CollidableComponent(true))
                 .with(new OffscreenCleanComponent())
-                .with(new EnemyControlComponent(data.get("stationary")))
+                .with(new EnemyControlComponent(data.get("stationary"), 5))
                 .build();
     }
 
@@ -99,19 +103,14 @@ public class PioneerFactory implements EntityFactory {
 
     @Spawns("Bullet")
     public Entity newBullet(SpawnData data) {
-        Entity owner = data.get("owner");
-
-        var collidable = new CollidableComponent(true);
-        collidable.addIgnoredType(owner.getType());
 
         return entityBuilder(data)
                 .at(data.getX(), data.getY())
                 .type(BULLET)
-                .viewWithBBox(new ImageView(
+                .view(new ImageView(
                         new Image(Utils.getPathFileFromResources("assets/Sprites/bullet.png"))
                 ))
-                .scale(0.5, 0.5)
-                .with(collidable)
+                .with(new CollidableComponent(true))
                 .with(new OffscreenCleanComponent())
                 .with(new ProjectileComponent(data.get("direction"), 32*10))
                 .build();

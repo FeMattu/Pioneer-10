@@ -80,8 +80,6 @@ public class PlayerControlComponent extends Component {
     }
 
     public void shoot() {
-        double angle = getEntity().getRotation();
-        System.out.println(angle);
         spawn("Bullet", new SpawnData(getEntity().getCenter())
                 .put("direction", direction())
                 .put("owner", entity)

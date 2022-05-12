@@ -99,6 +99,11 @@ public class LivGiove extends GameApplication {
             coinsGrabbed++;
         });
 
+        onCollisionOneTimeOnly(BULLET, PLATFORM, (bullet, platform) -> {
+            bullet.removeFromWorld();
+        });
+
+
         onCollisionBegin(PLAYER, ENEMY, (player, enemy) -> {
             if(vite>0){
                 getGameWorld().removeEntity(cuori.get(vite-1));

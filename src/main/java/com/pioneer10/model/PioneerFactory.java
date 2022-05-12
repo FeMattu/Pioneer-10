@@ -77,7 +77,6 @@ public class PioneerFactory implements EntityFactory {
                 .with(physics)
                 .with(new HealthIntComponent(5))
                 .with(new CollidableComponent(true))
-                .with(new OffscreenCleanComponent())
                 .with(new EnemyControlComponent(data.get("stationary")))
                 .build();
     }

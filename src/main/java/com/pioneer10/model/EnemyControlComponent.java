@@ -24,12 +24,13 @@ import static com.pioneer10.model.PioneerEntityType.PLAYER;
 
 public class EnemyControlComponent extends Component {
 
+    private final double DEATH_TIME = 1.5;
     private final ProgressBar healtBar;
     private HealthIntComponent hp;
     private AnimatedTexture texture;
     private AnimationChannel animIdle, animWalk, animDeath, animAttack;
     private PhysicsComponent physics;
-    private LocalTimer timer;
+    private LocalTimer timer, deathTimer;
 
     private Entity player;
     private boolean stationary;
@@ -51,7 +52,7 @@ public class EnemyControlComponent extends Component {
 
         animDeath = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/undead_death_sheet.png")),
                 13, 936/13, 26,
-                Duration.seconds(1.5), 0, 12);
+                Duration.seconds(DEATH_TIME), 0, 12);
 
         healtBar = HealtBar();
         FXGL.addUINode(healtBar);
@@ -64,6 +65,8 @@ public class EnemyControlComponent extends Component {
         entity.getViewComponent().addChild(texture);
         timer = FXGL.newLocalTimer();
         timer.capture();
+
+        deathTimer = FXGL.newLocalTimer();
 
         hp = entity.getComponent(HealthIntComponent.class);
         healtBar.setMaxValue(hp.getMaxValue());
@@ -114,17 +117,29 @@ public class EnemyControlComponent extends Component {
             }
         }
 
-        if (physics.isMovingX()) {
-            if (texture.getAnimationChannel() != animWalk) {
-                texture.loopAnimationChannel(animWalk);
+        if(!hp.isZero()){
+            if (physics.isMovingX()) {
+                if (texture.getAnimationChannel() != animWalk) {
+                    texture.loopAnimationChannel(animWalk);
+                }
+            } else if (!physics.isMovingX()){
+                if(texture.getAnimationChannel() == animAttack){
+                    texture.loopAnimationChannel(animAttack);
+                }else {
+                    texture.loopAnimationChannel(animIdle);
+                }
             }
-        } else if (!physics.isMovingX()){
-            if(texture.getAnimationChannel() == animAttack){
-                texture.loopAnimationChannel(animAttack);
-            }else {
-                texture.loopAnimationChannel(animIdle);
+        }else{
+            if(texture.getAnimationChannel() != animDeath){
+                texture.loopAnimationChannel(animDeath);
+            }
+
+            timer.capture();
+            if(deathTimer.elapsed(Duration.seconds(DEATH_TIME))){
+                entity.removeFromWorld();
             }
         }
+
     }
 
     public void stop() {
@@ -146,6 +161,7 @@ public class EnemyControlComponent extends Component {
     }
 
     public void death(){
+        stop();
         texture.loopAnimationChannel(animDeath);
     }
 
@@ -153,8 +169,12 @@ public class EnemyControlComponent extends Component {
         hp.damage(1);
         healtBar.setCurrentValue(hp.getValue());
 
-        if(hp.isZero())
-            death();
+        if(hp.isZero()){
+            if(!deathTimer.elapsed(Duration.seconds(20))){
+                death();
+            }
+            timer.capture();
+        }
     }
 
     @NotNull

@@ -34,7 +34,7 @@ public class LivGiove extends GameApplication {
     @Override
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setWidth(1200);
-        gameSettings.setHeight(25*32);
+        gameSettings.setHeight(20*32);
         gameSettings.setTitle("Pioneer-10\nGiove");
         gameSettings.setDeveloperMenuEnabled(true);
     }
@@ -92,7 +92,7 @@ public class LivGiove extends GameApplication {
 
     @Override
     protected void initPhysics() {
-        getPhysicsWorld().setGravity(0, 350);
+        getPhysicsWorld().setGravity(0, 400);
 
         onCollisionOneTimeOnly(PLAYER, COIN, (player, coin) -> {
             getGameWorld().removeEntity(coin);

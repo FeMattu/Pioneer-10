@@ -100,6 +100,10 @@ public class LivTerra extends GameApplication {
                 });
             }
         });
+
+        onCollisionOneTimeOnly(BULLET, PLATFORM, (bullet, platform) ->{
+            bullet.removeFromWorld();
+        });
     }
 
     @Override
@@ -163,7 +167,15 @@ public class LivTerra extends GameApplication {
             protected void onActionBegin() {
                 player.getComponent(PlayerControlComponent.class).jump();
             }
-        }, KeyCode.SPACE, VirtualButton.A);
+        }, KeyCode.SPACE, VirtualButton.UP);
+
+        getInput().addAction(new UserAction("Shoot") {
+            @Override
+            protected void onActionBegin() {
+                System.out.println(player.getRotation());
+               // player.getComponent(PlayerControlComponent.class).shoot();
+            }
+        }, KeyCode.E);
 
         getInput().addAction(new UserAction("DevPane") {
             @Override
@@ -174,7 +186,7 @@ public class LivTerra extends GameApplication {
                     getDevService().closeDevPane();
                 }
             }
-        }, KeyCode.P, VirtualButton.LB);
+        }, KeyCode.P);
     }
 
     public static void main(String[] args){launch(args);}

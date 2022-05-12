@@ -1,12 +1,16 @@
 package com.pioneer10.model;
 
+import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
+import com.almasb.fxgl.time.LocalTimer;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
+
+import static com.almasb.fxgl.dsl.FXGL.spawn;
 
 public class PlayerControlComponent extends Component {
 
@@ -15,7 +19,7 @@ public class PlayerControlComponent extends Component {
     private AnimatedTexture texture;
     private AnimationChannel animIdle, animWalk, animJump;
     private PhysicsComponent physics;
-
+    private LocalTimer shootTimer;
 
 
     public PlayerControlComponent() {
@@ -73,6 +77,24 @@ public class PlayerControlComponent extends Component {
 
     public void jump() {
         physics.setVelocityY(-200);
+    }
+
+    public void shoot() {
+        double angle = getEntity().getRotation();
+        System.out.println(angle);
+        spawn("Bullet", new SpawnData(getEntity().getCenter())
+                .put("direction", direction())
+                .put("owner", entity)
+        );
+    }
+
+    private Point2D direction() {
+
+        if (entity.getScaleX() == 1) {
+            return new Point2D(1, 0);
+        } else {
+            return new Point2D(-1, 0);
+        }
     }
 
 }

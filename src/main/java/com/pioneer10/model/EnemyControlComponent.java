@@ -1,9 +1,13 @@
 package com.pioneer10.model;
 
+import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
+import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
+import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
+import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import com.almasb.fxgl.time.LocalTimer;
@@ -57,43 +61,56 @@ public class EnemyControlComponent extends Component {
     @Override
     public void onUpdate(double tpf) {
         player = FXGL.getGameWorld().getSingleton(PLAYER);
+        physics.applyBodyForce(Vec2.fromAngle(90), Vec2.fromAngle(90));
 
-        if(stationary){
-            if(entity.distance(player) < 40
+        if(stationary){ //nemici statici
+
+            physics.setBodyType(BodyType.STATIC);
+            physics.setFixtureDef(new FixtureDef().friction(0.9f));
+
+            if(entity.distance(player) < 50
                     && entity.getY() < player.getY()+50     //aggiunta di margine di errore per le Y
                     && entity.getY() > player.getY()-50){
-                attack();
-            }
-        }else if(entity.distance(player) < 200
-                && entity.getY() < player.getY()+50     //aggiunta di margine di errore per le Y
-                && entity.getY() > player.getY()-50){
-            if (entity.distance(player) > 40){
                 if(player.getX() > entity.getX()){
-                    right();
+                    getEntity().setScaleX(1);
                 }else if( player.getX() < entity.getX()){
-                    left();
+                    getEntity().setScaleX(-1);
                 }
-            }else{
                 attack();
             }
-        }else if(timer.elapsed(Duration.seconds(1)) ){
-            if(physics.isMovingX() && physics.getVelocityX()>0){
-                left();
-            }else{ right(); }
-            timer.capture();
+
+        }else{ //no-stationary enemy
+            if(entity.distance(player) < 200
+                    && entity.getY() < player.getY()+50     //aggiunta di margine di errore per le Y
+                    && entity.getY() > player.getY()-50){
+                if (entity.distance(player) > 50){
+                    if(player.getX() > entity.getX()){
+                        right();
+                    }else if( player.getX() < entity.getX()){
+                        left();
+                    }
+                }else{
+                    attack();
+                }
+            }else if(timer.elapsed(Duration.seconds(1)) ){
+                if(physics.getVelocityX()>0){
+                    left();
+                }else{ right(); }
+                timer.capture();
+            }
         }
 
         if (physics.isMovingX()) {
             if (texture.getAnimationChannel() != animWalk) {
                 texture.loopAnimationChannel(animWalk);
             }
-        } else{
-            if (texture.getAnimationChannel() != animIdle) {
+        } else if (!physics.isMovingX()){
+            if(texture.getAnimationChannel() == animAttack){
+                texture.loopAnimationChannel(animAttack);
+            }else {
                 texture.loopAnimationChannel(animIdle);
             }
         }
-
-
     }
 
     public void stop() {

@@ -143,6 +143,14 @@ public class LivGiove extends GameApplication {
             }
         }, KeyCode.SPACE, VirtualButton.A);
 
+        getInput().addAction(new UserAction("Shoot") {
+            @Override
+            protected void onActionBegin() {
+                System.out.println(player.getRotation());
+                player.getComponent(PlayerControlComponent.class).shoot();
+            }
+        }, KeyCode.E);
+
         getInput().addAction(new UserAction("DevPane") {
             @Override
             protected void onActionBegin() {

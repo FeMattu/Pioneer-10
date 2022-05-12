@@ -1,5 +1,7 @@
 package com.pioneer10.model;
 
+import com.almasb.fxgl.dsl.components.OffscreenCleanComponent;
+import com.almasb.fxgl.dsl.components.ProjectileComponent;
 import com.almasb.fxgl.dsl.views.ScrollingBackgroundView;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
@@ -64,7 +66,6 @@ public class PioneerFactory implements EntityFactory {
     public Entity newEnemy(SpawnData data) {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-
         physics.setFixtureDef(new FixtureDef().friction(0.0f));
 
         return entityBuilder(data)
@@ -72,7 +73,7 @@ public class PioneerFactory implements EntityFactory {
                 .bbox(new HitBox(new Point2D(26,0), BoundingShape.box(8,24))) //box di collisione
                 .with(physics)
                 .with(new CollidableComponent(true))
-                .with(new PhysicsComponent())
+                .with(new OffscreenCleanComponent())
                 .with(new EnemyControlComponent(data.get("stationary")))
                 .build();
     }
@@ -93,6 +94,26 @@ public class PioneerFactory implements EntityFactory {
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new PlayerControlComponent())
+                .build();
+    }
+
+    @Spawns("Bullet")
+    public Entity newBullet(SpawnData data) {
+        Entity owner = data.get("owner");
+
+        var collidable = new CollidableComponent(true);
+        collidable.addIgnoredType(owner.getType());
+
+        return entityBuilder(data)
+                .at(data.getX(), data.getY())
+                .type(BULLET)
+                .viewWithBBox(new ImageView(
+                        new Image(Utils.getPathFileFromResources("assets/Sprites/bullet.png"))
+                ))
+                .scale(0.5, 0.5)
+                .with(collidable)
+                .with(new OffscreenCleanComponent())
+                .with(new ProjectileComponent(data.get("direction"), 32*10))
                 .build();
     }
 

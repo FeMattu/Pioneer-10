@@ -16,6 +16,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 
@@ -70,7 +71,9 @@ public class music extends Scene{
         mediaPlayer2.setVolume(1);
 
         //Adding event Filter
-        button5.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> mediaPlayer2.setAutoPlay(true));
+        button5.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> mediaPlayer2.play());
+
+        mediaPlayer2.seek(Duration.minutes(20));
 
         //Adding event Filter
         button6.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> mediaPlayer2.stop());

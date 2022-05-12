@@ -2,6 +2,7 @@ package com.pioneer10.model;
 
 import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
@@ -24,6 +25,7 @@ import static com.pioneer10.model.PioneerEntityType.PLAYER;
 public class EnemyControlComponent extends Component {
 
     private final ProgressBar healtBar;
+    private HealthIntComponent hp;
     private AnimatedTexture texture;
     private AnimationChannel animIdle, animWalk, animDeath, animAttack;
     private PhysicsComponent physics;
@@ -32,7 +34,7 @@ public class EnemyControlComponent extends Component {
     private Entity player;
     private boolean stationary;
 
-    public EnemyControlComponent(boolean stationary, int nrOfLife) {
+    public EnemyControlComponent(boolean stationary) {
         this.stationary = stationary;
 
         animIdle = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/undead_idle_sheet.png")),
@@ -52,9 +54,7 @@ public class EnemyControlComponent extends Component {
                 Duration.seconds(1.5), 0, 12);
 
         healtBar = HealtBar();
-        healtBar.setMaxValue(nrOfLife);
-        healtBar.setCurrentValue(nrOfLife);
-        //FXGL.addUINode(healtBar);
+        FXGL.addUINode(healtBar);
         texture = new AnimatedTexture(animIdle);
     }
 
@@ -64,6 +64,10 @@ public class EnemyControlComponent extends Component {
         entity.getViewComponent().addChild(texture);
         timer = FXGL.newLocalTimer();
         timer.capture();
+
+        hp = entity.getComponent(HealthIntComponent.class);
+        healtBar.setMaxValue(hp.getMaxValue());
+        healtBar.setCurrentValue(hp.getValue());
     }
 
     @Override
@@ -146,12 +150,25 @@ public class EnemyControlComponent extends Component {
     }
 
     public void hit(){
-        death();
+        hp.damage(1);
+        healtBar.setCurrentValue(hp.getValue());
+
+        if(hp.isZero())
+            death();
     }
 
     @NotNull
     private static ProgressBar HealtBar() {
         ProgressBar bar = new ProgressBar(true);
+        bar.getInnerBar().arcWidthProperty().unbind();
+        bar.getInnerBar().arcHeightProperty().unbind();
+        bar.getInnerBar().arcWidthProperty().setValue(0);
+        bar.getInnerBar().arcHeightProperty().setValue(0);
+        bar.getInnerBar().heightProperty().unbind();
+        bar.getBackgroundBar().setFill(null);
+        bar.getBackgroundBar().setEffect(null);
+        bar.getInnerBar().setEffect(null);
+
         bar.setWidth(50);
         bar.setFill(Color.AQUAMARINE);
         return bar;

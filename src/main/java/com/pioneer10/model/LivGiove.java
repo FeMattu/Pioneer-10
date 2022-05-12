@@ -107,7 +107,9 @@ public class LivGiove extends GameApplication {
         onCollisionBegin(PLAYER, ENEMY, (player, enemy) -> {
             if(vite>0){
                 getGameWorld().removeEntity(cuori.get(vite-1));
-                vite--;
+                //vite--;
+
+                enemy.getComponent(EnemyControlComponent.class).hit();
             }else{
                 getDialogService().showMessageBox("You are dead", () ->{
                 });

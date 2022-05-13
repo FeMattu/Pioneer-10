@@ -3,6 +3,7 @@ package com.pioneer10.model;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.Viewport;
+import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
@@ -104,16 +105,20 @@ public class LivGiove extends GameApplication {
         });
 
         onCollisionBegin(BULLET, ENEMY, (bullet, enemy) ->{
-            enemy.getComponent(EnemyControlComponent.class).hit();
-            bullet.removeFromWorld();
+            if(enemy.getComponent(HealthIntComponent.class).getValue() != 0){
+                enemy.getComponent(EnemyControlComponent.class).hit();
+                bullet.removeFromWorld();
+            }
         });
 
         onCollisionBegin(PLAYER, ENEMY, (player, enemy) -> {
             if(vite>0){
-                getGameWorld().removeEntity(cuori.get(vite-1));
-                vite--;
+                if(enemy.getComponent(HealthIntComponent.class).getValue() != 0){
+                    getGameWorld().removeEntity(cuori.get(vite-1));
+                    vite--;
 
-                enemy.getComponent(EnemyControlComponent.class).hit();
+                    enemy.getComponent(EnemyControlComponent.class).hit();
+                }
             }else{
                 getDialogService().showMessageBox("You are dead", () ->{
                 });

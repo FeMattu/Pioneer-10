@@ -31,26 +31,26 @@ public class LivNettuno extends GameApplication {
 
     @Override
     protected void initSettings(GameSettings gameSettings) {
-        gameSettings.setWidth(1200);
-        gameSettings.setHeight(640);
+        gameSettings.setWidth(360*16/4);
+        gameSettings.setHeight(40*16);
         gameSettings.setTitle("Pioneer-10\nNettuno");
+        gameSettings.setDeveloperMenuEnabled(true);
     }
 
     @Override
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
         setLevelFromMap("Nettuno/Nettuno.tmx");
+        spawn("backgroundNettuno");
         player = getGameWorld().getEntitiesByType(PLAYER).get(0);
         cuori = getGameWorld().getEntitiesByType(HEART);
 
         vite = MAX_VITE;
 
         viewport = getGameScene().getViewport();
-        viewport.setBounds(0, 0, 180*16, getAppHeight());
+        viewport.setBounds(0, 0, 360*16, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
-        getDevService().openConsole();
-
     }
 
     @Override
@@ -65,7 +65,7 @@ public class LivNettuno extends GameApplication {
 
     @Override
     protected void initPhysics() {
-        getPhysicsWorld().setGravity(0, 400);
+        getPhysicsWorld().setGravity(0, 200);
 
         //Collisione con monete
         onCollisionOneTimeOnly(PLAYER, COIN, (player, coin) -> {
@@ -141,6 +141,17 @@ public class LivNettuno extends GameApplication {
                 player.getComponent(PlayerControlComponent.class).jump();
             }
         }, KeyCode.SPACE, VirtualButton.A);
+
+        getInput().addAction(new UserAction("DevPane") {
+            @Override
+            protected void onActionBegin() {
+                if(!getDevService().isDevPaneOpen()){
+                    getDevService().openDevPane();
+                }else{
+                    getDevService().closeDevPane();
+                }
+            }
+        }, KeyCode.P, VirtualButton.LB);
     }
 
     public static void main(String[] args){launch(args);}

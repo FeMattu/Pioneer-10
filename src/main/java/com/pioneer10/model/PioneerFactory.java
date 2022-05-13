@@ -168,10 +168,10 @@ public class PioneerFactory implements EntityFactory {
                 .with(new IrremovableComponent())
                 .build();
     }
-    @Spawns("backgroundMarte")
-    public Entity newBackgroundMarte(SpawnData data) {
+    @Spawns("backgroundNettuno")
+    public Entity newBackgroundNettuno(SpawnData data) {
         return entityBuilder()
-                .view(new ScrollingBackgroundView(new Image(Utils.getPathFileFromResources("assets/levels/Giove/gioveBackground.jpg")),
+                .view(new ScrollingBackgroundView(new Image(Utils.getPathFileFromResources("assets/levels/Nettuno/background_nettuno.png")),
                         getAppWidth(), getAppHeight()))
                 .zIndex(-1)
                 .with(new IrremovableComponent())

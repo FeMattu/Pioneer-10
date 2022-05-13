@@ -96,7 +96,7 @@ public class PioneerFactory implements EntityFactory {
                 .bbox(new HitBox(new Point2D(7,7), BoundingShape.box(21,16)))//box di collisione per la testa
                 .with(physics)
                 .with(new CollidableComponent(true))
-                .with(new PlayerControlComponent())
+                .with(new PlayerControlComponent(3))
                 .build();
     }
 

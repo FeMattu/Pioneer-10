@@ -1,5 +1,6 @@
 package com.pioneer10.model;
 
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
@@ -14,15 +15,18 @@ import static com.almasb.fxgl.dsl.FXGL.spawn;
 
 public class PlayerControlComponent extends Component {
 
-    private int speed = 0;
-
     private AnimatedTexture texture;
     private AnimationChannel animIdle, animWalk, animJump;
     private PhysicsComponent physics;
     private LocalTimer shootTimer;
+    private int MAX_NR_OF_SHOOT;
+    private int nrOfShoot;
 
 
-    public PlayerControlComponent() {
+
+    public PlayerControlComponent(int maxNrOFShootInLoader) {
+        this.MAX_NR_OF_SHOOT = maxNrOFShootInLoader;
+        nrOfShoot = MAX_NR_OF_SHOOT;
         String spacemanWalkPath = Utils.getPathFileFromResources("assets/Sprites/Anim_Robot_Walk1_v1.1_spritesheet.png");
 
         animIdle = new AnimationChannel(new Image(spacemanWalkPath), 4, 32, 32,
@@ -42,6 +46,8 @@ public class PlayerControlComponent extends Component {
     public void onAdded() {
         entity.getTransformComponent().setScaleOrigin(new Point2D(16, 16));
         entity.getViewComponent().addChild(texture);
+        shootTimer = FXGL.newLocalTimer();
+        shootTimer.capture();
     }
 
     @Override
@@ -59,6 +65,13 @@ public class PlayerControlComponent extends Component {
                 texture.loopAnimationChannel(animIdle);
             }
         }
+
+
+        if(shootTimer.elapsed(Duration.seconds(1))){
+            nrOfShoot++;
+            System.out.println("+1");
+        }
+        shootTimer.capture();
     }
 
     public void stop() {
@@ -80,14 +93,16 @@ public class PlayerControlComponent extends Component {
     }
 
     public void shoot() {
-        spawn("Bullet", new SpawnData(getEntity().getCenter())
-                .put("direction", direction())
-                .put("owner", entity)
-        );
+        if(nrOfShoot > 0){
+            spawn("Bullet", new SpawnData(getEntity().getCenter())
+                    .put("direction", direction())
+                    .put("owner", entity)
+            );
+            nrOfShoot--;
+        }
     }
 
     private Point2D direction() {
-
         if (entity.getScaleX() == 1) {
             return new Point2D(1, 0);
         } else {

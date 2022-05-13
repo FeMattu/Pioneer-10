@@ -177,7 +177,6 @@ public class EnemyControlComponent extends Component {
            texture.setOnCycleFinished(()->{
                entity.removeFromWorld();
            });
-           return;
         }
     }
 

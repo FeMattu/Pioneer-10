@@ -106,7 +106,7 @@ public class PioneerFactory implements EntityFactory {
         return entityBuilder(data)
                 .at(data.getX(), data.getY())
                 .type(BULLET)
-                .view(new ImageView(
+                .viewWithBBox(new ImageView(
                         new Image(Utils.getPathFileFromResources("assets/Sprites/bullet.png"))
                 ))
                 .with(new CollidableComponent(true))

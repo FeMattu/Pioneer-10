@@ -20,11 +20,14 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import static com.pioneer10.model.PioneerEntityType.PLAYER;
 
 public class EnemyControlComponent extends Component {
 
-    private final double DEATH_TIME = 1.5;
+    private final double DEATH_TIME = 2.3;
     private final ProgressBar healtBar;
     private HealthIntComponent hp;
     private AnimatedTexture texture;
@@ -55,7 +58,6 @@ public class EnemyControlComponent extends Component {
                 Duration.seconds(DEATH_TIME), 0, 12);
 
         healtBar = HealtBar();
-        FXGL.addUINode(healtBar);
         texture = new AnimatedTexture(animIdle);
     }
 
@@ -80,11 +82,31 @@ public class EnemyControlComponent extends Component {
         healtBar.setTranslateX(entity.getX() - entity.getWidth()/2);
         healtBar.setTranslateY(entity.getY()-entity.getHeight()/2-5);
 
-        if(stationary){ //nemici statici
+        if(!hp.isZero()){
+            if (physics.isMovingX()) {
+                if (texture.getAnimationChannel() != animWalk) {
+                    texture.loopAnimationChannel(animWalk);
+                }
+            }else{
+                if(texture.getAnimationChannel() == animAttack){
+                    stop();
+                    return;
+                } else{
+                    texture.loopAnimationChannel(animIdle);
+                }
+            }
+        }else{
+            if(texture.getAnimationChannel() == animDeath){
+                stop();
+                return;
+            }
+        }
 
+        if(stationary){ //nemici statici
             physics.setBodyType(BodyType.STATIC);
             physics.setFixtureDef(new FixtureDef().friction(0.9f));
 
+            //il nemico si gira verso il player
             if(entity.distance(player) < 50
                     && entity.getY() < player.getY()+50     //aggiunta di margine di errore per le Y
                     && entity.getY() > player.getY()-50){
@@ -93,9 +115,10 @@ public class EnemyControlComponent extends Component {
                 }else if( player.getX() < entity.getX()){
                     getEntity().setScaleX(-1);
                 }
-                attack();
-            }
 
+                //attack();
+                return;
+            }
         }else{ //no-stationary enemy
             if(entity.distance(player) < 200
                     && entity.getY() < player.getY()+50     //aggiunta di margine di errore per le Y
@@ -107,7 +130,9 @@ public class EnemyControlComponent extends Component {
                         left();
                     }
                 }else{
-                    attack();
+                    //attack();
+                    stop();
+                    return;
                 }
             }else if(timer.elapsed(Duration.seconds(1)) ){
                 if(physics.getVelocityX()>0){
@@ -116,30 +141,6 @@ public class EnemyControlComponent extends Component {
                 timer.capture();
             }
         }
-
-        if(!hp.isZero()){
-            if (physics.isMovingX()) {
-                if (texture.getAnimationChannel() != animWalk) {
-                    texture.loopAnimationChannel(animWalk);
-                }
-            } else if (!physics.isMovingX()){
-                if(texture.getAnimationChannel() == animAttack){
-                    texture.loopAnimationChannel(animAttack);
-                }else {
-                    texture.loopAnimationChannel(animIdle);
-                }
-            }
-        }else{
-            if(texture.getAnimationChannel() != animDeath){
-                texture.loopAnimationChannel(animDeath);
-            }
-
-            timer.capture();
-            if(deathTimer.elapsed(Duration.seconds(DEATH_TIME))){
-                entity.removeFromWorld();
-            }
-        }
-
     }
 
     public void stop() {
@@ -161,19 +162,22 @@ public class EnemyControlComponent extends Component {
     }
 
     public void death(){
-        stop();
         texture.loopAnimationChannel(animDeath);
     }
 
     public void hit(){
         hp.damage(1);
         healtBar.setCurrentValue(hp.getValue());
+        System.out.println(hp.getValue());
 
         if(hp.isZero()){
-            if(!deathTimer.elapsed(Duration.seconds(20))){
+            if(texture.getAnimationChannel() != animDeath){
                 death();
             }
-            timer.capture();
+           texture.setOnCycleFinished(()->{
+               entity.removeFromWorld();
+           });
+           return;
         }
     }
 

@@ -1,6 +1,7 @@
 package com.pioneer10.model;
 
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
@@ -11,10 +12,14 @@ import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
+import java.util.List;
+
 import static com.almasb.fxgl.dsl.FXGL.spawn;
+import static com.pioneer10.model.PioneerEntityType.RELOADER;
 
 public class PlayerControlComponent extends Component {
 
+    private List<Entity> reloader;
     private AnimatedTexture texture;
     private AnimationChannel animIdle, animWalk, animJump;
     private PhysicsComponent physics;
@@ -27,6 +32,8 @@ public class PlayerControlComponent extends Component {
     public PlayerControlComponent(int maxNrOFShootInLoader) {
         this.MAX_NR_OF_SHOOT = maxNrOFShootInLoader;
         nrOfShoot = MAX_NR_OF_SHOOT;
+        this.reloader = reloader;
+
         String spacemanWalkPath = Utils.getPathFileFromResources("assets/Sprites/Anim_Robot_Walk1_v1.1_spritesheet.png");
 
         animIdle = new AnimationChannel(new Image(spacemanWalkPath), 4, 32, 32,
@@ -67,11 +74,13 @@ public class PlayerControlComponent extends Component {
         }
 
 
-        if(shootTimer.elapsed(Duration.seconds(1))){
-            nrOfShoot++;
-            System.out.println("+1");
+        if(nrOfShoot < MAX_NR_OF_SHOOT){
+            if(shootTimer.elapsed(Duration.seconds(3))){
+                nrOfShoot++;
+                //spawn("reloader");
+                shootTimer.capture();
+            }
         }
-        shootTimer.capture();
     }
 
     public void stop() {
@@ -92,6 +101,10 @@ public class PlayerControlComponent extends Component {
         physics.setVelocityY(-200);
     }
 
+    public void addReloader(List<Entity> reloader){
+        this.reloader = reloader;
+    }
+
     public void shoot() {
         if(nrOfShoot > 0){
             spawn("Bullet", new SpawnData(getEntity().getCenter())
@@ -99,6 +112,7 @@ public class PlayerControlComponent extends Component {
                     .put("owner", entity)
             );
             nrOfShoot--;
+            //FXGL.getGameWorld().removeEntity(reloader.get(reloader.size()-nrOfShoot));
         }
     }
 

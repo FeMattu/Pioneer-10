@@ -148,6 +148,16 @@ public class PioneerFactory implements EntityFactory {
                 .build();
     }
 
+    @Spawns("reloader")
+    public Entity newReloader(SpawnData data) {
+        return entityBuilder(data)
+                .type(RELOADER)
+                .view(new ImageView(
+                        new Image(Utils.getPathFileFromResources("assets/levels/bulletReloader.png"))
+                ))
+                .build();
+    }
+
     @Spawns("money")
     public Entity newMoney(SpawnData data) {
         return entityBuilder(data)

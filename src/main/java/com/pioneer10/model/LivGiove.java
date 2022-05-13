@@ -45,6 +45,8 @@ public class LivGiove extends GameApplication {
         getGameWorld().addEntityFactory(new PioneerFactory());
         setLevelFromMap("Giove/Giove.tmx");
         player = getGameWorld().getEntitiesByType(PLAYER).get(0);
+        player.getComponent(PlayerControlComponent.class).addReloader(
+                getGameWorld().getEntitiesByType(RELOADER));
         spawn("backgroundTerra");
 
         cuori = getGameWorld().getEntitiesByType(HEART);
@@ -77,6 +79,9 @@ public class LivGiove extends GameApplication {
         //bind dei cuori
         for(int i = 0; i < cuori.size(); i++){
             cuori.get(i).xProperty().set(viewport.xProperty().doubleValue()+i*32);
+            //getGameWorld().getEntitiesByType(RELOADER).get(i).xProperty().setValue(
+            //        viewport.xProperty().doubleValue()+i*20
+            //);
         }
         getGameWorld().getEntitiesByType(MONEY).get(0).xProperty().bind(viewport.xProperty());
         textForCoinGrabbed.setText(Integer.toString(coinsGrabbed));
@@ -86,8 +91,8 @@ public class LivGiove extends GameApplication {
         textForCoinGrabbed = new Text();
         textForCoinGrabbed.setFont(Font.font(30));
         textForCoinGrabbed.setFill(Color.WHITE);
-        textForCoinGrabbed.setX(34);
-        textForCoinGrabbed.setY(61);
+        textForCoinGrabbed.setX(35);
+        textForCoinGrabbed.setY(94);
         getGameScene().addUINode(textForCoinGrabbed);
     }
 

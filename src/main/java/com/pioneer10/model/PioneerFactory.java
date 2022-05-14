@@ -59,7 +59,7 @@ public class PioneerFactory implements EntityFactory {
 
         return entityBuilder(data)
                 .type(ANGLE)
-                .bbox(BoundingShape.polygon(points))
+                .bbox(new HitBox(BoundingShape.polygon(points)))
                 .with(new CollidableComponent(true))
                 .with(new PhysicsComponent())
                 .build();

@@ -32,7 +32,7 @@ public class LivTerra extends GameApplication {
     private Entity player;
     private Viewport viewport;
     private int vite, coinsGrabbed;
-    private List<Entity> cuori;
+    private List<Entity> cuori, reloader;
     private Text textForCoinGrabbed;
     private Entity closestPlatformToPlayer;
     @Override
@@ -50,30 +50,60 @@ public class LivTerra extends GameApplication {
         setLevelFromMap("Terra/MappaTerra.tmx");
         player = getGameWorld().getSingleton(PLAYER);
         spawn("backgroundTerra");
+
+        reloader = getGameWorld().getEntitiesByType(RELOADER);
+        player.getComponent(PlayerControlComponent.class).addReloader(reloader);
         cuori = getGameWorld().getEntitiesByType(HEART);
 
         vite = MAX_VITE;
 
-
         viewport = getGameScene().getViewport();
-        viewport.setBounds(0, 0, 150*32, getAppHeight());
+        viewport.setBounds(0, 0, 180*32, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
     }
 
     @Override
-    protected void onPreInit() {
-        getSettings().setGlobalMusicVolume(0.5);
-        loopBGM("Minecraft.mp3");
-    }
+    protected void onUpdate(double tpf) {
+        if (player.getY() > getAppHeight()) {
+            if(vite > 0){
+                closestPlatformToPlayer = getGameWorld().getClosestEntity(player, e -> e.isType(PLATFORM)).get();
+                getGameWorld().removeEntity(player);
+                player = spawn("player", closestPlatformToPlayer.getX()+16, closestPlatformToPlayer.getY()-16);
+                viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
+                getGameWorld().removeEntity(cuori.get(vite-1));
+                vite--;
+            }else{
+                getDialogService().showMessageBox("You are dead", () ->{
+                    FXGL.getPrimaryStage().setScene(new LevelScene(
+                            FXGL.getPrimaryStage(),
+                            PioneerLauncher.WIDTH,
+                            PioneerLauncher.HEIGHT
+                    ));
+                });
+            }
+        }
 
+        //bind dei cuori e dei proiettili
+        for(int i = 0; i < cuori.size(); i++){
+            cuori.get(i).xProperty().set(viewport.xProperty().doubleValue()+i*32);
+        }
+        reloader = getGameWorld().getEntitiesByType(RELOADER);
+        for( int i = 0; i < reloader.size(); i++){
+            reloader.get(i).xProperty().setValue(
+                    viewport.xProperty().doubleValue()+i*20
+            );
+        }
+        getGameWorld().getEntitiesByType(MONEY).get(0).xProperty().bind(viewport.xProperty());
+        textForCoinGrabbed.setText(Integer.toString(coinsGrabbed));
+    }
     @Override
     protected void initUI(){
         textForCoinGrabbed = new Text();
         textForCoinGrabbed.setFont(Font.font(30));
         textForCoinGrabbed.setFill(Color.WHITE);
-        textForCoinGrabbed.setX(34);
-        textForCoinGrabbed.setY(61);
+        textForCoinGrabbed.setX(35);
+        textForCoinGrabbed.setY(94);
         getGameScene().addUINode(textForCoinGrabbed);
     }
 
@@ -87,6 +117,9 @@ public class LivTerra extends GameApplication {
         });
 
         onCollisionBegin(BULLET, PLATFORM, (bullet, platform) -> {
+            bullet.removeFromWorld();
+        });
+        onCollisionBegin(BULLET, ANGLE, (bullet, platform) -> {
             bullet.removeFromWorld();
         });
 
@@ -107,23 +140,6 @@ public class LivTerra extends GameApplication {
                 }
             }else{
                 getDialogService().showMessageBox("You are dead", () ->{
-                });
-            }
-        });
-    }
-
-    @Override
-    protected void onUpdate(double tpf) {
-        if (player.getY() > getAppHeight()) {
-            if(vite > 0){
-                closestPlatformToPlayer = getGameWorld().getClosestEntity(player, e -> e.isType(PLATFORM)).get();
-                getGameWorld().removeEntity(player);
-                player = spawn("player", closestPlatformToPlayer.getX()+16, closestPlatformToPlayer.getY()-32);
-                viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
-                getGameWorld().removeEntity(cuori.get(vite-1));
-                vite--;
-            }else{
-                getDialogService().showMessageBox("You are dead", () ->{
                     FXGL.getPrimaryStage().setScene(new LevelScene(
                             FXGL.getPrimaryStage(),
                             PioneerLauncher.WIDTH,
@@ -131,15 +147,7 @@ public class LivTerra extends GameApplication {
                     ));
                 });
             }
-        }
-
-
-        //bind dei cuori
-        for(int i = 0; i < cuori.size(); i++){
-            cuori.get(i).xProperty().set(viewport.xProperty().doubleValue()+i*32);
-        }
-        getGameWorld().getEntitiesByType(MONEY).get(0).xProperty().bind(viewport.xProperty());
-        textForCoinGrabbed.setText(Integer.toString(coinsGrabbed));
+        });
     }
 
     @Override
@@ -173,7 +181,7 @@ public class LivTerra extends GameApplication {
             protected void onActionBegin() {
                 player.getComponent(PlayerControlComponent.class).jump();
             }
-        }, KeyCode.SPACE, VirtualButton.UP);
+        }, KeyCode.SPACE, VirtualButton.A);
 
         getInput().addAction(new UserAction("Shoot") {
             @Override
@@ -191,8 +199,7 @@ public class LivTerra extends GameApplication {
                     getDevService().closeDevPane();
                 }
             }
-        }, KeyCode.P);
+        }, KeyCode.P, VirtualButton.LB);
     }
-
     public static void main(String[] args){launch(args);}
 }

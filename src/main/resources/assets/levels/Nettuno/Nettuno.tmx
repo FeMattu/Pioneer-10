@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="360" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="204">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="360" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="207">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="1230" columns="30">
   <image source="tiles.png" width="480" height="656"/>
  </tileset>
@@ -408,7 +408,10 @@
   <object id="1" type="heart" x="0" y="0" width="32" height="32"/>
   <object id="2" type="heart" x="32" y="0" width="32" height="32"/>
   <object id="3" type="heart" x="64" y="0" width="32" height="32"/>
-  <object id="4" type="money" x="0" y="32" width="32" height="32"/>
+  <object id="4" type="money" x="0" y="64" width="32" height="32"/>
+  <object id="204" type="reloader" x="0" y="32" width="15" height="32"/>
+  <object id="205" type="reloader" x="25" y="32" width="15" height="32"/>
+  <object id="206" type="reloader" x="50" y="32" width="15" height="32"/>
  </objectgroup>
  <objectgroup id="4" name="Player">
   <object id="38" type="player" x="224" y="256" width="32" height="32"/>

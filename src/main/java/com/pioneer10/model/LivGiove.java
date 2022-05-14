@@ -4,11 +4,14 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.core.collection.Array;
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
+import com.pioneer10.PioneerLauncher;
 import com.pioneer10.controller.ControllerMenu;
+import com.pioneer10.view.LevelScene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -35,7 +38,7 @@ public class LivGiove extends GameApplication {
     @Override
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setWidth(1200);
-        gameSettings.setHeight(20*32);
+        gameSettings.setHeight(640);
         gameSettings.setTitle("Pioneer-10\nGiove");
         gameSettings.setDeveloperMenuEnabled(true);
     }
@@ -72,7 +75,11 @@ public class LivGiove extends GameApplication {
                 vite--;
             }else{
                 getDialogService().showMessageBox("You are dead", () ->{
-                    //codice per tornare al menu dei livelli
+                    FXGL.getPrimaryStage().setScene(new LevelScene(
+                            FXGL.getPrimaryStage(),
+                            PioneerLauncher.WIDTH,
+                            PioneerLauncher.HEIGHT
+                    ));
                 });
             }
         }
@@ -133,6 +140,11 @@ public class LivGiove extends GameApplication {
                 }
             }else{
                 getDialogService().showMessageBox("You are dead", () ->{
+                    FXGL.getPrimaryStage().setScene(new LevelScene(
+                            FXGL.getPrimaryStage(),
+                            PioneerLauncher.WIDTH,
+                            PioneerLauncher.HEIGHT
+                    ));
                 });
             }
         });

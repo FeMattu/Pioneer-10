@@ -58,7 +58,7 @@ public class PioneerFactory implements EntityFactory {
         }
 
         return entityBuilder(data)
-                .type(PLATFORM)
+                .type(ANGLE)
                 .bbox(BoundingShape.polygon(points))
                 .with(new CollidableComponent(true))
                 .with(new PhysicsComponent())
@@ -172,7 +172,7 @@ public class PioneerFactory implements EntityFactory {
     @Spawns("backgroundGiove")
     public Entity newBackgroundGiove(SpawnData data) {
         return entityBuilder()
-                .view(new ScrollingBackgroundView(new Image(Utils.getPathFileFromResources("assets/levels/Giove/gioveBackground.jpg")),
+                .view(new ScrollingBackgroundView(new Image(Utils.getPathFileFromResources("assets/levels/Giove/background_giove.png")),
                         getAppWidth(), getAppHeight()))
                 .zIndex(-1)
                 .with(new IrremovableComponent())

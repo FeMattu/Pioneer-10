@@ -3,6 +3,7 @@ package com.pioneer10.model;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.Viewport;
+import com.almasb.fxgl.core.collection.Array;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
@@ -27,9 +28,8 @@ public class LivGiove extends GameApplication {
     private Viewport viewport;
 
     private int vite, coinsGrabbed;
-    private List<Entity> cuori;
+    private List<Entity> cuori, reloader;
     private Text textForCoinGrabbed;
-
     private Entity closestPlatformToPlayer;
 
     @Override
@@ -45,10 +45,11 @@ public class LivGiove extends GameApplication {
         getGameWorld().addEntityFactory(new PioneerFactory());
         setLevelFromMap("Giove/Giove.tmx");
         player = getGameWorld().getEntitiesByType(PLAYER).get(0);
-        player.getComponent(PlayerControlComponent.class).addReloader(
-                getGameWorld().getEntitiesByType(RELOADER));
-        spawn("backgroundTerra");
 
+        spawn("backgroundGiove");
+
+        reloader = getGameWorld().getEntitiesByType(RELOADER);
+        player.getComponent(PlayerControlComponent.class).addReloader(reloader);
         cuori = getGameWorld().getEntitiesByType(HEART);
 
         vite = MAX_VITE;
@@ -76,12 +77,15 @@ public class LivGiove extends GameApplication {
             }
         }
 
-        //bind dei cuori
+        //bind dei cuori e dei proiettili
         for(int i = 0; i < cuori.size(); i++){
             cuori.get(i).xProperty().set(viewport.xProperty().doubleValue()+i*32);
-            //getGameWorld().getEntitiesByType(RELOADER).get(i).xProperty().setValue(
-            //        viewport.xProperty().doubleValue()+i*20
-            //);
+        }
+        reloader = getGameWorld().getEntitiesByType(RELOADER);
+        for( int i = 0; i < reloader.size(); i++){
+            reloader.get(i).xProperty().setValue(
+                    viewport.xProperty().doubleValue()+i*20
+            );
         }
         getGameWorld().getEntitiesByType(MONEY).get(0).xProperty().bind(viewport.xProperty());
         textForCoinGrabbed.setText(Integer.toString(coinsGrabbed));
@@ -106,6 +110,9 @@ public class LivGiove extends GameApplication {
         });
 
         onCollisionBegin(BULLET, PLATFORM, (bullet, platform) -> {
+            bullet.removeFromWorld();
+        });
+        onCollisionBegin(BULLET, ANGLE, (bullet, platform) -> {
             bullet.removeFromWorld();
         });
 

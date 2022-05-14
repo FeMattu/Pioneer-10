@@ -77,8 +77,8 @@ public class PlayerControlComponent extends Component {
                 spawn("reloader",
                         reloader.get(nrOfShoot).getX(),
                         reloader.get(nrOfShoot).getY());
+                //FXGL.getGameWorld().getEntitiesByType(RELOADER).add(reloader.get(nrOfShoot));
                 nrOfShoot++;
-                System.out.println("+1");
                 shootTimer.capture();
             }
         }
@@ -115,7 +115,6 @@ public class PlayerControlComponent extends Component {
             reloader.get(nrOfShoot-1);
             FXGL.getGameWorld().removeEntity(
                     FXGL.getGameWorld().getEntitiesByType(RELOADER).get(nrOfShoot-1));
-            System.out.println(nrOfShoot);
             nrOfShoot--;
         }
     }

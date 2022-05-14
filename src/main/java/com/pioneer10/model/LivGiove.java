@@ -103,7 +103,7 @@ public class LivGiove extends GameApplication {
         textForCoinGrabbed.setFont(Font.font(30));
         textForCoinGrabbed.setFill(Color.WHITE);
         textForCoinGrabbed.setX(35);
-        textForCoinGrabbed.setY(94);
+        textForCoinGrabbed.setY(92);
         getGameScene().addUINode(textForCoinGrabbed);
     }
 

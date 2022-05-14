@@ -32,7 +32,6 @@ public class PlayerControlComponent extends Component {
     public PlayerControlComponent(int maxNrOFShootInLoader) {
         this.MAX_NR_OF_SHOOT = maxNrOFShootInLoader;
         nrOfShoot = MAX_NR_OF_SHOOT;
-        this.reloader = reloader;
 
         String spacemanWalkPath = Utils.getPathFileFromResources("assets/Sprites/Anim_Robot_Walk1_v1.1_spritesheet.png");
 
@@ -73,11 +72,13 @@ public class PlayerControlComponent extends Component {
             }
         }
 
-
         if(nrOfShoot < MAX_NR_OF_SHOOT){
             if(shootTimer.elapsed(Duration.seconds(3))){
+                spawn("reloader",
+                        reloader.get(nrOfShoot).getX(),
+                        reloader.get(nrOfShoot).getY());
                 nrOfShoot++;
-                //spawn("reloader");
+                System.out.println("+1");
                 shootTimer.capture();
             }
         }
@@ -102,7 +103,7 @@ public class PlayerControlComponent extends Component {
     }
 
     public void addReloader(List<Entity> reloader){
-        this.reloader = reloader;
+        this.reloader = List.copyOf(reloader);
     }
 
     public void shoot() {
@@ -111,8 +112,11 @@ public class PlayerControlComponent extends Component {
                     .put("direction", direction())
                     .put("owner", entity)
             );
+            reloader.get(nrOfShoot-1);
+            FXGL.getGameWorld().removeEntity(
+                    FXGL.getGameWorld().getEntitiesByType(RELOADER).get(nrOfShoot-1));
+            System.out.println(nrOfShoot);
             nrOfShoot--;
-            //FXGL.getGameWorld().removeEntity(reloader.get(reloader.size()-nrOfShoot));
         }
     }
 

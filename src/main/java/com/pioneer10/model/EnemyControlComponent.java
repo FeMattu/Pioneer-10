@@ -115,7 +115,6 @@ public class EnemyControlComponent extends Component {
                 }else if( player.getX() < entity.getX()){
                     getEntity().setScaleX(-1);
                 }
-
                 //attack();
                 return;
             }
@@ -131,7 +130,7 @@ public class EnemyControlComponent extends Component {
                     }
                 }else{
                     //attack();
-                    stop();
+                    //stop();
                     return;
                 }
             }else if(timer.elapsed(Duration.seconds(1)) ){

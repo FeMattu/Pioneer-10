@@ -372,7 +372,7 @@
   <object id="281" type="heart" x="64" y="0" width="32" height="32"/>
   <object id="282" type="money" x="0" y="64" width="32" height="32"/>
   <object id="287" type="reloader" x="0" y="32" width="15" height="32"/>
-  <object id="291" type="reloader" x="50" y="32" width="15" height="32"/>
   <object id="292" type="reloader" x="25" y="32" width="15" height="32"/>
+  <object id="291" type="reloader" x="50" y="32" width="15" height="32"/>
  </objectgroup>
 </map>

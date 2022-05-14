@@ -4,6 +4,7 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
@@ -80,29 +81,34 @@ public class LivTerra extends GameApplication {
     protected void initPhysics() {
         getPhysicsWorld().setGravity(0, 400);
 
-        //Collisione con monete
         onCollisionOneTimeOnly(PLAYER, COIN, (player, coin) -> {
             getGameWorld().removeEntity(coin);
             coinsGrabbed++;
         });
 
-        onCollisionBegin(PLAYER, ENEMY, (player, enemy) -> {
-            if(vite>0){
-                getGameWorld().removeEntity(cuori.get(vite-1));
-                vite--;
-            }else{
-                getDialogService().showMessageBox("You are dead", () ->{
-                    FXGL.getPrimaryStage().setScene(new LevelScene(
-                            FXGL.getPrimaryStage(),
-                            PioneerLauncher.WIDTH,
-                            PioneerLauncher.HEIGHT
-                    ));
-                });
+        onCollisionBegin(BULLET, PLATFORM, (bullet, platform) -> {
+            bullet.removeFromWorld();
+        });
+
+        onCollisionBegin(BULLET, ENEMY, (bullet, enemy) ->{
+            if(enemy.getComponent(HealthIntComponent.class).getValue() != 0){
+                enemy.getComponent(EnemyControlComponent.class).hit();
+                bullet.removeFromWorld();
             }
         });
 
-        onCollisionOneTimeOnly(BULLET, PLATFORM, (bullet, platform) ->{
-            bullet.removeFromWorld();
+        onCollisionBegin(PLAYER, ENEMY, (player, enemy) -> {
+            if(vite>0){
+                if(enemy.getComponent(HealthIntComponent.class).getValue() != 0){
+                    getGameWorld().removeEntity(cuori.get(vite-1));
+                    vite--;
+
+                    enemy.getComponent(EnemyControlComponent.class).hit();
+                }
+            }else{
+                getDialogService().showMessageBox("You are dead", () ->{
+                });
+            }
         });
     }
 
@@ -172,8 +178,7 @@ public class LivTerra extends GameApplication {
         getInput().addAction(new UserAction("Shoot") {
             @Override
             protected void onActionBegin() {
-                System.out.println(player.getRotation());
-               // player.getComponent(PlayerControlComponent.class).shoot();
+                player.getComponent(PlayerControlComponent.class).shoot();
             }
         }, KeyCode.E);
 

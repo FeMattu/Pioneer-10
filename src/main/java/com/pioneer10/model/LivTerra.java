@@ -109,7 +109,7 @@ public class LivTerra extends GameApplication {
 
     @Override
     protected void initPhysics() {
-        getPhysicsWorld().setGravity(0, 400);
+        getPhysicsWorld().setGravity(0, 500);
 
         onCollisionOneTimeOnly(PLAYER, COIN, (player, coin) -> {
             getGameWorld().removeEntity(coin);

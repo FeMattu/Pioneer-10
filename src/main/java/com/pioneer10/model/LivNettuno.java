@@ -106,7 +106,7 @@ public class LivNettuno extends GameApplication {
 
     @Override
     protected void initPhysics() {
-        getPhysicsWorld().setGravity(0, 400);
+        getPhysicsWorld().setGravity(0, 200);
 
         onCollisionOneTimeOnly(PLAYER, COIN, (player, coin) -> {
             getGameWorld().removeEntity(coin);

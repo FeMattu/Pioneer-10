@@ -61,6 +61,13 @@ public class LivNettuno extends GameApplication {
     }
 
     @Override
+    protected void onPreInit() {
+        getSettings().setGlobalMusicVolume(0.5);
+        loopBGM("Subnautica Soundtrack Into The Unknown.mp3");
+    }
+
+
+    @Override
     protected void onUpdate(double tpf) {
         if (player.getY() > getAppHeight()) {
             if(vite > 0){

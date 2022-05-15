@@ -108,6 +108,13 @@ public class LivTerra extends GameApplication {
     }
 
     @Override
+    protected void onPreInit() {
+        getSettings().setGlobalMusicVolume(0.5);
+        loopBGM("Minecraft.mp3");
+    }
+
+
+    @Override
     protected void initPhysics() {
         getPhysicsWorld().setGravity(0, 500);
 

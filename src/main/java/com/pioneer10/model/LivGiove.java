@@ -64,6 +64,13 @@ public class LivGiove extends GameApplication {
     }
 
     @Override
+    protected void onPreInit() {
+        getSettings().setGlobalMusicVolume(0.25);
+        loopBGM("Ancient Egyptian Music – The Nile River.mp3");
+    }
+
+
+    @Override
     protected void onUpdate(double tpf) {
         if (player.getY() > getAppHeight()) {
             if(vite > 0){

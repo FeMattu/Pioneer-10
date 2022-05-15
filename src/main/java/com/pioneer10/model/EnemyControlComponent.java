@@ -5,6 +5,7 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
+import com.almasb.fxgl.entity.components.TransformComponent;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
@@ -50,8 +51,8 @@ public class EnemyControlComponent extends Component {
                 Duration.seconds(1), 0, 19);
 
         animAttack = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/undead_attack_sheet.png")),
-                20, 856/20, 26,
-                Duration.seconds(0.4), 0, 19);
+                20, 840/20, 26,
+                Duration.seconds(0.6), 0, 19);
 
         animDeath = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/undead_death_sheet.png")),
                 13, 936/13, 26,
@@ -78,9 +79,12 @@ public class EnemyControlComponent extends Component {
     @Override
     public void onUpdate(double tpf) {
         player = FXGL.getGameWorld().getSingleton(PLAYER);
-        physics.applyBodyForce(Vec2.fromAngle(90), Vec2.fromAngle(90));
-        healtBar.setTranslateX(entity.getX() - entity.getWidth()/2);
         healtBar.setTranslateY(entity.getY()-entity.getHeight()/2-5);
+        healtBar.translateXProperty().bind(entity.xProperty());
+
+        if(entity.getY() > FXGL.getAppHeight()){
+            entity.removeFromWorld();
+        }
 
         if(!hp.isZero()){
             if (physics.isMovingX()) {
@@ -89,7 +93,9 @@ public class EnemyControlComponent extends Component {
                 }
             }else{
                 if(texture.getAnimationChannel() == animAttack){
-                    stop();
+                    texture.setOnCycleFinished(()->{
+                        texture.loopAnimationChannel(animIdle);
+                    });
                     return;
                 } else{
                     texture.loopAnimationChannel(animIdle);
@@ -107,7 +113,7 @@ public class EnemyControlComponent extends Component {
             physics.setFixtureDef(new FixtureDef().friction(0.9f));
 
             //il nemico si gira verso il player
-            if(entity.distance(player) < 50
+            if(entity.distance(player) < 40
                     && entity.getY() < player.getY()+50     //aggiunta di margine di errore per le Y
                     && entity.getY() > player.getY()-50){
                 if(player.getX() > entity.getX()){
@@ -115,22 +121,21 @@ public class EnemyControlComponent extends Component {
                 }else if( player.getX() < entity.getX()){
                     getEntity().setScaleX(-1);
                 }
-                //attack();
+                attack();
                 return;
             }
         }else{ //no-stationary enemy
             if(entity.distance(player) < 200
                     && entity.getY() < player.getY()+50     //aggiunta di margine di errore per le Y
                     && entity.getY() > player.getY()-50){
-                if (entity.distance(player) > 50){
+                if (entity.distance(player) > 40){
                     if(player.getX() > entity.getX()){
                         right();
                     }else if( player.getX() < entity.getX()){
                         left();
                     }
                 }else{
-                    //attack();
-                    //stop();
+                    attack();
                     return;
                 }
             }else if(timer.elapsed(Duration.seconds(1)) ){
@@ -157,6 +162,7 @@ public class EnemyControlComponent extends Component {
     }
 
     public void attack() {
+        stop();
         texture.loopAnimationChannel(animAttack);
     }
 
@@ -167,7 +173,6 @@ public class EnemyControlComponent extends Component {
     public void hit(){
         hp.damage(1);
         healtBar.setCurrentValue(hp.getValue());
-        System.out.println(hp.getValue());
 
         if(hp.isZero()){
             if(texture.getAnimationChannel() != animDeath){

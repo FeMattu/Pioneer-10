@@ -31,7 +31,7 @@ public class LivTerra extends GameApplication {
     private final int MAX_VITE = 3;
     private Entity player;
     private Viewport viewport;
-    private int vite, coinsGrabbed;
+    private int coinsGrabbed, vite;
     private List<Entity> cuori, reloader;
     private Text textForCoinGrabbed;
     private Entity closestPlatformToPlayer;
@@ -67,9 +67,10 @@ public class LivTerra extends GameApplication {
     protected void onUpdate(double tpf) {
         if (player.getY() > getAppHeight()) {
             if(vite > 0){
-                closestPlatformToPlayer = getGameWorld().getClosestEntity(player, e -> e.isType(PLATFORM)).get();
                 getGameWorld().removeEntity(player);
-                player = spawn("player", closestPlatformToPlayer.getX()+16, closestPlatformToPlayer.getY()-16);
+                player = spawn("player",
+                        closestPlatformToPlayer.getX()+closestPlatformToPlayer.getWidth()/2,
+                        closestPlatformToPlayer.getY()-16);
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
                 getGameWorld().removeEntity(cuori.get(vite-1));
                 vite--;
@@ -111,6 +112,10 @@ public class LivTerra extends GameApplication {
     protected void initPhysics() {
         getPhysicsWorld().setGravity(0, 500);
 
+        onCollisionBegin(PLAYER, PLATFORM, (player, platform)->{
+           closestPlatformToPlayer = platform;
+        });
+
         onCollisionOneTimeOnly(PLAYER, COIN, (player, coin) -> {
             getGameWorld().removeEntity(coin);
             coinsGrabbed++;
@@ -119,8 +124,15 @@ public class LivTerra extends GameApplication {
         onCollisionBegin(BULLET, PLATFORM, (bullet, platform) -> {
             bullet.removeFromWorld();
         });
-        onCollisionBegin(BULLET, ANGLE, (bullet, platform) -> {
-            bullet.removeFromWorld();
+
+        onCollisionOneTimeOnly(ASTRONAVE, PLAYER, (astronave, player) -> {
+            getDialogService().showMessageBox("Level finish", () ->{
+                FXGL.getPrimaryStage().setScene(new LevelScene(
+                        FXGL.getPrimaryStage(),
+                        PioneerLauncher.WIDTH,
+                        PioneerLauncher.HEIGHT
+                ));
+            });
         });
 
         onCollisionBegin(BULLET, ENEMY, (bullet, enemy) ->{
@@ -190,6 +202,8 @@ public class LivTerra extends GameApplication {
             }
         }, KeyCode.E);
 
+        //tasto per controllo delle bounding box
+        /*
         getInput().addAction(new UserAction("DevPane") {
             @Override
             protected void onActionBegin() {
@@ -199,7 +213,6 @@ public class LivTerra extends GameApplication {
                     getDevService().closeDevPane();
                 }
             }
-        }, KeyCode.P, VirtualButton.LB);
+        }, KeyCode.P, VirtualButton.LB);*/
     }
-    public static void main(String[] args){launch(args);}
 }

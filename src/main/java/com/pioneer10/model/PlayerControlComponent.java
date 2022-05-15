@@ -1,6 +1,7 @@
 package com.pioneer10.model;
 
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.component.Component;
@@ -26,6 +27,7 @@ public class PlayerControlComponent extends Component {
     private LocalTimer shootTimer;
     private int MAX_NR_OF_SHOOT;
     private int nrOfShoot;
+    private int jumps = 3;
 
 
 
@@ -54,6 +56,12 @@ public class PlayerControlComponent extends Component {
         entity.getViewComponent().addChild(texture);
         shootTimer = FXGL.newLocalTimer();
         shootTimer.capture();
+
+        physics.onGroundProperty().addListener((obs, old, isOnGround) -> {
+            if (isOnGround) {
+                jumps = 3;
+            }
+        });
     }
 
     @Override
@@ -99,7 +107,12 @@ public class PlayerControlComponent extends Component {
     }
 
     public void jump() {
+        if (jumps == 0)
+            return;
+
         physics.setVelocityY(-200);
+
+        jumps--;
     }
 
     public void addReloader(List<Entity> reloader){
@@ -117,6 +130,10 @@ public class PlayerControlComponent extends Component {
                     FXGL.getGameWorld().getEntitiesByType(RELOADER).get(nrOfShoot-1));
             nrOfShoot--;
         }
+    }
+
+    public void hit(){
+        entity.getComponent(HealthIntComponent.class).damage(1);
     }
 
     private Point2D direction() {

@@ -56,6 +56,10 @@ public class OptionScene extends Scene{
             stage.setScene(new LoadingGameScene(stage,width,height));
         });
 
+        button6.setOnMouseClicked(event -> {
+            stage.setScene(new brightness(stage,width,height));
+        });
+
 
 
         button7.setTranslateX(this.getWidth()/11.5 - button7.getWidth()/2);

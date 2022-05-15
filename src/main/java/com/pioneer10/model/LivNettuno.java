@@ -71,9 +71,10 @@ public class LivNettuno extends GameApplication {
     protected void onUpdate(double tpf) {
         if (player.getY() > getAppHeight()) {
             if(vite > 0){
-                closestPlatformToPlayer = getGameWorld().getClosestEntity(player, e -> e.isType(PLATFORM)).get();
                 getGameWorld().removeEntity(player);
-                player = spawn("player", closestPlatformToPlayer.getX()+16, closestPlatformToPlayer.getY()-16);
+                player = spawn("player",
+                        closestPlatformToPlayer.getX()+closestPlatformToPlayer.getWidth()/2,
+                        closestPlatformToPlayer.getY()-16);
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
                 getGameWorld().removeEntity(cuori.get(vite-1));
                 vite--;
@@ -115,6 +116,10 @@ public class LivNettuno extends GameApplication {
     protected void initPhysics() {
         getPhysicsWorld().setGravity(0, 200);
 
+        onCollisionBegin(PLAYER, PLATFORM, (player, platform)->{
+            closestPlatformToPlayer = platform;
+        });
+
         onCollisionOneTimeOnly(PLAYER, COIN, (player, coin) -> {
             getGameWorld().removeEntity(coin);
             coinsGrabbed++;
@@ -123,8 +128,15 @@ public class LivNettuno extends GameApplication {
         onCollisionBegin(BULLET, PLATFORM, (bullet, platform) -> {
             bullet.removeFromWorld();
         });
-        onCollisionBegin(BULLET, ANGLE, (bullet, platform) -> {
-            bullet.removeFromWorld();
+
+        onCollisionOneTimeOnly(ASTRONAVE, PLAYER, (astronave, player) -> {
+            getDialogService().showMessageBox("Level finish", () ->{
+                FXGL.getPrimaryStage().setScene(new LevelScene(
+                        FXGL.getPrimaryStage(),
+                        PioneerLauncher.WIDTH,
+                        PioneerLauncher.HEIGHT
+                ));
+            });
         });
 
         onCollisionBegin(BULLET, ENEMY, (bullet, enemy) ->{
@@ -143,12 +155,13 @@ public class LivNettuno extends GameApplication {
                     enemy.getComponent(EnemyControlComponent.class).hit();
                 }
             }else{
-                getDialogService().showMessageBox("You are dead", () ->
-                        FXGL.getPrimaryStage().setScene(new LevelScene(
+                getDialogService().showMessageBox("You are dead", () ->{
+                    FXGL.getPrimaryStage().setScene(new LevelScene(
                             FXGL.getPrimaryStage(),
                             PioneerLauncher.WIDTH,
                             PioneerLauncher.HEIGHT
-                )));
+                    ));
+                });
             }
         });
     }
@@ -193,6 +206,8 @@ public class LivNettuno extends GameApplication {
             }
         }, KeyCode.E);
 
+        //tasto per controllo delle bounding box
+        /*
         getInput().addAction(new UserAction("DevPane") {
             @Override
             protected void onActionBegin() {
@@ -202,8 +217,6 @@ public class LivNettuno extends GameApplication {
                     getDevService().closeDevPane();
                 }
             }
-        }, KeyCode.P, VirtualButton.LB);
+        }, KeyCode.P, VirtualButton.LB);*/
     }
-
-    public static void main(String[] args){launch(args);}
 }

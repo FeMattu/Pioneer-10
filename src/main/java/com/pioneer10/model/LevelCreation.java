@@ -1,16 +1,15 @@
 package com.pioneer10.model;
 
+
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.Viewport;
-import com.almasb.fxgl.core.collection.Array;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
 import com.pioneer10.PioneerLauncher;
-import com.pioneer10.controller.ControllerMenu;
 import com.pioneer10.view.LevelScene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -18,35 +17,42 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
 import static com.pioneer10.model.PioneerEntityType.*;
 
-public class LivGiove extends GameApplication {
+public class LevelCreation extends GameApplication {
 
-    private final int MAX_VITE = 3;
     private Entity player;
     private Viewport viewport;
-
     private int vite, coinsGrabbed;
     private List<Entity> cuori, reloader;
     private Text textForCoinGrabbed;
     private Entity closestPlatformToPlayer;
+    private String level, levelMapPath;
+    private int nrOfLevel, gravity;
+
+    public LevelCreation(String level, int nrOfLevel, String levelMapPath, int gravity){
+        this.level = level;
+        this.levelMapPath = levelMapPath;
+        this.nrOfLevel = nrOfLevel;
+        this.gravity = gravity;
+    }
 
     @Override
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setWidth(1200);
         gameSettings.setHeight(640);
-        gameSettings.setTitle("Pioneer-10\nGiove");
-        gameSettings.setDeveloperMenuEnabled(true);
+        gameSettings.setTitle(level);
+        //to activate the developer menu to see bboxs
+        //gameSettings.setDeveloperMenuEnabled(true);
     }
 
     @Override
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
-        setLevelFromMap("Giove/Giove.tmx");
+        setLevelFromMap(levelMapPath);
         player = getGameWorld().getEntitiesByType(PLAYER).get(0);
 
         spawn("backgroundGiove");
@@ -55,7 +61,7 @@ public class LivGiove extends GameApplication {
         player.getComponent(PlayerControlComponent.class).addReloader(reloader);
         cuori = getGameWorld().getEntitiesByType(HEART);
 
-        vite = MAX_VITE;
+        vite = Configuration.MAX_PLAYER_LIFE;
 
         viewport = getGameScene().getViewport();
         viewport.setBounds(0, 0, 180*32, getAppHeight());
@@ -118,7 +124,7 @@ public class LivGiove extends GameApplication {
 
     @Override
     protected void initPhysics() {
-        getPhysicsWorld().setGravity(0, 400);
+        getPhysicsWorld().setGravity(gravity/100, gravity);
 
         onCollisionBegin(PLAYER, PLATFORM, (player, platform)->{
             closestPlatformToPlayer = platform;

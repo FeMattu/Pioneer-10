@@ -10,24 +10,15 @@ import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.entity.components.IrremovableComponent;
-import com.almasb.fxgl.pathfinding.CellMoveComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
-import com.almasb.fxgl.physics.PolygonShapeData;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
-import com.almasb.fxgl.texture.AnimationChannel;
-import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Box;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 
 import java.util.List;
 
@@ -75,7 +66,7 @@ public class PioneerFactory implements EntityFactory {
                 .type(ENEMY)
                 .bbox(new HitBox(new Point2D(26,0), BoundingShape.box(8,24))) //box di collisione
                 .with(physics)
-                .with(new HealthIntComponent(5))
+                .with(new HealthIntComponent(Configuration.MAX_ENEMY_LIFE))
                 .with(new CollidableComponent(true))
                 .with(new EnemyControlComponent(data.get("stationary")))
                 .build();
@@ -95,7 +86,7 @@ public class PioneerFactory implements EntityFactory {
                 .bbox(new HitBox(new Point2D(13,17), BoundingShape.box(8,14)))//box di collisione per le gambe
                 .bbox(new HitBox(new Point2D(7,7), BoundingShape.box(21,16)))//box di collisione per la testa
                 .with(physics)
-                .with(new HealthIntComponent(3))
+                .with(new HealthIntComponent(Configuration.MAX_PLAYER_LIFE))
                 .with(new CollidableComponent(true))
                 .with(new PlayerControlComponent(3))
                 .build();
@@ -112,7 +103,7 @@ public class PioneerFactory implements EntityFactory {
                 ))
                 .with(new CollidableComponent(true))
                 .with(new OffscreenCleanComponent())
-                .with(new ProjectileComponent(data.get("direction"), 32*10))
+                .with(new ProjectileComponent(data.get("direction"), Configuration.BULLET_SPEED))
                 .build();
     }
 

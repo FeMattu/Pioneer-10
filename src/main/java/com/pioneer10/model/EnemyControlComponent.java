@@ -95,6 +95,8 @@ public class EnemyControlComponent extends Component {
                 if(texture.getAnimationChannel() == animAttack){
                     texture.setOnCycleFinished(()->{
                         texture.loopAnimationChannel(animIdle);
+                        FXGL.getGameWorld().getSingleton(PLAYER)
+                                .getComponent(PlayerControlComponent.class).hit();
                     });
                     return;
                 } else{

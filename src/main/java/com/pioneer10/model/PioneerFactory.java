@@ -180,6 +180,16 @@ public class PioneerFactory implements EntityFactory {
                 .build();
     }
     @Spawns("backgroundTerra")
+    public Entity newBackgroundTerra(SpawnData data) {
+        return entityBuilder()
+                .view(new ScrollingBackgroundView(new Image(Utils.getPathFileFromResources("assets/levels/Terra/backgroundTerra.jpg")),
+                        getAppWidth(), getAppHeight()))
+                .zIndex(-1)
+                .with(new IrremovableComponent())
+                .build();
+    }
+
+    @Spawns("background,backgroundPath")
     public Entity newBackground(SpawnData data) {
         return entityBuilder()
                 .view(new ScrollingBackgroundView(new Image(Utils.getPathFileFromResources("assets/levels/Terra/backgroundTerra.jpg")),

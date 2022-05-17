@@ -7,6 +7,7 @@ import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
 import com.pioneer10.PioneerLauncher;
@@ -32,6 +33,7 @@ public class LevelCreation extends GameApplication {
     private Entity closestPlatformToPlayer;
     private String level, levelMapPath;
     private int nrOfLevel, gravity;
+    private String music;
 
     public LevelCreation(String level, int nrOfLevel, String levelMapPath, int gravity){
         this.level = level;
@@ -55,8 +57,6 @@ public class LevelCreation extends GameApplication {
         setLevelFromMap(levelMapPath);
         player = getGameWorld().getEntitiesByType(PLAYER).get(0);
 
-        spawn("backgroundGiove");
-
         reloader = getGameWorld().getEntitiesByType(RELOADER);
         player.getComponent(PlayerControlComponent.class).addReloader(reloader);
         cuori = getGameWorld().getEntitiesByType(HEART);
@@ -69,12 +69,23 @@ public class LevelCreation extends GameApplication {
         viewport.setLazy(true);
     }
 
+    public void addBackground(String backgroundPath){
+        spawn("background");
+    }
+
+    /**
+     * add music to level
+     * @param assetName
+     */
+    public void addMusic(String assetName){
+        music = assetName;
+    }
+
     @Override
     protected void onPreInit() {
         getSettings().setGlobalMusicVolume(0.25);
-        loopBGM("Ancient Egyptian Music – The Nile River.mp3");
+        loopBGM(music);
     }
-
 
     @Override
     protected void onUpdate(double tpf) {

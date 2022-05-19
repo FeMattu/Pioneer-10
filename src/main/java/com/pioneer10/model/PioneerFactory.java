@@ -25,6 +25,7 @@ import java.util.List;
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
 import static com.pioneer10.model.PioneerEntityType.*;
+import static com.pioneer10.model.Configuration.*;
 
 public class PioneerFactory implements EntityFactory {
 
@@ -66,7 +67,7 @@ public class PioneerFactory implements EntityFactory {
                 .type(ENEMY)
                 .bbox(new HitBox(new Point2D(26,0), BoundingShape.box(8,24))) //box di collisione
                 .with(physics)
-                .with(new HealthIntComponent(Configuration.MAX_ENEMY_LIFE))
+                .with(new HealthIntComponent(MAX_ENEMY_LIFE))
                 .with(new CollidableComponent(true))
                 .with(new EnemyControlComponent(data.get("stationary")))
                 .build();
@@ -86,9 +87,9 @@ public class PioneerFactory implements EntityFactory {
                 .bbox(new HitBox(new Point2D(13,17), BoundingShape.box(8,14)))//box di collisione per le gambe
                 .bbox(new HitBox(new Point2D(7,7), BoundingShape.box(21,16)))//box di collisione per la testa
                 .with(physics)
-                .with(new HealthIntComponent(Configuration.MAX_PLAYER_LIFE))
+                .with(new HealthIntComponent(MAX_PLAYER_LIFE))
                 .with(new CollidableComponent(true))
-                .with(new PlayerControlComponent(3))
+                .with(new PlayerControlComponent(MAX_PLAYER_LIFE, MAX_BULLET_TO_SHOOT))
                 .build();
     }
 
@@ -103,7 +104,7 @@ public class PioneerFactory implements EntityFactory {
                 ))
                 .with(new CollidableComponent(true))
                 .with(new OffscreenCleanComponent())
-                .with(new ProjectileComponent(data.get("direction"), Configuration.BULLET_SPEED))
+                .with(new ProjectileComponent(data.get("direction"), BULLET_SPEED))
                 .build();
     }
 

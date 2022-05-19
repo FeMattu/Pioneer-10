@@ -25,15 +25,15 @@ public class PlayerControlComponent extends Component {
     private AnimationChannel animIdle, animWalk, animJump;
     private PhysicsComponent physics;
     private LocalTimer shootTimer;
-    private int MAX_NR_OF_SHOOT;
-    private int nrOfShoot;
-    private int jumps = 3;
+    private final int MAX_NR_OF_SHOOT;
+    private int nrOfShoot, jumps;
 
 
 
-    public PlayerControlComponent(int maxNrOFShootInLoader) {
-        this.MAX_NR_OF_SHOOT = maxNrOFShootInLoader;
-        nrOfShoot = MAX_NR_OF_SHOOT;
+    public PlayerControlComponent(int nrOfLife, int nrOfShootInLoader) {
+        this.MAX_NR_OF_SHOOT = nrOfShoot = nrOfShootInLoader;
+
+        jumps  = Configuration.MAX_JUMPS;
 
         String spacemanWalkPath = Utils.getPathFileFromResources("assets/Sprites/Anim_Robot_Walk1_v1.1_spritesheet.png");
 
@@ -59,9 +59,12 @@ public class PlayerControlComponent extends Component {
 
         physics.onGroundProperty().addListener((obs, old, isOnGround) -> {
             if (isOnGround) {
-                jumps = 3;
+                jumps  = Configuration.MAX_JUMPS;
             }
         });
+        entity.addComponent(new HealthIntComponent(3));
+
+
     }
 
     @Override
@@ -85,7 +88,6 @@ public class PlayerControlComponent extends Component {
                 spawn("reloader",
                         reloader.get(nrOfShoot).getX(),
                         reloader.get(nrOfShoot).getY());
-                //FXGL.getGameWorld().getEntitiesByType(RELOADER).add(reloader.get(nrOfShoot));
                 nrOfShoot++;
                 shootTimer.capture();
             }
@@ -120,6 +122,9 @@ public class PlayerControlComponent extends Component {
     }
 
     public void shoot() {
+        if(shootTimer.elapsed(Duration.seconds(1)))
+            return;
+
         if(nrOfShoot > 0){
             spawn("Bullet", new SpawnData(getEntity().getCenter())
                     .put("direction", direction())
@@ -130,10 +135,8 @@ public class PlayerControlComponent extends Component {
                     FXGL.getGameWorld().getEntitiesByType(RELOADER).get(nrOfShoot-1));
             nrOfShoot--;
         }
-    }
 
-    public void hit(){
-        entity.getComponent(HealthIntComponent.class).damage(1);
+        shootTimer.capture();
     }
 
     private Point2D direction() {
@@ -143,5 +146,23 @@ public class PlayerControlComponent extends Component {
             return new Point2D(-1, 0);
         }
     }
+
+    public int getNrOfShoot(){
+        return nrOfShoot;
+    }
+
+    public void hit(){entity.getComponent(HealthIntComponent.class).damage(1);}
+    public void recoverLife(){
+        entity.getComponent(HealthIntComponent.class).damage(-1);
+    }
+
+    public int getLife(){
+        return entity.getComponent(HealthIntComponent.class).getValue();
+    }
+
+    public int getMaxLife(){
+        return entity.getComponent(HealthIntComponent.class).getMaxValue();
+    }
+
 
 }

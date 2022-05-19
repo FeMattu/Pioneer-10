@@ -93,12 +93,13 @@ public class LevelCreation extends GameApplication {
             if(vite > 0){
                 getGameWorld().removeEntity(player);
                 player = spawn("player",
-                        closestPlatformToPlayer.getX()+closestPlatformToPlayer.getWidth()/2,
+                        closestPlatformToPlayer.getX()+
+                                (closestPlatformToPlayer.getWidth()/2-player.getWidth()),
                         closestPlatformToPlayer.getY()-16);
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
                 getGameWorld().removeEntity(cuori.get(vite-1));
                 player.getComponent(PlayerControlComponent.class).hit();
-                vite = player.getComponent(HealthIntComponent.class).getValue();
+                vite = player.getComponent(PlayerControlComponent.class).getLife();
             }else{
                 getDialogService().showMessageBox("You are dead", () ->{
                     FXGL.getPrimaryStage().setScene(new LevelScene(

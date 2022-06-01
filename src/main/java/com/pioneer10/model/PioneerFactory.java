@@ -8,6 +8,7 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
+import com.almasb.fxgl.entity.components.BoundingBoxComponent;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.entity.components.IrremovableComponent;
 import com.almasb.fxgl.physics.BoundingShape;
@@ -15,6 +16,12 @@ import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
+import com.pioneer10.Component.EnemyControlComponent;
+import com.pioneer10.Component.EnemyHealthViewComponent;
+import com.pioneer10.Component.PlayerControlComponent;
+import com.pioneer10.data.Configuration;
+import com.pioneer10.data.EnemyData;
+import com.pioneer10.data.PlayerData;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,7 +32,6 @@ import java.util.List;
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
 import static com.pioneer10.model.PioneerEntityType.*;
-import static com.pioneer10.model.Configuration.*;
 
 public class PioneerFactory implements EntityFactory {
 
@@ -67,8 +73,9 @@ public class PioneerFactory implements EntityFactory {
                 .type(ENEMY)
                 .bbox(new HitBox(new Point2D(26,0), BoundingShape.box(8,24))) //box di collisione
                 .with(physics)
-                .with(new HealthIntComponent(MAX_ENEMY_LIFE))
                 .with(new CollidableComponent(true))
+                .with(new HealthIntComponent(EnemyData.MAX_ENEMY_LIFE))
+                .with(new EnemyHealthViewComponent())
                 .with(new EnemyControlComponent(data.get("stationary")))
                 .build();
     }
@@ -87,9 +94,9 @@ public class PioneerFactory implements EntityFactory {
                 .bbox(new HitBox(new Point2D(13,17), BoundingShape.box(8,14)))//box di collisione per le gambe
                 .bbox(new HitBox(new Point2D(7,7), BoundingShape.box(21,16)))//box di collisione per la testa
                 .with(physics)
-                .with(new HealthIntComponent(MAX_PLAYER_LIFE))
+                .with(new HealthIntComponent(PlayerData.MAX_PLAYER_LIFE))
                 .with(new CollidableComponent(true))
-                .with(new PlayerControlComponent(MAX_PLAYER_LIFE, MAX_BULLET_TO_SHOOT))
+                .with(new PlayerControlComponent(3))
                 .build();
     }
 
@@ -104,7 +111,7 @@ public class PioneerFactory implements EntityFactory {
                 ))
                 .with(new CollidableComponent(true))
                 .with(new OffscreenCleanComponent())
-                .with(new ProjectileComponent(data.get("direction"), BULLET_SPEED))
+                .with(new ProjectileComponent(data.get("direction"), Configuration.BULLET_SPEED))
                 .build();
     }
 
@@ -190,10 +197,10 @@ public class PioneerFactory implements EntityFactory {
                 .build();
     }
 
-    @Spawns("background,backgroundPath")
+    @Spawns("background")
     public Entity newBackground(SpawnData data) {
         return entityBuilder()
-                .view(new ScrollingBackgroundView(new Image(Utils.getPathFileFromResources("assets/levels/Terra/backgroundTerra.jpg")),
+                .view(new ScrollingBackgroundView(new Image(Utils.getPathFileFromResources(data.get("background"))),
                         getAppWidth(), getAppHeight()))
                 .zIndex(-1)
                 .with(new IrremovableComponent())

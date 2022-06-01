@@ -10,6 +10,8 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
+import com.pioneer10.Component.EnemyControlComponent;
+import com.pioneer10.Component.PlayerControlComponent;
 import com.pioneer10.PioneerLauncher;
 import com.pioneer10.view.LevelScene;
 import javafx.scene.input.KeyCode;
@@ -21,19 +23,17 @@ import java.util.List;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
+import static com.pioneer10.data.PlayerData.MAX_PLAYER_LIFE;
 import static com.pioneer10.model.PioneerEntityType.*;
 
 public class LevelCreation extends GameApplication {
 
-    private Entity player;
+    private Entity player, lastPlatformTouched;
     private Viewport viewport;
-    private int vite, coinsGrabbed;
+    private int vite, coinsGrabbed, nrOfLevel, gravity;
     private List<Entity> cuori, reloader;
     private Text textForCoinGrabbed;
-    private Entity closestPlatformToPlayer;
-    private String level, levelMapPath;
-    private int nrOfLevel, gravity;
-    private String music;
+    private String level, levelMapPath, music;
 
     public LevelCreation(String level, int nrOfLevel, String levelMapPath, int gravity){
         this.level = level;
@@ -56,12 +56,16 @@ public class LevelCreation extends GameApplication {
         getGameWorld().addEntityFactory(new PioneerFactory());
         setLevelFromMap(levelMapPath);
         player = getGameWorld().getEntitiesByType(PLAYER).get(0);
+        SpawnData backgroundData = new SpawnData();
+        backgroundData.put("background", "assets/levels/Terra/background"+level);
+        spawn("background", backgroundData);
+
 
         reloader = getGameWorld().getEntitiesByType(RELOADER);
         player.getComponent(PlayerControlComponent.class).addReloader(reloader);
         cuori = getGameWorld().getEntitiesByType(HEART);
 
-        vite = Configuration.MAX_PLAYER_LIFE;
+        vite = MAX_PLAYER_LIFE;
 
         viewport = getGameScene().getViewport();
         viewport.setBounds(0, 0, 180*32, getAppHeight());
@@ -93,13 +97,12 @@ public class LevelCreation extends GameApplication {
             if(vite > 0){
                 getGameWorld().removeEntity(player);
                 player = spawn("player",
-                        closestPlatformToPlayer.getX()+
-                                (closestPlatformToPlayer.getWidth()/2-player.getWidth()),
-                        closestPlatformToPlayer.getY()-16);
+                        lastPlatformTouched.getX()+ lastPlatformTouched.getWidth()/2,
+                        lastPlatformTouched.getY()-16);
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
                 getGameWorld().removeEntity(cuori.get(vite-1));
                 player.getComponent(PlayerControlComponent.class).hit();
-                vite = player.getComponent(PlayerControlComponent.class).getLife();
+                vite = player.getComponent(HealthIntComponent.class).getValue();
             }else{
                 getDialogService().showMessageBox("You are dead", () ->{
                     FXGL.getPrimaryStage().setScene(new LevelScene(
@@ -139,7 +142,7 @@ public class LevelCreation extends GameApplication {
         getPhysicsWorld().setGravity(gravity/100, gravity);
 
         onCollisionBegin(PLAYER, PLATFORM, (player, platform)->{
-            closestPlatformToPlayer = platform;
+            lastPlatformTouched = platform;
         });
 
         onCollisionOneTimeOnly(PLAYER, COIN, (player, coin) -> {

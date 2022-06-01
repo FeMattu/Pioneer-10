@@ -3,14 +3,14 @@ package com.pioneer10.model;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.Viewport;
-import com.almasb.fxgl.core.collection.Array;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
+import com.pioneer10.Component.EnemyControlComponent;
+import com.pioneer10.Component.PlayerControlComponent;
 import com.pioneer10.PioneerLauncher;
-import com.pioneer10.controller.ControllerMenu;
 import com.pioneer10.view.LevelScene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -18,7 +18,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;

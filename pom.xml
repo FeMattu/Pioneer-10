@@ -174,7 +174,7 @@
                         <list>com.almasb.fxgl.dsl.components.ProjectileComponent</list>
 
                         <!--     Custom components                  -->
-                        <list>com.pioneer10.model.PlayerControlComponent</list>
+                        <list>com.pioneer10.Component.PlayerControlComponent</list>
                         <list>com.pioneer10.model.PioneerFactory</list>
 
                     </reflectionList>

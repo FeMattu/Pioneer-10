@@ -1,35 +1,30 @@
-package com.pioneer10.model;
+package com.pioneer10.Component;
 
-import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.entity.components.TransformComponent;
+import com.almasb.fxgl.physics.BoundingShape;
+import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
-import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import com.almasb.fxgl.time.LocalTimer;
 import com.almasb.fxgl.ui.ProgressBar;
+import com.pioneer10.model.Utils;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import static com.pioneer10.model.PioneerEntityType.PLAYER;
 
 public class EnemyControlComponent extends Component {
 
-    private final double DEATH_TIME = 2.3;
-    private final ProgressBar healtBar;
     private HealthIntComponent hp;
     private AnimatedTexture texture;
     private AnimationChannel animIdle, animWalk, animDeath, animAttack;
@@ -50,15 +45,14 @@ public class EnemyControlComponent extends Component {
                 20, 1120/20, 26,
                 Duration.seconds(1), 0, 19);
 
-        animAttack = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/undead_attack_sheet.png")),
-                20, 840/20, 26,
+        animAttack = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/undead_attack_sheet1.png")),
+                20, 1120/20, 36,
                 Duration.seconds(0.6), 0, 19);
 
         animDeath = new AnimationChannel(new Image(Utils.getPathFileFromResources("assets/Sprites/undead_death_sheet.png")),
                 13, 936/13, 26,
-                Duration.seconds(DEATH_TIME), 0, 12);
+                Duration.seconds(2.3), 0, 12);
 
-        healtBar = HealtBar();
         texture = new AnimatedTexture(animIdle);
     }
 
@@ -72,15 +66,12 @@ public class EnemyControlComponent extends Component {
         deathTimer = FXGL.newLocalTimer();
 
         hp = entity.getComponent(HealthIntComponent.class);
-        healtBar.setMaxValue(hp.getMaxValue());
-        healtBar.setCurrentValue(hp.getValue());
     }
 
     @Override
     public void onUpdate(double tpf) {
         player = FXGL.getGameWorld().getSingleton(PLAYER);
-        healtBar.setTranslateY(entity.getY()-entity.getHeight()/2-5);
-        healtBar.translateXProperty().bind(entity.xProperty());
+
 
         if(entity.getY() > FXGL.getAppHeight()){
             entity.removeFromWorld();
@@ -165,6 +156,9 @@ public class EnemyControlComponent extends Component {
 
     public void attack() {
         stop();
+        TransformComponent t = new TransformComponent();
+        t.scaleYProperty().setValue(2);
+        entity.getBoundingBoxComponent().setTransform(t);
         texture.loopAnimationChannel(animAttack);
     }
 
@@ -174,7 +168,6 @@ public class EnemyControlComponent extends Component {
 
     public void hit(){
         hp.damage(1);
-        healtBar.setCurrentValue(hp.getValue());
 
         if(hp.isZero()){
             if(texture.getAnimationChannel() != animDeath){
@@ -186,21 +179,6 @@ public class EnemyControlComponent extends Component {
         }
     }
 
-    @NotNull
-    private static ProgressBar HealtBar() {
-        ProgressBar bar = new ProgressBar(true);
-        bar.getInnerBar().arcWidthProperty().unbind();
-        bar.getInnerBar().arcHeightProperty().unbind();
-        bar.getInnerBar().arcWidthProperty().setValue(0);
-        bar.getInnerBar().arcHeightProperty().setValue(0);
-        bar.getInnerBar().heightProperty().unbind();
-        bar.getBackgroundBar().setFill(null);
-        bar.getBackgroundBar().setEffect(null);
-        bar.getInnerBar().setEffect(null);
 
-        bar.setWidth(50);
-        bar.setFill(Color.AQUAMARINE);
-        return bar;
-    }
 
 }

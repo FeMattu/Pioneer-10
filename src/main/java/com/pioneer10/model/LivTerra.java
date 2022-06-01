@@ -6,12 +6,11 @@ import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
-import com.almasb.fxgl.physics.BoundingShape;
-import com.almasb.fxgl.physics.CollisionHandler;
-import com.almasb.fxgl.physics.PhysicsWorld;
-import com.almasb.fxgl.ui.InGamePanel;
+import com.pioneer10.Component.EnemyControlComponent;
+import com.pioneer10.Component.PlayerControlComponent;
 import com.pioneer10.PioneerLauncher;
 import com.pioneer10.view.LevelScene;
 import javafx.scene.input.KeyCode;
@@ -19,12 +18,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.pioneer10.model.PioneerEntityType.*;
-import static com.pioneer10.model.Planet.EARTH;
 
 public class LivTerra extends GameApplication {
 
@@ -210,7 +207,7 @@ public class LivTerra extends GameApplication {
         }, KeyCode.E);
 
         //tasto per controllo delle bounding box
-        /*
+
         getInput().addAction(new UserAction("DevPane") {
             @Override
             protected void onActionBegin() {
@@ -220,6 +217,8 @@ public class LivTerra extends GameApplication {
                     getDevService().closeDevPane();
                 }
             }
-        }, KeyCode.P, VirtualButton.LB);*/
+        }, KeyCode.P, VirtualButton.LB);
     }
+
+    public static void main(String[] args) {launch(args);}
 }

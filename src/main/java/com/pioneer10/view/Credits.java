@@ -2,10 +2,8 @@ package com.pioneer10.view;
 
 
 import com.pioneer10.model.Utils;
-import com.pioneer10.view.LoadingGameScene;
 import javafx.scene.*;
 import javafx.scene.control.Button;
-import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -59,9 +57,6 @@ public class Credits extends Scene{
         Button button8 = new Button("BACK");
         root.getChildren().add(button8);
 
-        button8.setOnMouseClicked(event -> {
-            stage.setScene(new LoadingGameScene(stage,width,height));
-        });
 
         button8.setTranslateX(this.getWidth()/9 - button8.getWidth()/2);
         button8.setTranslateY(this.getHeight()/3 - button8.getHeight()/2 + 330);

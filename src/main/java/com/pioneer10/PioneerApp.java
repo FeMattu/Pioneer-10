@@ -18,20 +18,15 @@ import com.pioneer10.Menu.GameMenu;
 import com.pioneer10.Menu.MainMenu;
 import com.pioneer10.controller.PioneerUIController;
 import com.pioneer10.data.LevelData;
-import com.pioneer10.data.PlayerData;
 import com.pioneer10.model.PioneerFactory;
 import com.pioneer10.model.Utils;
-import com.pioneer10.view.LevelScene;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
-import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.pioneer10.model.PioneerEntityType.*;
@@ -69,6 +64,7 @@ public class PioneerApp extends GameApplication {
             }
         };
         gameSettings.setSceneFactory(menuFactory);
+        gameSettings.setAppIcon(Utils.getPathFileFromResources("assets/icon.png"));
     }
 
     @Override
@@ -117,13 +113,12 @@ public class PioneerApp extends GameApplication {
                         lastPlatformTouchedByPlayer.getX()+ lastPlatformTouchedByPlayer.getWidth()/2,
                         lastPlatformTouchedByPlayer.getY()-32);
                 player.getComponent(HealthIntComponent.class).damage(1);
-                inc("lives", -1);
                 controller.removeLife();
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
                 //vite--;
             }else{
                 getDialogService().showMessageBox("You are dead", () ->{
-                    menuFactory.newMainMenu();
+                    FXGL.getSceneService().pushSubScene(menuFactory.newMainMenu());
                 });
             }
         }
@@ -151,9 +146,8 @@ public class PioneerApp extends GameApplication {
 
         onCollisionOneTimeOnly(ASTRONAVE, PLAYER, (astronave, player) -> {
             getDialogService().showMessageBox("Level finish", () ->{
-                menuFactory.newMainMenu();
-            });
-        });
+                FXGL.getSceneService().pushSubScene(menuFactory.newMainMenu());
+            });        });
 
         onCollisionBegin(BULLET, ENEMY, (bullet, enemy) ->{
             if(enemy.getComponent(HealthIntComponent.class).getValue() != 0){
@@ -170,7 +164,7 @@ public class PioneerApp extends GameApplication {
                 }
             }else{
                 getDialogService().showMessageBox("You are dead", () ->{
-                    menuFactory.newMainMenu();
+                    FXGL.getSceneService().pushSubScene(menuFactory.newMainMenu());
                 });
             }
         });
@@ -217,7 +211,7 @@ public class PioneerApp extends GameApplication {
         }, KeyCode.E);
 
         //tasto per controllo delle bounding box
-
+        /*
         getInput().addAction(new UserAction("DevPane") {
             @Override
             protected void onActionBegin() {
@@ -227,9 +221,8 @@ public class PioneerApp extends GameApplication {
                     getDevService().closeDevPane();
                 }
             }
-        }, KeyCode.P, VirtualButton.LB);
+        }, KeyCode.P, VirtualButton.LB);*/
     }
-
 
     public static void main(String[] args){launch(args);}
 }

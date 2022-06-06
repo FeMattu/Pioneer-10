@@ -6,12 +6,8 @@ import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.time.LocalTimer;
 import com.pioneer10.PioneerApp;
 import com.pioneer10.data.PlayerData;
-import com.pioneer10.model.LivTerra;
-import com.pioneer10.model.Utils;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.util.ArrayList;

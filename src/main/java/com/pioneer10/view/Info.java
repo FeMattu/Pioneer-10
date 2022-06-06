@@ -1,10 +1,8 @@
 package com.pioneer10.view;
 
 import com.pioneer10.model.Utils;
-import com.pioneer10.view.LoadingGameScene;
 import javafx.scene.*;
 import javafx.scene.control.Button;
-import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -62,9 +60,6 @@ public class Info extends Scene{
         button11.setEffect(Utils.neonEffect());
         button11.setTextFill(Color.WHITE);
 
-        button11.setOnMouseClicked(event -> {
-            stage.setScene(new LoadingGameScene(stage,width,height));
-        });
 
     }
 }

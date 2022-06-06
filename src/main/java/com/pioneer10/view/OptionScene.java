@@ -35,9 +35,6 @@ public class OptionScene extends Scene{
         button5.setEffect(Utils.neonEffect());
         button5.setTextFill(Color.WHITE);
 
-        button5.setOnMouseClicked(event -> {
-            stage.setScene(new music(stage,width,height));
-        });
 
         Button button6 = new Button("SET BRIGHTNESS");
         root.getChildren().add(button6);
@@ -52,9 +49,6 @@ public class OptionScene extends Scene{
         Button button7 = new Button("BACK");
         root.getChildren().add(button7);
 
-        button7.setOnMouseClicked(event -> {
-            stage.setScene(new LoadingGameScene(stage,width,height));
-        });
 
         button6.setOnMouseClicked(event -> {
             stage.setScene(new brightness(stage,width,height));
@@ -68,7 +62,6 @@ public class OptionScene extends Scene{
         button7.setScaleY(2);
         button7.setEffect(Utils.neonEffect());
         button7.setTextFill(Color.WHITE);
-
 
 
         Text Options = new Text("OPTION:");

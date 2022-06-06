@@ -1,7 +1,6 @@
 package com.pioneer10.Menu;
 
 import com.pioneer10.model.Utils;
-import com.pioneer10.view.LoadingGameScene;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
@@ -64,9 +63,6 @@ public class Info extends Scene{
         button11.setEffect(Utils.neonEffect());
         button11.setTextFill(Color.WHITE);
 
-        button11.setOnMouseClicked(event -> {
-            stage.setScene(new LoadingGameScene(stage,width,height));
-        });
 
     }
 }

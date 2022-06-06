@@ -4,10 +4,8 @@ import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.input.view.KeyView;
-import com.almasb.fxgl.ui.FontType;
 import com.pioneer10.PioneerApp;
 import com.pioneer10.data.LevelData;
-import com.pioneer10.model.LivTerra;
 import com.pioneer10.model.Planet;
 import com.pioneer10.model.Utils;
 import javafx.beans.binding.Bindings;
@@ -21,12 +19,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getAssetLoader;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getUIFactoryService;
@@ -52,8 +48,8 @@ public class MainMenu extends FXGLMenu {
 
         //bottoni
         MenuButton playGame = new MenuButton("Levels", "Select level", () -> LevelScene());
-        MenuButton options = new MenuButton("Options", "Adjust in-game option", () -> {});
-        MenuButton credits = new MenuButton("Credits", "How create game", () -> {});
+        MenuButton options = new MenuButton("Options", "Adjust in-game option", () -> OptionsScene());
+        MenuButton credits = new MenuButton("Credits", "How create game", () -> CreditScene());
         MenuButton exits = new MenuButton("Exit", "Close game", () -> fireExit());
 
         selectedButton = new SimpleObjectProperty<>(playGame);
@@ -104,8 +100,7 @@ public class MainMenu extends FXGLMenu {
     }
 
     private Pane worldPreview = new Pane();
-    private void LevelScene(){
-
+    public void LevelScene(){
         worldPreview.setTranslateX(600);
         Node n = Planet.EARTH.getNode();
         n.setTranslateY(400);
@@ -139,6 +134,38 @@ public class MainMenu extends FXGLMenu {
         levelBox.setTranslateX(100);
 
         contentMenu.getChildren().setAll(levelBox, worldPreview);
+    }
+
+    private void CreditScene(){
+        var credits = new VBox(
+                getUIFactoryService().newText("Credits", Color.GREEN, 40),
+                new Text(""),
+                getUIFactoryService().newText("Mattucci Federico", Color.WHITE, 20),
+                getUIFactoryService().newText("Arcuti Manuel", Color.WHITE, 20),
+                getUIFactoryService().newText("Mario Popa", Color.WHITE, 20),
+                getUIFactoryService().newText("Tarlarini Gabriele", Color.WHITE, 20),
+                getUIFactoryService().newText("Augusto Alessandro", Color.WHITE, 20)
+        );
+        credits.setTranslateX(100);
+        credits.setTranslateY(430);
+
+        contentMenu.getChildren().setAll(credits);
+    }
+
+    private void OptionsScene(){
+        var options = new VBox(
+                getUIFactoryService().newText("Options", Color.GREEN, 40),
+                new Text(""),
+                getUIFactoryService().newText("Mattucci Federico", Color.WHITE, 20),
+                getUIFactoryService().newText("Arcuti Manuel", Color.WHITE, 20),
+                getUIFactoryService().newText("Mario Popa", Color.WHITE, 20),
+                getUIFactoryService().newText("Tarlarini Gabriele", Color.WHITE, 20),
+                getUIFactoryService().newText("Augusto Alessandro", Color.WHITE, 20)
+        );
+        options.setTranslateX(100);
+        options.setTranslateY(430);
+
+        contentMenu.getChildren().setAll(options);
     }
 
     private class MenuButton extends StackPane {

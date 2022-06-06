@@ -6,9 +6,6 @@ import com.almasb.fxgl.entity.component.Required;
 import com.almasb.fxgl.ui.ProgressBar;
 import javafx.scene.paint.Color;
 
-/**
- * @author Almas Baimagambetov (almaslvl@gmail.com)
- */
 @Required(HealthIntComponent.class)
 public class EnemyHealthViewComponent extends ChildViewComponent {
 
@@ -18,7 +15,7 @@ public class EnemyHealthViewComponent extends ChildViewComponent {
     public EnemyHealthViewComponent() {
         super(0, -20, false);
 
-        hpBar = new ProgressBar(false);
+        hpBar = new ProgressBar(true);
         hpBar.setWidth(60);
         hpBar.setHeight(10);
         hpBar.setFill(Color.LIGHTGREEN);

@@ -1,16 +1,18 @@
-package com.pioneer10.view;
+package com.pioneer10.Menu;
 
 import com.pioneer10.model.Utils;
 import com.pioneer10.view.LoadingGameScene;
-import javafx.scene.*;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.Button;
-import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 
 public class Info extends Scene{
 

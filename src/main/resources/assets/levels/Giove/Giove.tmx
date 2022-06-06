@@ -366,13 +366,4 @@
  <objectgroup id="7" name="player" visible="0">
   <object id="283" type="player" x="160" y="384" width="32" height="32"/>
  </objectgroup>
- <objectgroup id="8" name="info">
-  <object id="279" type="heart" x="0" y="0" width="32" height="32"/>
-  <object id="280" type="heart" x="32" y="0" width="32" height="32"/>
-  <object id="281" type="heart" x="64" y="0" width="32" height="32"/>
-  <object id="282" type="money" x="0" y="64" width="32" height="32"/>
-  <object id="287" type="reloader" x="0" y="32" width="15" height="32"/>
-  <object id="292" type="reloader" x="25" y="32" width="15" height="32"/>
-  <object id="291" type="reloader" x="50" y="32" width="15" height="32"/>
- </objectgroup>
 </map>

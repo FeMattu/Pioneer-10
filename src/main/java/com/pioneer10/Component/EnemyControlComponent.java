@@ -14,6 +14,8 @@ import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import com.almasb.fxgl.time.LocalTimer;
 import com.almasb.fxgl.ui.ProgressBar;
+import com.pioneer10.PioneerApp;
+import com.pioneer10.model.LivTerra;
 import com.pioneer10.model.Utils;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
@@ -65,13 +67,13 @@ public class EnemyControlComponent extends Component {
 
         deathTimer = FXGL.newLocalTimer();
 
+
         hp = entity.getComponent(HealthIntComponent.class);
     }
 
     @Override
     public void onUpdate(double tpf) {
         player = FXGL.getGameWorld().getSingleton(PLAYER);
-
 
         if(entity.getY() > FXGL.getAppHeight()){
             entity.removeFromWorld();
@@ -87,7 +89,8 @@ public class EnemyControlComponent extends Component {
                     texture.setOnCycleFinished(()->{
                         texture.loopAnimationChannel(animIdle);
                         FXGL.getGameWorld().getSingleton(PLAYER)
-                                .getComponent(PlayerControlComponent.class).hit();
+                                .getComponent(HealthIntComponent.class).damage(1);
+                        PioneerApp.controller.removeLife();
                     });
                     return;
                 } else{
@@ -154,6 +157,7 @@ public class EnemyControlComponent extends Component {
         getEntity().setScaleX(-1);
     }
 
+    //TODO: correzione della bounding box per l'attacco
     public void attack() {
         stop();
         TransformComponent t = new TransformComponent();

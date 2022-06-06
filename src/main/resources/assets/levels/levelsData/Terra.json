@@ -1,0 +1,7 @@
+{
+  "name": "Terra",
+  "levelPath": "Terra/MappaTerra.tmx",
+  "background": "assets/levels/Terra/backgroundTerra.jpg",
+  "gravity": 720,
+  "music": "Minecraft.mp3"
+}

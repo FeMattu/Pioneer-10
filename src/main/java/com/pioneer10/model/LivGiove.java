@@ -10,8 +10,12 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
 import com.pioneer10.Component.EnemyControlComponent;
 import com.pioneer10.Component.PlayerControlComponent;
+import com.pioneer10.Component.ReloaderComponent;
 import com.pioneer10.PioneerLauncher;
 import com.pioneer10.view.LevelScene;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -30,7 +34,6 @@ public class LivGiove extends GameApplication {
     private Viewport viewport;
 
     private int vite, coinsGrabbed;
-    private List<Entity> cuori, reloader;
     private Text textForCoinGrabbed;
     private Entity closestPlatformToPlayer;
 
@@ -50,10 +53,6 @@ public class LivGiove extends GameApplication {
 
         spawn("backgroundGiove");
 
-        reloader = getGameWorld().getEntitiesByType(RELOADER);
-        player.getComponent(PlayerControlComponent.class).addReloader(reloader);
-        cuori = getGameWorld().getEntitiesByType(HEART);
-
         vite = MAX_VITE;
 
         viewport = getGameScene().getViewport();
@@ -61,13 +60,6 @@ public class LivGiove extends GameApplication {
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
     }
-
-    @Override
-    protected void onPreInit() {
-        getSettings().setGlobalMusicVolume(0.25);
-        loopBGM("Ancient Egyptian Music – The Nile River.mp3");
-    }
-
 
     @Override
     protected void onUpdate(double tpf) {
@@ -78,9 +70,7 @@ public class LivGiove extends GameApplication {
                         closestPlatformToPlayer.getX()+closestPlatformToPlayer.getWidth()/2,
                         closestPlatformToPlayer.getY()-16);
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
-                getGameWorld().removeEntity(cuori.get(vite-1));
-                player.getComponent(PlayerControlComponent.class).hit();
-                vite = player.getComponent(HealthIntComponent.class).getValue();
+                vite--;
             }else{
                 getDialogService().showMessageBox("You are dead", () ->{
                     FXGL.getPrimaryStage().setScene(new LevelScene(
@@ -93,20 +83,16 @@ public class LivGiove extends GameApplication {
         }
 
         //bind dei cuori e dei proiettili
-        for(int i = 0; i < cuori.size(); i++){
-            cuori.get(i).xProperty().set(viewport.xProperty().doubleValue()+i*32);
-        }
-        reloader = getGameWorld().getEntitiesByType(RELOADER);
-        for( int i = 0; i < reloader.size(); i++){
-            reloader.get(i).xProperty().setValue(
-                    viewport.xProperty().doubleValue()+i*20
-            );
-        }
         getGameWorld().getEntitiesByType(MONEY).get(0).xProperty().bind(viewport.xProperty());
         textForCoinGrabbed.setText(Integer.toString(coinsGrabbed));
     }
     @Override
     protected void initUI(){
+        Node moneyIcon = new ImageView(
+                new Image(Utils.getPathFileFromResources("assets/levels/money.png")));
+        moneyIcon.setTranslateY(64);
+        FXGL.addUINode(moneyIcon);
+
         textForCoinGrabbed = new Text();
         textForCoinGrabbed.setFont(Font.font(30));
         textForCoinGrabbed.setFill(Color.WHITE);
@@ -116,8 +102,14 @@ public class LivGiove extends GameApplication {
     }
 
     @Override
+    protected void onPreInit() {
+        getSettings().setGlobalMusicVolume(0.25);
+        loopBGM("Ancient Egyptian Music – The Nile River.mp3");
+    }
+
+    @Override
     protected void initPhysics() {
-        getPhysicsWorld().setGravity(0, 400);
+        getPhysicsWorld().setGravity(0, 500);
 
         onCollisionBegin(PLAYER, PLATFORM, (player, platform)->{
             closestPlatformToPlayer = platform;
@@ -152,10 +144,7 @@ public class LivGiove extends GameApplication {
         onCollisionBegin(PLAYER, ENEMY, (player, enemy) -> {
             if(vite>0){
                 if(enemy.getComponent(HealthIntComponent.class).getValue() != 0){
-                    getGameWorld().removeEntity(cuori.get(vite-1));
-                    player.getComponent(PlayerControlComponent.class).hit();
-                    vite = player.getComponent(HealthIntComponent.class).getValue();
-
+                    vite--;
                     enemy.getComponent(EnemyControlComponent.class).hit();
                 }
             }else{
@@ -206,12 +195,12 @@ public class LivGiove extends GameApplication {
         getInput().addAction(new UserAction("Shoot") {
             @Override
             protected void onActionBegin() {
-                player.getComponent(PlayerControlComponent.class).shoot();
+                player.getComponent(ReloaderComponent.class).shoot();
             }
         }, KeyCode.E);
 
         //tasto per controllo delle bounding box
-        /*
+
         getInput().addAction(new UserAction("DevPane") {
             @Override
             protected void onActionBegin() {
@@ -221,6 +210,8 @@ public class LivGiove extends GameApplication {
                     getDevService().closeDevPane();
                 }
             }
-        }, KeyCode.P, VirtualButton.LB);*/
+        }, KeyCode.P, VirtualButton.LB);
     }
+
+    public static void main(String[] args) {launch(args);}
 }

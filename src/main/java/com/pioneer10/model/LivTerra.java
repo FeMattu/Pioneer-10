@@ -6,19 +6,24 @@ import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
 import com.pioneer10.Component.EnemyControlComponent;
 import com.pioneer10.Component.PlayerControlComponent;
+import com.pioneer10.Component.ReloaderComponent;
 import com.pioneer10.PioneerLauncher;
+import com.pioneer10.controller.PioneerUIController;
+import com.pioneer10.data.PlayerData;
 import com.pioneer10.view.LevelScene;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import java.util.List;
+import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.pioneer10.model.PioneerEntityType.*;
@@ -29,9 +34,9 @@ public class LivTerra extends GameApplication {
     private Entity player;
     private Viewport viewport;
     private int coinsGrabbed, vite;
-    private List<Entity> cuori, reloader;
     private Text textForCoinGrabbed;
-    private Entity closestPlatformToPlayer;
+    private Entity lastPlatformTouchedByPlayer;
+    public static PioneerUIController controller;
     @Override
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setWidth(1200);
@@ -42,15 +47,10 @@ public class LivTerra extends GameApplication {
 
     @Override
     public void initGame(){
-
         getGameWorld().addEntityFactory(new PioneerFactory());
         setLevelFromMap("Terra/MappaTerra.tmx");
         player = getGameWorld().getSingleton(PLAYER);
         spawn("backgroundTerra");
-
-        reloader = getGameWorld().getEntitiesByType(RELOADER);
-        player.getComponent(PlayerControlComponent.class).addReloader(reloader);
-        cuori = getGameWorld().getEntitiesByType(HEART);
 
         vite = MAX_VITE;
 
@@ -59,18 +59,43 @@ public class LivTerra extends GameApplication {
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
     }
+    @Override
+    protected void initUI(){
+        controller = new PioneerUIController();
+        controller.init();
+
+        Node moneyIcon = new ImageView(
+                new Image(Utils.getPathFileFromResources("assets/levels/money.png")));
+        moneyIcon.setTranslateY(64);
+        FXGL.addUINode(moneyIcon);
+
+        textForCoinGrabbed = new Text();
+        textForCoinGrabbed.setFont(Font.font(30));
+        textForCoinGrabbed.setFill(Color.WHITE);
+        textForCoinGrabbed.setX(35);
+        textForCoinGrabbed.setY(92);
+        getGameScene().addUINode(textForCoinGrabbed);
+    }
+
+    @Override
+    protected void initGameVars(Map<String, Object> vars) {
+        vars.put("level", "MappaTerra.tmx");
+        vars.put("lives", PlayerData.MAX_PLAYER_LIFE);
+    }
 
     @Override
     protected void onUpdate(double tpf) {
         if (player.getY() > getAppHeight()) {
             if(vite > 0){
-                getGameWorld().removeEntity(player);
+                player.removeFromWorld();
                 player = spawn("player",
-                        closestPlatformToPlayer.getX()+closestPlatformToPlayer.getWidth()/2,
-                        closestPlatformToPlayer.getY()-16);
+                        lastPlatformTouchedByPlayer.getX()+ lastPlatformTouchedByPlayer.getWidth()/2,
+                        lastPlatformTouchedByPlayer.getY()-32);
+                player.getComponent(HealthIntComponent.class).damage(1);
+                inc("lives", -1);
+                controller.removeLife();
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
-                getGameWorld().removeEntity(cuori.get(vite-1));
-                vite--;
+                //vite--;
             }else{
                 getDialogService().showMessageBox("You are dead", () ->{
                     FXGL.getPrimaryStage().setScene(new LevelScene(
@@ -81,28 +106,8 @@ public class LivTerra extends GameApplication {
                 });
             }
         }
-
-        //bind dei cuori e dei proiettili
-        for(int i = 0; i < cuori.size(); i++){
-            cuori.get(i).xProperty().set(viewport.xProperty().doubleValue()+i*32);
-        }
-        reloader = getGameWorld().getEntitiesByType(RELOADER);
-        for( int i = 0; i < reloader.size(); i++){
-            reloader.get(i).xProperty().setValue(
-                    viewport.xProperty().doubleValue()+i*20
-            );
-        }
-        getGameWorld().getEntitiesByType(MONEY).get(0).xProperty().bind(viewport.xProperty());
+        //bind con la viewport del numero di monete
         textForCoinGrabbed.setText(Integer.toString(coinsGrabbed));
-    }
-    @Override
-    protected void initUI(){
-        textForCoinGrabbed = new Text();
-        textForCoinGrabbed.setFont(Font.font(30));
-        textForCoinGrabbed.setFill(Color.WHITE);
-        textForCoinGrabbed.setX(35);
-        textForCoinGrabbed.setY(92);
-        getGameScene().addUINode(textForCoinGrabbed);
     }
 
     @Override
@@ -111,13 +116,12 @@ public class LivTerra extends GameApplication {
         loopBGM("Minecraft.mp3");
     }
 
-
     @Override
     protected void initPhysics() {
         getPhysicsWorld().setGravity(0, 500);
 
         onCollisionBegin(PLAYER, PLATFORM, (player, platform)->{
-           closestPlatformToPlayer = platform;
+           lastPlatformTouchedByPlayer = platform;
         });
 
         onCollisionOneTimeOnly(PLAYER, COIN, (player, coin) -> {
@@ -149,9 +153,7 @@ public class LivTerra extends GameApplication {
         onCollisionBegin(PLAYER, ENEMY, (player, enemy) -> {
             if(vite>0){
                 if(enemy.getComponent(HealthIntComponent.class).getValue() != 0){
-                    getGameWorld().removeEntity(cuori.get(vite-1));
                     vite--;
-
                     enemy.getComponent(EnemyControlComponent.class).hit();
                 }
             }else{
@@ -202,7 +204,7 @@ public class LivTerra extends GameApplication {
         getInput().addAction(new UserAction("Shoot") {
             @Override
             protected void onActionBegin() {
-                player.getComponent(PlayerControlComponent.class).shoot();
+                player.getComponent(ReloaderComponent.class).shoot();
             }
         }, KeyCode.E);
 

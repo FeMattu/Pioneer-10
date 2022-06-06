@@ -1,0 +1,7 @@
+{
+  "name": "Terra",
+  "levelPath": "Giove/Giove.tmx",
+  "background": "assets/levels/Giove/background_giove.png",
+  "gravity": 720,
+  "music":"Ancient Egyptian Music – The Nile River.mp3"
+}

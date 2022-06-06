@@ -19,8 +19,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import java.util.List;
-
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
 import static com.pioneer10.data.PlayerData.MAX_PLAYER_LIFE;
@@ -31,7 +29,6 @@ public class LevelCreation extends GameApplication {
     private Entity player, lastPlatformTouched;
     private Viewport viewport;
     private int vite, coinsGrabbed, nrOfLevel, gravity;
-    private List<Entity> cuori, reloader;
     private Text textForCoinGrabbed;
     private String level, levelMapPath, music;
 
@@ -54,16 +51,14 @@ public class LevelCreation extends GameApplication {
     @Override
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
+        //generazione mappa
         setLevelFromMap(levelMapPath);
         player = getGameWorld().getEntitiesByType(PLAYER).get(0);
+        //generazione background
         SpawnData backgroundData = new SpawnData();
         backgroundData.put("background", "assets/levels/Terra/background"+level);
         spawn("background", backgroundData);
 
-
-        reloader = getGameWorld().getEntitiesByType(RELOADER);
-        player.getComponent(PlayerControlComponent.class).addReloader(reloader);
-        cuori = getGameWorld().getEntitiesByType(HEART);
 
         vite = MAX_PLAYER_LIFE;
 
@@ -100,8 +95,6 @@ public class LevelCreation extends GameApplication {
                         lastPlatformTouched.getX()+ lastPlatformTouched.getWidth()/2,
                         lastPlatformTouched.getY()-16);
                 viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
-                getGameWorld().removeEntity(cuori.get(vite-1));
-                player.getComponent(PlayerControlComponent.class).hit();
                 vite = player.getComponent(HealthIntComponent.class).getValue();
             }else{
                 getDialogService().showMessageBox("You are dead", () ->{
@@ -112,17 +105,6 @@ public class LevelCreation extends GameApplication {
                     ));
                 });
             }
-        }
-
-        //bind dei cuori e dei proiettili
-        for(int i = 0; i < cuori.size(); i++){
-            cuori.get(i).xProperty().set(viewport.xProperty().doubleValue()+i*32);
-        }
-        reloader = getGameWorld().getEntitiesByType(RELOADER);
-        for( int i = 0; i < reloader.size(); i++){
-            reloader.get(i).xProperty().setValue(
-                    viewport.xProperty().doubleValue()+i*20
-            );
         }
         getGameWorld().getEntitiesByType(MONEY).get(0).xProperty().bind(viewport.xProperty());
         textForCoinGrabbed.setText(Integer.toString(coinsGrabbed));
@@ -173,9 +155,7 @@ public class LevelCreation extends GameApplication {
 
         onCollisionBegin(PLAYER, ENEMY, (player, enemy) -> {
             if(vite>0){
-                if(enemy.getComponent(HealthIntComponent.class).getValue() != 0){
-                    getGameWorld().removeEntity(cuori.get(vite-1));
-                    player.getComponent(PlayerControlComponent.class).hit();
+                if(enemy.getComponent(HealthIntComponent.class).getValue() != 0){ 
                     vite = player.getComponent(HealthIntComponent.class).getValue();
 
                     enemy.getComponent(EnemyControlComponent.class).hit();
@@ -228,7 +208,7 @@ public class LevelCreation extends GameApplication {
         getInput().addAction(new UserAction("Shoot") {
             @Override
             protected void onActionBegin() {
-                player.getComponent(PlayerControlComponent.class).shoot();
+
             }
         }, KeyCode.E);
 

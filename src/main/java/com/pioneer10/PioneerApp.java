@@ -1,55 +1,84 @@
-package com.pioneer10.model;
+package com.pioneer10;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.app.scene.FXGLMenu;
+import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.virtual.VirtualButton;
 import com.pioneer10.Component.EnemyControlComponent;
 import com.pioneer10.Component.PlayerControlComponent;
 import com.pioneer10.Component.ReloaderComponent;
-import com.pioneer10.PioneerLauncher;
+import com.pioneer10.Menu.GameMenu;
+import com.pioneer10.Menu.MainMenu;
+import com.pioneer10.controller.PioneerUIController;
+import com.pioneer10.data.LevelData;
+import com.pioneer10.data.PlayerData;
+import com.pioneer10.model.PioneerFactory;
+import com.pioneer10.model.Utils;
 import com.pioneer10.view.LevelScene;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import java.util.List;
+import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
 import static com.pioneer10.model.PioneerEntityType.*;
 
-public class LivNettuno extends GameApplication {
+public class PioneerApp extends GameApplication {
 
     private final int MAX_VITE = 3;
     private Entity player;
     private Viewport viewport;
-    private int vite, coinsGrabbed;
+    private int coinsGrabbed, vite;
     private Text textForCoinGrabbed;
-    private Entity closestPlatformToPlayer;
+    private Entity lastPlatformTouchedByPlayer;
+    public static PioneerUIController controller;
+    private LevelData currentLevelData;
+    private SceneFactory menuFactory;
+
+    public void setCurrentLeve(LevelData levelData){
+        this.currentLevelData = levelData;
+    }
 
     @Override
     protected void initSettings(GameSettings gameSettings) {
         gameSettings.setWidth(1200);
-        gameSettings.setHeight(640);
-        gameSettings.setTitle("Pioneer-10\nNettuno");
-        gameSettings.setDeveloperMenuEnabled(true);
+        gameSettings.setHeight(720);
+        gameSettings.setMainMenuEnabled(true);
+        gameSettings.setGameMenuEnabled(true);
+        menuFactory = new SceneFactory(){
+            @Override
+            public FXGLMenu newMainMenu() {
+                return new MainMenu();
+            }
+            @Override
+            public FXGLMenu newGameMenu() {
+                return new GameMenu();
+            }
+        };
+        gameSettings.setSceneFactory(menuFactory);
     }
 
     @Override
     public void initGame(){
         getGameWorld().addEntityFactory(new PioneerFactory());
-        setLevelFromMap("Nettuno/Nettuno.tmx");
+        setLevelFromMap(currentLevelData.levelPath());
         player = getGameWorld().getSingleton(PLAYER);
-        spawn("backgroundNettuno");
+        SpawnData backgroundData = new SpawnData();
+        backgroundData.put("background", currentLevelData.background());
+        spawn("background", backgroundData);
 
         vite = MAX_VITE;
 
@@ -57,36 +86,15 @@ public class LivNettuno extends GameApplication {
         viewport.setBounds(0, 0, 180*32, getAppHeight());
         viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
         viewport.setLazy(true);
-    }
 
-
-    @Override
-    protected void onUpdate(double tpf) {
-        if (player.getY() > getAppHeight()) {
-            if(vite > 0){
-                getGameWorld().removeEntity(player);
-                player = spawn("player",
-                        closestPlatformToPlayer.getX()+closestPlatformToPlayer.getWidth()/2,
-                        closestPlatformToPlayer.getY()-16);
-                viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
-                vite--;
-            }else{
-                getDialogService().showMessageBox("You are dead", () ->{
-                    FXGL.getPrimaryStage().setScene(new LevelScene(
-                            FXGL.getPrimaryStage(),
-                            PioneerLauncher.WIDTH,
-                            PioneerLauncher.HEIGHT
-                    ));
-                });
-            }
-        }
-
-        //bind dei cuori e dei proiettili
-        getGameWorld().getEntitiesByType(MONEY).get(0).xProperty().bind(viewport.xProperty());
-        textForCoinGrabbed.setText(Integer.toString(coinsGrabbed));
+        getSettings().setGlobalMusicVolume(0.5);
+        loopBGM(currentLevelData.music());
     }
     @Override
     protected void initUI(){
+        controller = new PioneerUIController();
+        controller.init();
+
         Node moneyIcon = new ImageView(
                 new Image(Utils.getPathFileFromResources("assets/levels/money.png")));
         moneyIcon.setTranslateY(64);
@@ -101,17 +109,35 @@ public class LivNettuno extends GameApplication {
     }
 
     @Override
-    protected void onPreInit() {
-        getSettings().setGlobalMusicVolume(0.5);
-        loopBGM("Subnautica Soundtrack Into The Unknown.mp3");
+    protected void onUpdate(double tpf) {
+        if (player.getY() > getAppHeight()) {
+            if(vite > 0){
+                player.removeFromWorld();
+                player = spawn("player",
+                        lastPlatformTouchedByPlayer.getX()+ lastPlatformTouchedByPlayer.getWidth()/2,
+                        lastPlatformTouchedByPlayer.getY()-32);
+                player.getComponent(HealthIntComponent.class).damage(1);
+                inc("lives", -1);
+                controller.removeLife();
+                viewport.bindToEntity(player, getAppWidth() / 2, getAppHeight() / 2);
+                //vite--;
+            }else{
+                getDialogService().showMessageBox("You are dead", () ->{
+                    menuFactory.newMainMenu();
+                });
+            }
+        }
+        //bind con la viewport del numero di monete
+        textForCoinGrabbed.setText(Integer.toString(coinsGrabbed));
     }
+
 
     @Override
     protected void initPhysics() {
-        getPhysicsWorld().setGravity(0, 500);
+        getPhysicsWorld().setGravity(0, currentLevelData.gravity());
 
         onCollisionBegin(PLAYER, PLATFORM, (player, platform)->{
-            closestPlatformToPlayer = platform;
+            lastPlatformTouchedByPlayer = platform;
         });
 
         onCollisionOneTimeOnly(PLAYER, COIN, (player, coin) -> {
@@ -125,11 +151,7 @@ public class LivNettuno extends GameApplication {
 
         onCollisionOneTimeOnly(ASTRONAVE, PLAYER, (astronave, player) -> {
             getDialogService().showMessageBox("Level finish", () ->{
-                FXGL.getPrimaryStage().setScene(new LevelScene(
-                        FXGL.getPrimaryStage(),
-                        PioneerLauncher.WIDTH,
-                        PioneerLauncher.HEIGHT
-                ));
+                menuFactory.newMainMenu();
             });
         });
 
@@ -148,11 +170,7 @@ public class LivNettuno extends GameApplication {
                 }
             }else{
                 getDialogService().showMessageBox("You are dead", () ->{
-                    FXGL.getPrimaryStage().setScene(new LevelScene(
-                            FXGL.getPrimaryStage(),
-                            PioneerLauncher.WIDTH,
-                            PioneerLauncher.HEIGHT
-                    ));
+                    menuFactory.newMainMenu();
                 });
             }
         });
@@ -212,5 +230,6 @@ public class LivNettuno extends GameApplication {
         }, KeyCode.P, VirtualButton.LB);
     }
 
-    public static void main(String[] args) {launch(args);}
+
+    public static void main(String[] args){launch(args);}
 }

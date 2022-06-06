@@ -8,7 +8,6 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
-import com.almasb.fxgl.entity.components.BoundingBoxComponent;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.entity.components.IrremovableComponent;
 import com.almasb.fxgl.physics.BoundingShape;
@@ -16,10 +15,7 @@ import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
-import com.pioneer10.Component.EnemyControlComponent;
-import com.pioneer10.Component.EnemyHealthViewComponent;
-import com.pioneer10.Component.PlayerControlComponent;
-import com.pioneer10.data.Configuration;
+import com.pioneer10.Component.*;
 import com.pioneer10.data.EnemyData;
 import com.pioneer10.data.PlayerData;
 import javafx.geometry.Point2D;
@@ -31,6 +27,7 @@ import java.util.List;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
+import static com.pioneer10.model.Configuration.BULLET_SPEED;
 import static com.pioneer10.model.PioneerEntityType.*;
 
 public class PioneerFactory implements EntityFactory {
@@ -94,9 +91,10 @@ public class PioneerFactory implements EntityFactory {
                 .bbox(new HitBox(new Point2D(13,17), BoundingShape.box(8,14)))//box di collisione per le gambe
                 .bbox(new HitBox(new Point2D(7,7), BoundingShape.box(21,16)))//box di collisione per la testa
                 .with(physics)
-                .with(new HealthIntComponent(PlayerData.MAX_PLAYER_LIFE))
                 .with(new CollidableComponent(true))
-                .with(new PlayerControlComponent(3))
+                .with(new HealthIntComponent(PlayerData.MAX_PLAYER_LIFE))
+                .with(new ReloaderComponent(PlayerData.MAX_BULLET_TO_SHOOT))
+                .with(new PlayerControlComponent())
                 .build();
     }
 
@@ -111,7 +109,7 @@ public class PioneerFactory implements EntityFactory {
                 ))
                 .with(new CollidableComponent(true))
                 .with(new OffscreenCleanComponent())
-                .with(new ProjectileComponent(data.get("direction"), Configuration.BULLET_SPEED))
+                .with(new ProjectileComponent(data.get("direction"), BULLET_SPEED))
                 .build();
     }
 
@@ -132,68 +130,9 @@ public class PioneerFactory implements EntityFactory {
     public Entity newCoin(SpawnData data) {
         return entityBuilder(data)
                 .type(COIN)
-                .with( new CoinAnimation())
+                .with( new CoinAnimationComponent())
                 .bbox(BoundingShape.circle(15))
                 .with(new CollidableComponent(true))
-                .build();
-    }
-
-    @Spawns("heart")
-    public Entity newHeart(SpawnData data) {
-        return entityBuilder(data)
-                .type(HEART)
-                .view(new ImageView(
-                        new Image(Utils.getPathFileFromResources("assets/levels/cuore.png"))
-                ))
-                .build();
-    }
-
-    @Spawns("reloader")
-    public Entity newReloader(SpawnData data) {
-        return entityBuilder(data)
-                .type(RELOADER)
-                .view(new ImageView(
-                        new Image(Utils.getPathFileFromResources("assets/levels/bulletReloader.png"))
-                ))
-                .build();
-    }
-
-    @Spawns("money")
-    public Entity newMoney(SpawnData data) {
-        return entityBuilder(data)
-                .type(MONEY)
-                .view(new ImageView(
-                        new Image(Utils.getPathFileFromResources("assets/levels/money.png"))
-                ))
-                .with(new IrremovableComponent())
-                .build();
-    }
-
-    @Spawns("backgroundGiove")
-    public Entity newBackgroundGiove(SpawnData data) {
-        return entityBuilder()
-                .view(new ScrollingBackgroundView(new Image(Utils.getPathFileFromResources("assets/levels/Giove/background_giove.png")),
-                        getAppWidth(), getAppHeight()))
-                .zIndex(-1)
-                .with(new IrremovableComponent())
-                .build();
-    }
-    @Spawns("backgroundNettuno")
-    public Entity newBackgroundNettuno(SpawnData data) {
-        return entityBuilder()
-                .view(new ScrollingBackgroundView(new Image(Utils.getPathFileFromResources("assets/levels/Nettuno/background_nettuno.png")),
-                        getAppWidth(), getAppHeight()))
-                .zIndex(-1)
-                .with(new IrremovableComponent())
-                .build();
-    }
-    @Spawns("backgroundTerra")
-    public Entity newBackgroundTerra(SpawnData data) {
-        return entityBuilder()
-                .view(new ScrollingBackgroundView(new Image(Utils.getPathFileFromResources("assets/levels/Terra/backgroundTerra.jpg")),
-                        getAppWidth(), getAppHeight()))
-                .zIndex(-1)
-                .with(new IrremovableComponent())
                 .build();
     }
 

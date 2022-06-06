@@ -19,12 +19,12 @@ public abstract class Utils {
     public static final String ROOT = "src/main/resources/";
 
     /**
-     * Return the image object by given name of image
-     * the image is get from the resource folder.
-     * The image should be under directory {@see ROOT}
+     * Return the path string of given file
+     * the path is absolute; the file should be
+     * under {@see ROOT}
      *
-     * @param fileName Name of the image
-     * @return The image object of the given image
+     * @param fileName Name of the file
+     * @return the absolute path of the file
      */
     public static String getPathFileFromResources(String fileName) throws InvalidPathException {
         return Path.of(ROOT,fileName).toAbsolutePath().normalize().toString();

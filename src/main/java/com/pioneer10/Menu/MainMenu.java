@@ -11,6 +11,7 @@ import com.pioneer10.model.Utils;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableObjectValue;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -22,7 +23,9 @@ import javafx.scene.paint.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getAssetLoader;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getUIFactoryService;
@@ -74,8 +77,11 @@ public class MainMenu extends FXGLMenu {
         menuBox.setTranslateY(430);
         menuBox.setTranslateX(100);
 
-
+        //tasto di back
         var view = new KeyView(KeyCode.ESCAPE, Color.GREEN, 14.0);
+        view.setOnMouseClicked(e->{
+            contentMenu.getChildren().setAll(menuBox);
+        });
         var hBox = new HBox(25,
                 getUIFactoryService().newText("Back", 14),
                 view
@@ -84,7 +90,7 @@ public class MainMenu extends FXGLMenu {
         hBox.setTranslateY(430 + 7*28);
         hBox.setAlignment(Pos.BOTTOM_CENTER);
 
-        contentMenu.setOnKeyPressed(e->{
+        getRoot().setOnKeyPressed(e->{
             if(e.getCode() == KeyCode.ESCAPE){
                 contentMenu.getChildren().setAll(menuBox);
             }
@@ -99,41 +105,50 @@ public class MainMenu extends FXGLMenu {
         );
     }
 
-    private Pane worldPreview = new Pane();
-    public void LevelScene(){
-        worldPreview.setTranslateX(600);
-        Node n = Planet.EARTH.getNode();
-        n.setTranslateY(400);
-        n.setTranslateX(100);
-        worldPreview.getChildren().setAll(n);
+    @Override
+    protected void onUpdate(double tpf) {
+        super.onUpdate(tpf);
 
-        var levelBox = new VBox(12,
-                getUIFactoryService().newText("Livelli", Color.GREEN,40),
-                new Text(""),
-                new MenuButton("Terra", "livelloTerra", ()->{
-                    FXGL.<PioneerApp>getAppCast().setCurrentLeve(
-                            getAssetLoader().loadJSON("levels/levelsData/Terra.json", LevelData.class).get()
-                    );
-                    fireNewGame();
-                }),
-                new MenuButton("Giove", "livelloGiove", ()->{
-                    FXGL.<PioneerApp>getAppCast().setCurrentLeve(
-                            getAssetLoader().loadJSON("levels/levelsData/Giove.json", LevelData.class).get()
-                    );
-                    fireNewGame();
-                }),
-                new MenuButton("Nettuno", "livelloNettuno", ()->{
-                    FXGL.<PioneerApp>getAppCast().setCurrentLeve(
-                            getAssetLoader().loadJSON("levels/levelsData/Nettuno.json", LevelData.class).get()
-                    );
-                    fireNewGame();
-                })
+
+    }
+
+    private Pane worldPreview = new Pane();//TODO: create world preview
+    public void LevelScene(){
+
+        //Tutti i livelli, l'ordine in cui sono messi, sarà l'ordine di visualizzazione
+        List<String> levelsData = List.of(
+                "Terra.json",
+                "Giove.json",
+                "Nettuno.json"
         );
 
-        levelBox.setTranslateY(430);
-        levelBox.setTranslateX(100);
+        var levelBox1 = LevelSelectionBox(
+                levelsData
+                        .stream()
+                        .map(name -> FXGL.getAssetLoader().loadJSON("levels/levelsData/" + name, LevelData.class).get())
+                        .collect(Collectors.toList())
+        );
 
-        contentMenu.getChildren().setAll(levelBox, worldPreview);
+        levelBox1.setTranslateY(430);
+        levelBox1.setTranslateX(100);
+
+        contentMenu.getChildren().setAll(levelBox1, worldPreview);
+    }
+
+    public VBox LevelSelectionBox(List<LevelData> levels) {
+        var box = new VBox(12);
+        box.getChildren().add(getUIFactoryService().newText("Livelli", Color.GREEN,40));
+
+        levels.forEach(data -> {
+            MenuButton item = new MenuButton(data.name(), "", ()->{
+                FXGL.<PioneerApp>getAppCast().setCurrentLeve(data);
+                fireNewGame();
+            });
+
+            box.getChildren().add(item);
+        });
+
+        return box;
     }
 
     private void CreditScene(){
@@ -230,45 +245,6 @@ public class MainMenu extends FXGLMenu {
 
             line.setFill(gradient);
             getChildren().add(line);
-        }
-    }
-
-    public class LevelSelectionBox extends VBox {
-        private ObjectProperty<LevelButton> selected = new SimpleObjectProperty<>();
-        private ObjectProperty<LevelData> selectedLevel = new SimpleObjectProperty<>();
-
-        public LevelSelectionBox(List<LevelData> levels) {
-            super(-20);
-
-            levels.forEach(data -> {
-                LevelButton item = new LevelButton(data);
-
-                getChildren().add(item);
-            });
-        }
-
-        public ObjectProperty<LevelData> selectedLevelProperty() {
-            return selectedLevel;
-        }
-
-        public LevelData getSelectedLevel() {
-            return selectedLevel.get();
-        }
-
-        private void select(LevelButton item) {
-            selected.set(item);
-        }
-
-
-        public class LevelButton extends MenuButton{
-
-            public LevelButton(LevelData data) {
-                super(data.name(), "", ()->{});
-
-
-            }
-
-
         }
     }
 

@@ -13,6 +13,7 @@ import com.almasb.fxgl.texture.AnimationChannel;
 import com.almasb.fxgl.time.LocalTimer;
 import com.pioneer10.PioneerApp;
 import com.pioneer10.model.Utils;
+import javafx.geometry.BoundingBox;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
@@ -29,6 +30,7 @@ public class EnemyControlComponent extends Component {
 
     private Entity player;
     private boolean stationary;
+    private BoundingBox boundingBox;
 
     public EnemyControlComponent(boolean stationary) {
         this.stationary = stationary;

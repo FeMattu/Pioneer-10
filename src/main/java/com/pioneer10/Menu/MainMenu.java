@@ -4,6 +4,7 @@ import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.input.view.KeyView;
+import com.almasb.fxgl.ui.FXGLScrollPane;
 import com.pioneer10.PioneerApp;
 import com.pioneer10.data.LevelData;
 import com.pioneer10.model.Planet;
@@ -15,6 +16,7 @@ import javafx.beans.value.ObservableObjectValue;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -119,25 +121,31 @@ public class MainMenu extends FXGLMenu {
         List<String> levelsData = List.of(
                 "Terra.json",
                 "Giove.json",
+                "Nettuno.json",
+                "Nettuno.json",
+                "Nettuno.json",
                 "Nettuno.json"
         );
+        var box = new VBox(12);
+        box.getChildren().add(getUIFactoryService().newText("Livelli", Color.GREEN,40));
 
-        var levelBox1 = LevelSelectionBox(
+        var levelBox = LevelSelectionBox(
                 levelsData
                         .stream()
                         .map(name -> FXGL.getAssetLoader().loadJSON("levels/levelsData/" + name, LevelData.class).get())
                         .collect(Collectors.toList())
         );
 
-        levelBox1.setTranslateY(430);
-        levelBox1.setTranslateX(100);
+        box.getChildren().add(levelBox);
 
-        contentMenu.getChildren().setAll(levelBox1, worldPreview);
+        box.setTranslateX(100);
+        box.setTranslateY(430);
+
+        contentMenu.getChildren().setAll(box, worldPreview);
     }
 
     public VBox LevelSelectionBox(List<LevelData> levels) {
         var box = new VBox(12);
-        box.getChildren().add(getUIFactoryService().newText("Livelli", Color.GREEN,40));
 
         levels.forEach(data -> {
             MenuButton item = new MenuButton(data.name(), "", ()->{
@@ -198,17 +206,31 @@ public class MainMenu extends FXGLMenu {
             selector = new Rectangle(7, 21, Color.WHITE);
             selector.setTranslateX(-23);
             selector.setTranslateY(-2);
-            selector.visibleProperty().bind(focusedProperty());
+            selector.visibleProperty().bind(pressedProperty());
+
 
             //text
             var text = getUIFactoryService().newText(name, Color.WHITE,20.0);
+            /*
             text.fillProperty().bind(
                     Bindings.when(focusedProperty()).then(SELECTED_COLOR).otherwise(NOT_SELECTED_COLOR)
             );
             text.strokeProperty().bind(
                     Bindings.when(focusedProperty()).then(SELECTED_COLOR).otherwise(NOT_SELECTED_COLOR)
             );
+            */
             text.setStrokeWidth(1.0);
+
+            text.fillProperty().bind(
+                    Bindings.when(hoverProperty()).then(SELECTED_COLOR).otherwise(NOT_SELECTED_COLOR)
+            );
+            pressedProperty().addListener((observable, oldValue, pressed) ->{
+                if(pressed){
+                    if(disableProperty().get()){
+                        setFocused(true);
+                    }
+                }
+            });
 
             focusedProperty().addListener((observable, oldValue, isSelected) ->{
                 if(isSelected){
@@ -216,8 +238,9 @@ public class MainMenu extends FXGLMenu {
                 }
             });
 
+
             setAlignment(Pos.CENTER_LEFT);
-            setFocusTraversable(true);
+            //setFocusTraversable(true);
 
             setOnKeyPressed( e -> {
                 if(e.getCode() == KeyCode.ENTER){

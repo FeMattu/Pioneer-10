@@ -2,6 +2,6 @@
   "name": "Giove",
   "levelPath": "Giove/Giove.tmx",
   "background": "assets/levels/Giove/background_giove.png",
-  "gravity": 720,
+  "gravity": 400,
   "music":"Ancient Egyptian Music – The Nile River.mp3"
 }

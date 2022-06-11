@@ -2,6 +2,6 @@
   "name": "Nettuno",
   "levelPath": "Nettuno/Nettuno.tmx",
   "background": "assets/levels/Nettuno/background_nettuno.png",
-  "gravity": 720,
+  "gravity": 200,
   "music": "Subnautica Soundtrack Into The Unknown.mp3"
 }

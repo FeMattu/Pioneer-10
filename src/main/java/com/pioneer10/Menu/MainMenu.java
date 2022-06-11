@@ -25,12 +25,16 @@ import javafx.scene.paint.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import javax.swing.text.AttributeSet;
+import javax.swing.text.MutableAttributeSet;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getAssetLoader;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getUIFactoryService;
+import static javax.swing.text.StyleConstants.setBackground;
 
 public class MainMenu extends FXGLMenu {
 
@@ -61,7 +65,7 @@ public class MainMenu extends FXGLMenu {
 
         var textDescription = getUIFactoryService().newText("", Color.GRAY, 20);
         textDescription.textProperty().bind(
-                Bindings.createStringBinding(()-> selectedButton.get().getDescription(), selectedButton)
+                Bindings.createStringBinding(() -> selectedButton.get().getDescription(), selectedButton)
         );
 
         //menu button
@@ -81,19 +85,19 @@ public class MainMenu extends FXGLMenu {
 
         //tasto di back
         var view = new KeyView(KeyCode.ESCAPE, Color.GREEN, 14.0);
-        view.setOnMouseClicked(e->{
+        view.setOnMouseClicked(e -> {
             contentMenu.getChildren().setAll(menuBox);
         });
         var hBox = new HBox(25,
                 getUIFactoryService().newText("Back", 14),
                 view
         );
-        hBox.setTranslateX(getAppWidth()-200);
-        hBox.setTranslateY(430 + 7*28);
+        hBox.setTranslateX(getAppWidth() - 200);
+        hBox.setTranslateY(430 + 7 * 28);
         hBox.setAlignment(Pos.BOTTOM_CENTER);
 
-        getRoot().setOnKeyPressed(e->{
-            if(e.getCode() == KeyCode.ESCAPE){
+        getRoot().setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ESCAPE) {
                 contentMenu.getChildren().setAll(menuBox);
             }
         });
@@ -105,13 +109,6 @@ public class MainMenu extends FXGLMenu {
                 contentMenu,
                 hBox
         );
-    }
-
-    @Override
-    protected void onUpdate(double tpf) {
-        super.onUpdate(tpf);
-
-
     }
 
     private Pane worldPreview = new Pane();//TODO: create world preview
@@ -206,31 +203,20 @@ public class MainMenu extends FXGLMenu {
             selector = new Rectangle(7, 21, Color.WHITE);
             selector.setTranslateX(-23);
             selector.setTranslateY(-2);
-            selector.visibleProperty().bind(pressedProperty());
+            selector.visibleProperty().bind(focusedProperty());
 
 
             //text
             var text = getUIFactoryService().newText(name, Color.WHITE,20.0);
-            /*
+
             text.fillProperty().bind(
                     Bindings.when(focusedProperty()).then(SELECTED_COLOR).otherwise(NOT_SELECTED_COLOR)
             );
             text.strokeProperty().bind(
                     Bindings.when(focusedProperty()).then(SELECTED_COLOR).otherwise(NOT_SELECTED_COLOR)
             );
-            */
-            text.setStrokeWidth(1.0);
 
-            text.fillProperty().bind(
-                    Bindings.when(hoverProperty()).then(SELECTED_COLOR).otherwise(NOT_SELECTED_COLOR)
-            );
-            pressedProperty().addListener((observable, oldValue, pressed) ->{
-                if(pressed){
-                    if(disableProperty().get()){
-                        setFocused(true);
-                    }
-                }
-            });
+            text.setStrokeWidth(1.0);
 
             focusedProperty().addListener((observable, oldValue, isSelected) ->{
                 if(isSelected){
@@ -240,7 +226,7 @@ public class MainMenu extends FXGLMenu {
 
 
             setAlignment(Pos.CENTER_LEFT);
-            //setFocusTraversable(true);
+            setFocusTraversable(true);
 
             setOnKeyPressed( e -> {
                 if(e.getCode() == KeyCode.ENTER){

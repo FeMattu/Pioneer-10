@@ -13,10 +13,12 @@ For each level there will be a maximum of 3 lives available and a magazine of 3 
 
 How to play:
 
--A or <-, the character moves to the left
--D or ->, the character moves to the right
--with the 'space' key, the character jumps
--E, shoot
+-<strong>A</strong>, the character moves to the left<br>
+-<strong>D</strong>, the character moves to the right<br>
+-with the <strong>'space'</strong> key, the character jumps<br>
+-<strong>E</strong>, shoot<br>
+
+The <a href="https://github.com/AlmasB/FXGL.git">FXGL</a> library was used to create the game
 
 ----------------------------------------ITALIAN-ITALIANO-----------------------------------------------
 
@@ -32,7 +34,9 @@ Per ogni livelli ci saranno max 3 vite disponibili e un caricatore da 3 proietti
 
 Come giocare:
 
--A o <-, il personaggio si muove verso sinistra
--D o ->, il personaggio si muove verso destra
--con il tasto "spazio", il personaggio salta
--E, spara
+-<strong>A</strong>, il personaggio si muove verso sinistra<br>
+-<strong>D</strong>, il personaggio si muove verso destra<br>
+-con il tasto <strong>"spazio"</strong>, il personaggio salta<br>
+-<strong>E</strong>, spara<br>
+
+Per creare il gioco è stata usata la libreria <a href="https://github.com/AlmasB/FXGL.git">FXGL</a>
